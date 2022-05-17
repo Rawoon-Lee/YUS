@@ -81,8 +81,8 @@ CREATE TABLE youtube_comm (
     comm TEXT NOT NULL,
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
-	exercise_no INT DEFAULT 0,
-    FOREIGN KEY (exercise_no) REFERENCES exercise_info (exercise_no)
+	video_id INT,
+    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id)
 );
 
 CREATE TABLE routine_comm (
