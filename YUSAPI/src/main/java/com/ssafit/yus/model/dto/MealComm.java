@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class mealComm {
+public class MealComm {
 	private int commIndex;
 	private int classNo;
 	private String comm;

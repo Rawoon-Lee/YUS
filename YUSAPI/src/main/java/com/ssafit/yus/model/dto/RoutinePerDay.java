@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoutinePerDay {
 	private int id;
-	private String days;
+	private int days;
 	private int groupNo;
 	private int routineNo;
 }
