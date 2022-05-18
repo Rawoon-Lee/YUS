@@ -9,7 +9,6 @@ CREATE TABLE youtube_info (
     channel_name VARCHAR(40) NOT NULL,
     exercise_no INT,
     FOREIGN KEY (exercise_no) REFERENCES exercise_info (exercise_no),
-    liked INT DEFAULT 0,
     view_cnt INT DEFAULT 0
 );
 
@@ -24,7 +23,6 @@ CREATE TABLE routine_info (
     exercise_type INT DEFAULT 0,
 	user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
-    liked INT DEFAULT 0,
     view_cnt INT DEFAULT 0
 );
 
@@ -145,6 +143,5 @@ CREATE TABLE meal_board (
     fat INT DEFAULT 0,
     user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
-    liked INT DEFAULT 0,
     view_cnt INT DEFAULT 0
 );
