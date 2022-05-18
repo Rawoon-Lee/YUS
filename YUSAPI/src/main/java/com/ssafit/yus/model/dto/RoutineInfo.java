@@ -11,6 +11,5 @@ public class RoutineInfo {
 	private int routineNo;
 	private int exerciseType;
 	private int userNo;
-	private int liked;
 	private int viewCnt;
 }

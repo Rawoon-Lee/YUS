@@ -16,6 +16,5 @@ public class MealBoard {
 	private int protein;
 	private int fat;
 	private int userNo;
-	private int liked;
 	private int viewCnt;
 }
