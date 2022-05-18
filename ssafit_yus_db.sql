@@ -82,7 +82,9 @@ CREATE TABLE youtube_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	video_id INT,
-    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id)
+    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id),
+    user_no INT,
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
 
 CREATE TABLE routine_comm (
@@ -92,7 +94,9 @@ CREATE TABLE routine_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	routine_no INT,
-    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no)
+    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no),
+    user_no INT,
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
 
 CREATE TABLE meal_comm (
@@ -102,7 +106,9 @@ CREATE TABLE meal_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	post_no INT,
-    FOREIGN KEY (post_no) REFERENCES meal_board (post_no)
+    FOREIGN KEY (post_no) REFERENCES meal_board (post_no),
+    user_no INT,
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
 
 CREATE TABLE youtube_liked (
