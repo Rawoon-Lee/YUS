@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/main">
+        <img src="./assets/logo.png" alt="" width="70px" height="" />
+      </router-link>
+      <router-link to="/routine"></router-link>
     </nav>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -28,5 +30,8 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+* {
+  background-color: black;
 }
 </style>

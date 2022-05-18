@@ -1,29 +1,51 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import MainView from "../views/MainView.vue";
+import RoutineView from "../views/RoutineView.vue";
+import ChallengeView from "../views/ChallengeView.vue";
+import BoardView from "@/views/BoardView.vue";
+import ExerciseView from "@/views/ExerciseView.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "home",
+    component: HomeView,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/main",
+    name: "main",
+    component: MainView,
+  },
+  {
+    path: "/routine",
+    name: "routine",
+    component: RoutineView,
+  },
+  {
+    path: "/exercise",
+    name: "exercise",
+    component: ExerciseView,
+  },
+  {
+    path: "/board",
+    name: "board",
+    component: BoardView,
+  },
+  {
+    path: "/challenge",
+    name: "challenge",
+    component: ChallengeView,
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
