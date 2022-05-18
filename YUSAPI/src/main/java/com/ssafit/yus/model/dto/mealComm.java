@@ -15,4 +15,5 @@ public class mealComm {
 	private int commGroup;
 	private int postNo;
 	private int userNo;
+	private String regDate;
 }

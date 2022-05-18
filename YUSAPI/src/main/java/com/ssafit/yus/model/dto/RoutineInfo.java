@@ -12,4 +12,5 @@ public class RoutineInfo {
 	private int exerciseType;
 	private int userNo;
 	private int viewCnt;
+	private String regDate;
 }

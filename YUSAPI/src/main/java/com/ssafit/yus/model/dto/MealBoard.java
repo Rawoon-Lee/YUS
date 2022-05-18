@@ -17,4 +17,5 @@ public class MealBoard {
 	private int fat;
 	private int userNo;
 	private int viewCnt;
+	private String regDate;
 }

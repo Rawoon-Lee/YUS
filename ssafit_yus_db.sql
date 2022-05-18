@@ -47,7 +47,8 @@ CREATE TABLE routine_info (
     exercise_type INT DEFAULT 0,
 	user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
-    view_cnt INT DEFAULT 0
+    view_cnt INT DEFAULT 0,
+    reg_date TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE meal_board (
@@ -60,7 +61,8 @@ CREATE TABLE meal_board (
     fat INT DEFAULT 0,
     user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
-    view_cnt INT DEFAULT 0
+    view_cnt INT DEFAULT 0,
+    reg_date TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE exercise_per_routine (
@@ -120,7 +122,8 @@ CREATE TABLE youtube_comm (
 	video_id VARCHAR(40) NOT NULL,
     FOREIGN KEY (video_id) REFERENCES youtube_info (video_id),
     user_no INT,
-    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no),
+    reg_date TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE routine_comm (
@@ -132,7 +135,8 @@ CREATE TABLE routine_comm (
 	routine_no INT,
     FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no),
     user_no INT,
-    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no),
+    reg_date TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE meal_comm (
@@ -144,5 +148,6 @@ CREATE TABLE meal_comm (
 	post_no INT,
     FOREIGN KEY (post_no) REFERENCES meal_board (post_no),
     user_no INT,
-    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no),
+    reg_date TIMESTAMP DEFAULT now()
 );
