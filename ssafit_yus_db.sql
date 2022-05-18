@@ -224,3 +224,20 @@ VALUES (1, "temp"),
 
 INSERT INTO routine_liked (routine_no, user_no)
 VALUES (1, 1), (2, 1);
+
+INSERT INTO meal_liked (user_no, post_no)
+VALUES (1, 1), (2, 1);
+
+INSERT INTO meal_comm (class_no, comm, order_no, comm_group, post_no, user_no)
+VALUES (0, "오 보기만해도 건강해질 거 같네요", 0, 1, 1, 2),
+(1, "감사합니다. 가까이 사시는거면 제가 만들어 드릴까요?", 1, 1, 1, 1),
+(1, "신고할게요", 2, 1, 1, 2);
+
+INSERT INTO youtube_comm (class_no, comm, order_no, comm_group, video_id, user_no)
+VALUES (0, "운동 가즈아!", 0, 1, "temp", 2),
+(1, "화이팅!", 1, 1, "temp", 1),
+(0, "공짜로 이런 수업을 듣다니 감사합니다", 0, 3, "temp", 2);
+
+INSERT INTO routine_comm (class_no, comm, order_no, comm_group, routine_no, user_no)
+VALUES (0, "내 동생이 이거 효과좋다네요", 0, 1, 1, 1),
+(0, "공짜로 이런 수업을 듣다니 감사합니다", 0, 2, 1, 2);
