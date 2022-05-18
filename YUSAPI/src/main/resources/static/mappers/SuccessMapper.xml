@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.model.dao.SuccessDao">
+	<resultMap type="Success" id="SuccessMap">
+		<result column="id" property="id" />
+		<result column="is_done" property="isDone" />
+		<result column="user_no" property="userNo" />
+	</resultMap>
+</mapper>

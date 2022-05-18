@@ -86,7 +86,7 @@ CREATE TABLE routine_per_day (
 DROP TABLE IF EXISTS success;
 CREATE TABLE success (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    isDone TIMESTAMP DEFAULT now(),
+    is_done TIMESTAMP DEFAULT now(),
 	user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
