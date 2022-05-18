@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <router-link to="/main">
+    <!-- <router-link to="/main">
       <img alt="yus logo" src="../assets/home.png" />
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
