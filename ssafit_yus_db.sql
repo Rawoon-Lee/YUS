@@ -3,8 +3,9 @@ CREATE DATABASE ssafit_yus DEFAULT CHARACTER SET utf8mb4;
 
 USE ssafit_yus;
 
+DROP TABLE IF EXISTS exercise_info;
 CREATE TABLE exercise_info (
-	exercise_no INT NOT NULL PRIMARY KEY,
+	exercise_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     exercise_name VARCHAR(40) NOT NULL,
 	exercise_part VARCHAR(40) NOT NULL
 );
@@ -75,16 +76,17 @@ CREATE TABLE exercise_per_routine (
 
 CREATE TABLE routine_per_day (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    days DATE NOT NULL,
+    days INT NOT NULL,
 	group_no INT,
     FOREIGN KEY (group_no) REFERENCES group_info (group_no),
     routine_no INT,
     FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no)
 );
 
+DROP TABLE IF EXISTS success;
 CREATE TABLE success (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    isDone DATE NOT NULL,
+    isDone TIMESTAMP DEFAULT now(),
 	user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
@@ -151,3 +153,74 @@ CREATE TABLE meal_comm (
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
     reg_date TIMESTAMP DEFAULT now()
 );
+
+INSERT INTO exercise_info (exercise_name, exercise_part)
+VALUES ('스쿼트', '하체'),
+("레그 프레스", "하체"),
+("레그 익스텐션", "하체"),
+("숄더 프레스", "어깨"),
+("벤치 프레스", "가슴");
+SELECT * FROM exercise_info;
+
+INSERT INTO group_info (group_name, exercise_type, maximum_people)
+VALUES ("놀기위해 운동한다", 0, 20),
+("체력이 국력", 1, 10),
+("오늘은 내가 핫바디", 1, 15);
+SELECT * FROM group_info;
+
+INSERT INTO user_info(user_id, user_password, weight, height, gym_name, purpose, group_no)
+VALUES ("JunhoLee", "iamhandsome", 67, 178, "강남비싼헬스장", 1, 3),
+("Hwasa", "iamsexy", 44, 160, "이태원비싼헬스장", 1, 1);
+SELECT * FROM user_info;
+
+INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_no)
+VALUES ("temp", "www.youtube.com/embed/temp", "뱃살빼는 최고의 운동", "땅끄부부", 1),
+("trmp01", "www.youtube.com/embed/temp01", "가슴운동 다 알려줄게", "계란 형", 5);
+SELECT * FROM youtube_info;
+
+INSERT INTO routine_info (exercise_type, user_no)
+VALUES (0, 1),
+(1, 2);
+
+SELECT * FROM routine_info; 
+
+INSERT INTO meal_board (title, filepath, content, carb, protein, fat, user_no)
+VALUES ("오늘의 식단 인증", "static/profile/me.jpg", "치팅데이 다음 날에는 꼭 이렇게 먹어줘야 마음이 편해요", 90, 100, 40, 1);
+
+INSERT INTO exercise_per_routine (routine_no, exercise_no)
+VALUES (1, 1),
+(1, 2), 
+(1, 3),
+(1, 4),
+(2, 1),
+(2, 5);
+
+INSERT INTO routine_per_day (days, group_no, routine_no)
+VALUES (0, 1, 1),
+(1, 1, 1),
+(2, 1, 1),
+(3, 1, 1),
+(4, 1, 1),
+(5, 1, 1),
+(6, 1, 2),
+(0, 2, 2),
+(1, 2, 1),
+(2, 2, 2),
+(3, 2, 1),
+(4, 2, 1),
+(5, 2, 1),
+(6, 2, 2);
+
+INSERT INTO success (user_no)
+VALUES (1);
+
+INSERT INTO success (user_no)
+VALUES (2);
+
+INSERT INTO youtube_liked (user_no, video_id)
+VALUES (1, "temp"), 
+(2, "trmp01"),
+(2, "temp");
+
+INSERT INTO routine_liked (routine_no, user_no)
+VALUES (1, 1), (2, 1);
