@@ -7,8 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class YoutubeLiked {
-	private int id;
+public class MealComm {
+	private int commIndex;
+	private int classNo;
+	private String comm;
+	private int orderNo;
+	private int commGroup;
+	private int postNo;
 	private int userNo;
-	private String videoId;
+	private String regDate;
 }

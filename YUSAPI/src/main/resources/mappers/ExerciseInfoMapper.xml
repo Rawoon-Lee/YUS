@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafit.yus.model.dao.ExerciseInfoDao">
+	<resultMap type="ExerciseInfo" id="ExerciseInfoMap">
+		<result column="exercise_no" property="exerciseNo" />
+		<result column="exercise_name" property="exerciseName" />
+		<result column="exercise_part" property="exercisePart" />
+	</resultMap>
+	<select id="selectAll" resultMap="ExerciseInfoMap">
+		SELECT *
+		FROM exercise_info
+	</select>
+</mapper>
