@@ -11,7 +11,7 @@
 		<result column="carb" property="carb" />
 		<result column="protein" property="protein" />
 		<result column="fat" property="fat" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="view_cnt" property="viewCnt" />
 		<result column="reg_date" property="regDate" />
 	</resultMap>

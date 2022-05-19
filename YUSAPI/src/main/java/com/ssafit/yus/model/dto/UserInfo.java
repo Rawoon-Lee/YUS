@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo {
-	private int userNo;
 	private String userId;
 	private String userPassword;
 	private float weight;

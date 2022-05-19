@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class YoutubeLiked {
 	private int id;
-	private int userNo;
+	private String userId;
 	private String videoId;
 }

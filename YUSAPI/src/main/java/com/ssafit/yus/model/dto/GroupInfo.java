@@ -14,5 +14,5 @@ public class GroupInfo {
 	private int groupPoint;
 	private int maximumPeople;
 	private int currentPeople;
-	private int userNo;
+	private String userId;
 }

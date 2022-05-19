@@ -8,5 +8,5 @@ public interface UserInfoService {
 	UserInfo selectUserInfo(String id);
 	void insertUserInfo(UserInfo userInfo) throws NoSuchAlgorithmException;
 	void deleteUserInfo(String id);
-	void updateUserInfo(UserInfo userInfo) throws NoSuchAlgorithmException;
+	void updateUserInfo(UserInfo userInfo);
 }

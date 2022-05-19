@@ -17,5 +17,9 @@ public class YoutubeInfoServiceImpl implements YoutubeInfoService{
 		List<YoutubeInfo> list = youtubeInfoDao.selectAll();
 		return list;
 	}
+	@Override
+	public YoutubeInfo selectById(String videoId) {
+		return youtubeInfoDao.selectById(videoId);
+	}
 
 }

@@ -6,4 +6,5 @@ import com.ssafit.yus.model.dto.YoutubeInfo;
 
 public interface YoutubeInfoService {
 	List<YoutubeInfo> getAll();
+	YoutubeInfo selectById(String videoId);
 }

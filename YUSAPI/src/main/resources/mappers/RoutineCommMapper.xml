@@ -10,7 +10,7 @@
 		<result column="order_no" property="orderNo" />
 		<result column="comm_group" property="commGroup" />
 		<result column="routine_no" property="routineNo" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="reg_date" property="regDate" />
 	</resultMap>
 	<select id="selectAll" resultMap="RoutineCommMap">

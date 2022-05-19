@@ -15,4 +15,9 @@
 		SELECT *
 		FROM youtube_info
 	</select>
+	<select id="selectById" parameterType="String" resultMap="YoutubeInfoMap">
+		SELECT *
+		FROM youtube_info
+		WHERE video_id = #{videoId}
+	</select>
 </mapper>

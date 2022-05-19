@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class Success {
 	private int id;
 	private String isDone;
-	private int userNo;
+	private String userId;
 }

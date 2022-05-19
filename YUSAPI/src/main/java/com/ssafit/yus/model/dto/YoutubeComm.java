@@ -14,6 +14,6 @@ public class YoutubeComm {
 	private int orderNo;
 	private int commGroup;
 	private String videoId;
-	private int userNo;
+	private String userId;
 	private String regDate;
 }

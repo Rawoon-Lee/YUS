@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafit.yus.model.dao.MealLikedDao">
 	<resultMap type="MealLiked" id="MealLikedMap">
 		<result column="id" property="id" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="post_no" property="postNo" />
 	</resultMap>
 	<select id="selectAll" resultMap="MealLikedMap">

@@ -14,6 +14,6 @@ public class RoutineComm {
 	private int orderNo;
 	private int commGroup;
 	private int routineNo;
-	private int userNo;
+	private String userId;
 	private String regDate;
 }

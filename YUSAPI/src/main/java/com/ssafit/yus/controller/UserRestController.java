@@ -116,7 +116,7 @@ public class UserRestController {
 		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", required = true)
 	})
 	@PostMapping("/info")
-	public ResponseEntity<String> updateInfo(@RequestBody UserInfo userInfo) throws NoSuchAlgorithmException{
+	public ResponseEntity<String> updateInfo(@RequestBody UserInfo userInfo){
 		System.out.println(userInfo);
 		userInfoService.updateUserInfo(userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

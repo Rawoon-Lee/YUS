@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafit.yus.model.dao.RoutineLikedDao">
 	<resultMap type="RoutineLiked" id="RoutineLikedMap">
 		<result column="id" property="id" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="routine_no" property="routineNo" />
 	</resultMap>
 	<select id="selectAll" resultMap="RoutineLikedMap">

@@ -6,7 +6,7 @@
 	<resultMap type="Success" id="SuccessMap">
 		<result column="id" property="id" />
 		<result column="is_done" property="isDone" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 	</resultMap>
 	<select id="selectAll" resultMap="SuccessMap">
 		SELECT *

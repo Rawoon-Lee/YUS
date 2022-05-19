@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MealLiked {
 	private int id;
-	private int userNo;
+	private String userId;
 	private int postNo;
 }

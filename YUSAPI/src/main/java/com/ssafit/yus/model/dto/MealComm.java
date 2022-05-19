@@ -14,6 +14,6 @@ public class MealComm {
 	private int orderNo;
 	private int commGroup;
 	private int postNo;
-	private int userNo;
+	private String userId;
 	private String regDate;
 }

@@ -6,10 +6,10 @@
 	<resultMap type="RoutineInfo" id="RoutineInfoMap">
 		<result column="routine_no" property="routineNo" />
 		<result column="exercise_type" property="exerciseType" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="view_cnt" property="viewCnt" />
 		<result column="reg_date" property="regDate" />
-		<result column="gym_name" property="gymName" />
+		<result column="title" property="title" />
 	</resultMap>
 	<select id="selectAll" resultMap="RoutineInfoMap">
 		SELECT *

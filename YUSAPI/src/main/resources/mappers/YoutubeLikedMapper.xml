@@ -5,11 +5,25 @@
 <mapper namespace="com.ssafit.yus.model.dao.YoutubeLikedDao">
 	<resultMap type="YoutubeLiked" id="YoutubeLikedMap">
 		<result column="id" property="id" />
-		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
 		<result column="video_id" property="videoId" />
 	</resultMap>
-	<select id="selectAll" resultMap="YoutubeLikedMap">
+	<select id="selectById" resultMap="YoutubeLikedMap" parameterType="String">
 		SELECT *
 		FROM youtube_liked
+		where video_id = #{videoId}
 	</select>
+	<select id="selectByIdNo" resultMap="YoutubeLikedMap" parameterType="YoutubeLiked">
+		SELECT *
+		FROM youtube_liked
+		where video_id = #{videoId} and user_id = #{userId} 
+	</select>
+	<insert id="insertYoutubeLiked" parameterType="YoutubeLiked">
+		INSERT INTO youtube_liked(user_id, video_id)
+		VALUES (#{userId}, #{videoId})
+	</insert>
+	<delete id="deleteByIdNo" parameterType="YoutubeLiked">
+		DELETE FROM youtube_liked
+		WHERE video_id = #{videoId} and user_id = #{userId} 
+	</delete>
 </mapper>

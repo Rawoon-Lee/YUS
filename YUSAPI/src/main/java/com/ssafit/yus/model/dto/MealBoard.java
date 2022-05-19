@@ -15,7 +15,7 @@ public class MealBoard {
 	private int carb;
 	private int protein;
 	private int fat;
-	private int userNo;
+	private String userId;
 	private int viewCnt;
 	private String regDate;
 }
