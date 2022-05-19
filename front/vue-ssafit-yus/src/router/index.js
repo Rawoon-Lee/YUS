@@ -65,7 +65,7 @@ const routes = [
         component: ExerciseUpdate,
       },
       {
-        path: "detail:id",
+        path: "detail/:id",
         name: "exerciseDetail",
         component: ExerciseDetail,
       },

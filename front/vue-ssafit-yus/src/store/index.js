@@ -37,6 +37,9 @@ export default new Vuex.Store({
     GET_VIDEOS(state, payload) {
       state.videos = payload;
     },
+    GET_VIDEO(state, payload) {
+      state.video = payload;
+    },
     GET_EXERCISES(state, payload) {
       state.exercises = payload;
     },
@@ -127,6 +130,16 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err);
         });
+    },
+    getVideo({ commit }, id) {
+      for (let video of this.$store.state.videos) {
+        console.log(video);
+        if (video.videoId == id) {
+          commit("GET_VIDEO", video);
+          console.log(video);
+          break;
+        }
+      }
     },
     getExercises({ commit }, payload) {
       let params = null;
