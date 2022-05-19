@@ -1,14 +1,18 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/main">
-        <img src="./assets/logo.png" alt="" width="70px" height="" />
-      </router-link>
-      <router-link to="/routine"></router-link>
-    </nav>
+    <header-nav></header-nav>
     <router-view />
   </div>
 </template>
+<script>
+import HeaderNav from "@/components/common/HeadaerNav.vue";
+
+export default {
+  components: {
+    HeaderNav,
+  },
+};
+</script>
 
 <style>
 #app {
@@ -31,7 +35,7 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-* {
+/* * {
   background-color: black;
-}
+} */
 </style>
