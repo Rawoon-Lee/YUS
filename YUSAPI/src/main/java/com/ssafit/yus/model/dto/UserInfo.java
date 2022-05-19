@@ -11,6 +11,8 @@ public class UserInfo {
 	private String userPassword;
 	private float weight;
 	private float height;
+	private int age;
+	private int gender;
 	private String gymName;
 	private String filepath;
 	private int purpose;

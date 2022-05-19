@@ -9,14 +9,46 @@
 		<result column="user_password" property="userPassword" />
 		<result column="weight" property="weight" />
 		<result column="height" property="height" />
+		<result column="age" property="age" />
+		<result column="gender" property="gender" />
 		<result column="gym_name" property="gymName" />
 		<result column="filepath" property="filepath" />
 		<result column="purpose" property="purpose" />
 		<result column="group_no" property="groupNo" />
 		<result column="user_point" property="userPoint" />
 	</resultMap>
-	<select id="selectAll" resultMap="UserInfoMap">
+	<select id="selectUserInfo" resultMap="UserInfoMap" parameterType="String">
 		SELECT *
 		FROM user_info
+		WHERE user_id = #{id}
 	</select>
+	<insert id="insertUserInfo" parameterType="UserInfo">
+		INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, filepath, purpose, user_point)
+		VALUES (#{userId}, #{userPassword}, #{weight}, #{height}, #{age}, #{gender}, #{gymName}, #{filepath}, #{purpose}, #{userPoint})
+	</insert>
+	<update id="updateGroupNo" parameterType="UserInfo">
+		UPDATE user_info
+		SET group_no = #{groupNo}
+		WHERE user_id = #{id}
+	</update>
+	<update id="updateUserPoint" parameterType="UserInfo">
+		UPDATE user_info
+		SET user_point = #{userPoint}
+		WHERE user_id = #{id}
+	</update>
+	<update id="updateUserInfo" parameterType="UserInfo">
+		UPDATE user_info
+		SET
+		user_password = #{userPassword}
+		weight = #{weight}
+		height = #{height}
+		age = #{age}
+		gym_name = #{gymName}
+		purpose = #{purpose}
+		WHERE user_id = #{id}
+	</update>
+	<delete id="deleteUserInfo" parameterType="String">
+		DELETE FROM user_info
+		WHERE user_id = #{id}
+	</delete>
 </mapper>
