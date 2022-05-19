@@ -10,12 +10,19 @@ import ChallengeView from "../views/ChallengeView.vue";
 import MealView from "@/views/MealView.vue";
 import MealCreate from "@/components/meal/MealCreate.vue";
 import MealDetail from "@/components/meal/MealDetail.vue";
-import MealList from "@/components/meal/MealDetail.vue";
+import MealList from "@/components/meal/MealList.vue";
 import MealUpdate from "@/components/meal/MealUpdate.vue";
 
 import ExerciseView from "@/views/ExerciseView.vue";
+import ExerciseCreate from "@/components/exercise/ExerciseCreate.vue";
+import ExerciseDetail from "@/components/exercise/ExerciseDetail.vue";
+import ExerciseList from "@/components/exercise/ExerciseList.vue";
+import ExerciseUpdate from "@/components/exercise/ExerciseUpdate.vue";
 
+import MemberView from "@/views/MemberView.vue";
 import MemberLogin from "@/components/member/MemberLogin.vue";
+import MemberJoin from "@/components/member/MemberJoin.vue";
+import MemberMyPage from "@/components/member/MemberMyPage.vue";
 
 Vue.use(VueRouter);
 
@@ -32,12 +39,50 @@ const routes = [
   },
   {
     path: "/exercise",
-    name: "exercise",
     component: ExerciseView,
+    children: [
+      {
+        path: "",
+        name: "exerciseList",
+        component: ExerciseList,
+      },
+      {
+        path: "create",
+        name: "exerciseCreate",
+        component: ExerciseCreate,
+      },
+      {
+        path: "update",
+        name: "exerciseUpdate",
+        component: ExerciseUpdate,
+      },
+      {
+        path: "detail:id",
+        name: "exerciseDetail",
+        component: ExerciseDetail,
+      },
+    ],
   },
   {
     path: "/member",
-    component: MemberLogin,
+    component: MemberView,
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: MemberLogin,
+      },
+      {
+        path: "join",
+        name: "join",
+        component: MemberJoin,
+      },
+      {
+        path: "mypage",
+        name: "mypage",
+        component: MemberMyPage,
+      },
+    ],
   },
   {
     path: "/meal",
@@ -59,7 +104,7 @@ const routes = [
         component: MealUpdate,
       },
       {
-        path: ":id",
+        path: "detail:id",
         name: "mealDetail",
         component: MealDetail,
       },

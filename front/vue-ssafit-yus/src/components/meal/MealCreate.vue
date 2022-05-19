@@ -109,7 +109,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 h1 {
   font-family: "Do Hyeon", sans-serif;

@@ -1,21 +1,20 @@
 <template>
   <div class="container">
-    <h2>식단 목록</h2>
+    <h2>운동 정보 목록</h2>
     <hr />
-    <div v-if="meals.length">
+    <div v-if="exercises.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
           <b-tr>
             <b-th>번호</b-th>
             <b-th>제목</b-th>
-            <b-th>글쓴이</b-th>
-            <b-th>칼로리</b-th>
-            <b-th>등록일</b-th>
+            <b-th>부위</b-th>
+            <b-th>찜</b-th>
             <b-th>조회수</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="meal in pageMealList" :key="meal.post_no">
+          <b-tr v-for="meal in pageBoardList" :key="meal.post_no">
             <b-td>{{ meal.post_no }}</b-td>
             <b-td>
               <b-link :to="`/meal/${meal.post_no}`">{{
@@ -55,7 +54,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "MealList",
+  name: "ExerciseList",
   data() {
     return {
       keyword: "",
@@ -65,19 +64,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["meals"]),
+    ...mapState(["exercises"]),
     rows() {
-      return this.meals.length;
+      return this.exercises.length;
     },
-    pageMealList() {
-      return this.meals.slice(
+    pageExerciseList() {
+      return this.exercises.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
     },
   },
   created() {
-    this.$store.dispatch("getMeals");
+    this.$store.dispatch("getExercises");
   },
   methods: {
     search() {
@@ -85,7 +84,7 @@ export default {
         mode: this.mode,
         keyword: this.keyword,
       };
-      this.$store.dispatch("getMeals", payload);
+      this.$store.dispatch("getExercises", payload);
     },
   },
 };
