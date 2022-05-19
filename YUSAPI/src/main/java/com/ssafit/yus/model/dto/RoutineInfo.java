@@ -13,4 +13,5 @@ public class RoutineInfo {
 	private int userNo;
 	private int viewCnt;
 	private String regDate;
+	private String title;
 }

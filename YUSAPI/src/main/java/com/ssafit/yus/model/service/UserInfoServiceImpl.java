@@ -16,7 +16,6 @@ public class UserInfoServiceImpl implements UserInfoService{
 
 	@Override
 	public UserInfo selectUserInfo(String id) {
-		// TODO Auto-generated method stub
 		return userInfoDao.selectUserInfo(id);
 	}
 
@@ -26,29 +25,15 @@ public class UserInfoServiceImpl implements UserInfoService{
 		userInfo.setUserPassword(pw);
 		userInfoDao.insertUserInfo(userInfo);
 	}
-
-	@Override
-	public void updateGroupNo(UserInfo userInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateUserPoint(UserInfo userInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateUserInfo(UserInfo userInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void deleteUserInfo(String id) {
-		// TODO Auto-generated method stub
-		
+		userInfoDao.deleteUserInfo(id);
+	}
+
+	@Override
+	public void updateUserInfo(UserInfo userInfo){
+		userInfoDao.updateUserInfo(userInfo);
 	}
 	
 }

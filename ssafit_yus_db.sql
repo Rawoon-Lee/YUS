@@ -10,15 +10,6 @@ CREATE TABLE exercise_info (
 	exercise_part VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE group_info (
-	group_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(20) NOT NULL,
-	exercise_type INT DEFAULT 0,
-    group_point INT DEFAULT 0,
-    maximum_people INT DEFAULT 0,
-    current_people INT DEFAULT 0
-);
-
 CREATE TABLE user_info (
 	user_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(20) NOT NULL,
@@ -30,9 +21,19 @@ CREATE TABLE user_info (
     gym_name VARCHAR(40) DEFAULT 'unknown',
     filepath VARCHAR(40),
     purpose INT DEFAULT 0,
-    group_no INT,
-    FOREIGN KEY (group_no) REFERENCES group_info (group_no),
+    group_no INT DEFAULT 0,
     user_point INT DEFAULT 0
+);
+
+CREATE TABLE group_info (
+	group_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    group_name VARCHAR(20) NOT NULL,
+	exercise_type INT DEFAULT 0,
+    group_point INT DEFAULT 0,
+    maximum_people INT DEFAULT 0,
+    current_people INT DEFAULT 0,
+    user_no INT,
+    FOREIGN KEY (user_no) REFERENCES user_info (user_no)
 );
 
 CREATE TABLE youtube_info (
@@ -47,6 +48,7 @@ CREATE TABLE youtube_info (
 
 CREATE TABLE routine_info (
 	routine_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(40) NOT NULL,
     exercise_type INT DEFAULT 0,
 	user_no INT,
     FOREIGN KEY (user_no) REFERENCES user_info (user_no),
@@ -164,27 +166,27 @@ VALUES ('스쿼트', '하체'),
 ("벤치 프레스", "가슴");
 SELECT * FROM exercise_info;
 
-INSERT INTO group_info (group_name, exercise_type, maximum_people)
-VALUES ("놀기위해 운동한다", 0, 20),
-("체력이 국력", 1, 10),
-("오늘은 내가 핫바디", 1, 15);
-SELECT * FROM group_info;
-
-INSERT INTO user_info(user_id, user_password, weight, height, gym_name, purpose, group_no)
-VALUES ("JunhoLee", "iamhandsome", 67, 178, "강남비싼헬스장", 1, 3),
-("Hwasa", "iamsexy", 44, 160, "이태원비싼헬스장", 1, 1);
+INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no)
+VALUES ("JunhoLee", "iamhandsome", 67, 178, 32, 0, "강남비싼헬스장", 1, 1),
+("Hwasa", "iamsexy", 44, 160, 28, 1, "이태원비싼헬스장", 1, 2),
+("hyunklee", "121314", 90, 186, 27, 0, "테리온휘트니스", 0, 3);
 SELECT * FROM user_info;
+
+INSERT INTO group_info (group_name, exercise_type, maximum_people, user_no)
+VALUES ("놀기위해 운동한다", 0, 20, 1),
+("체력이 국력", 1, 10, 2),
+("오늘은 내가 핫바디", 1, 15, 3);
+SELECT * FROM group_info;
 
 INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_no)
 VALUES ("temp", "www.youtube.com/embed/temp", "뱃살빼는 최고의 운동", "땅끄부부", 1),
 ("trmp01", "www.youtube.com/embed/temp01", "가슴운동 다 알려줄게", "계란 형", 5);
 SELECT * FROM youtube_info;
 
-INSERT INTO routine_info (exercise_type, user_no)
-VALUES (0, 1),
-(1, 2);
-
-SELECT * FROM routine_info; 
+INSERT INTO routine_info (exercise_type, user_no, title)
+VALUES (0, 1, "아무나 따라하셈"),
+(1, 2, "저장용");
+SELECT * FROM routine_info;
 
 INSERT INTO meal_board (title, filepath, content, carb, protein, fat, user_no)
 VALUES ("오늘의 식단 인증", "static/profile/me.jpg", "치팅데이 다음 날에는 꼭 이렇게 먹어줘야 마음이 편해요", 90, 100, 40, 1);

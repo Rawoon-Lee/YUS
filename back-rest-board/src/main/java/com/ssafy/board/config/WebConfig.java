@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ssafy.board.interceptor.JWTInterceptor;
+import com.ssafit.yus.interceptor.JWTInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -33,14 +33,14 @@ public class WebConfig implements WebMvcConfigurer{
 				.addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
 	}
 	
-	@Autowired
-	private JWTInterceptor jwtInterceptor;
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor)
-		.addPathPatterns("/**")
-		.excludePathPatterns("/api/login");
-	}
+//	@Autowired
+//	private JWTInterceptor jwtInterceptor;
+//	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor)
+//		.addPathPatterns("/**")
+//		.excludePathPatterns("/api/login");
+//	}
 	
 }

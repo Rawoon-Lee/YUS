@@ -20,7 +20,7 @@ public class SwaggerConfig {
 				// ApiSelectorBuilder
 				.apis(RequestHandlerSelectors.basePackage("com.ssafit.yus.controller"))
 				// ApiSelectorBuilder
-				.paths(PathSelectors.ant("/api/**"))
+				.paths(PathSelectors.ant("/**"))
 				// Docket
 				.build()
 				.apiInfo(apiInfo());
@@ -29,8 +29,8 @@ public class SwaggerConfig {
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				//  ApiInfoBuilder
-				.title("SSAFY Board Swagger")
-				.description("싸피 게시판 REST API 테스트")
+				.title("SSAFIT YUS SWAGGER")
+				.description("YUS에 필요한 api")
 				.version("1.0")
 				.build();
 	}

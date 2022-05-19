@@ -1,4 +1,4 @@
-package com.ssafy.board.interceptor;
+package com.ssafit.yus.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.ssafy.board.util.JWTUtil;
+import com.ssafit.yus.util.JWTUtil;
+
 
 @Component
 public class JWTInterceptor implements HandlerInterceptor{
@@ -26,7 +27,6 @@ public class JWTInterceptor implements HandlerInterceptor{
 		}
 		
 		final String token = request.getHeader(HEADER_AUTH);
-		System.out.println("token : " + token);
 		if(token != null){
 			jwtUtil.valid(token);
 			return true;
