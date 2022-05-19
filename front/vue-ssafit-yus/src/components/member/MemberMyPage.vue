@@ -1,13 +1,11 @@
 <template>
   <div>
-    <h2>업데이트</h2>
+    <h2>마이페이지</h2>
   </div>
 </template>
 
 <script>
-export default {
-  name: "MealUpdate",
-};
+export default {};
 </script>
 
 <style></style>

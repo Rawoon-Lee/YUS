@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h1>식단 등록</h1>
+  <div>
+    <h2>로그인 페이지</h2>
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form-group
@@ -14,7 +14,7 @@
             id="input-1"
             v-model="id"
             trim
-            placeholder="제목을 입력해주세요"
+            placeholder="아이디를 입력해주세요"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -28,95 +28,31 @@
             id="input-2"
             v-model="pw"
             trim
-            placeholder="제목을 입력해주세요"
+            placeholder="비밀번호를 입력해주세요"
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          label="프로필"
-          label-for="input-3"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-file
-            accept=".jpg, .png"
-            id="input-2"
-            v-model="imgFilePath"
-            :state="Boolean(imgFilePath)"
-            placeholder="프로필 사진을 첨부해주세요"
-          ></b-form-file>
-        </b-form-group>
-        <b-form-group
-          label="몸무게"
-          label-for="weight"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input id="weight" v-model="weight"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="키"
-          label-for="height"
-          label-cols-xl="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input id="height" v-model="height"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="목적"
-          label-for="purpose"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input list="input-list" v-model="purpose_text"></b-form-input>
-          <datalist id="input-list">
-            <option
-              v-for="(pp, index) in purpose"
-              :key="index"
-              :value="pp.value"
-            >
-              {{ pp.text }}
-            </option>
-          </datalist>
-        </b-form-group>
-        <b-button variant="outline-success" @click="insertUser">등록</b-button>
+        <b-button variant="outline-success" @click="loginUser">로그인</b-button>
       </div>
     </b-card>
-
-    {{ purpose_text }}
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  name: "MemberLogin",
+  daat() {
     return {
       id: null,
       pw: null,
-      imgFilePath: null,
-      weight: null,
-      height: null,
-      purpose: [
-        { text: "체중 감량", value: 0 },
-        { text: "체중 유지", value: 1 },
-        { text: "체중 증량", value: 2 },
-      ],
-      purpose_text: null,
     };
   },
   methods: {
-    insertUser() {
-      let newUser = {
+    loginUser() {
+      let user = {
         id: this.id,
         pw: this.pw,
-        imgFilePath: this.imgFilePath,
-        weight: this.weight,
-        height: this.height,
       };
-      this.$store.dispatch("createMeal", newUser);
+      this.$store.dispatch("userLogin", user);
     },
   },
 };

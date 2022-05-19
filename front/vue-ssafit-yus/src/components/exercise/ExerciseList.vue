@@ -1,31 +1,31 @@
 <template>
   <div class="container">
-    <h2>식단 목록</h2>
+    <h2>운동 정보 목록</h2>
     <hr />
-    <div v-if="meals.length">
+    <div v-if="exercises.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
           <b-tr>
             <b-th>번호</b-th>
             <b-th>제목</b-th>
-            <b-th>글쓴이</b-th>
-            <b-th>칼로리</b-th>
-            <b-th>등록일</b-th>
+            <b-th>유튜버</b-th>
+            <b-th>부위</b-th>
+            <b-th>찜</b-th>
             <b-th>조회수</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="meal in pageMealList" :key="meal.postNo">
-            <b-td>{{ meal.postNo }}</b-td>
+          <b-tr v-for="ex in pageExerciseList" :key="ex.exerciseNo">
+            <b-td>1</b-td>
             <b-td>
-              <b-link :to="`/meal/${meal.postNo}`">{{
-                meal.title
+              <b-link :to="`/exercise/detail/${ex.url}`">{{
+                ex.title
               }}</b-link></b-td
             >
-            <b-td>{{ meal.userNo }}</b-td>
-            <b-td>{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }}</b-td>
-            <b-td>{{ meal.regDate }}</b-td>
-            <b-td>{{ meal.viewCnt }}</b-td>
+            <b-td>{{ ex.channelName }}</b-td>
+            <b-td>하체</b-td>
+            <b-td>찜</b-td>
+            <b-td>{{ ex.viewCnt }}</b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>
@@ -55,7 +55,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "MealList",
+  name: "ExerciseList",
   data() {
     return {
       keyword: "",
@@ -65,19 +65,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["meals"]),
+    ...mapState(["exercises"]),
     rows() {
-      return this.meals.length;
+      return this.exercises.length;
     },
-    pageMealList() {
-      return this.meals.slice(
+    pageExerciseList() {
+      return this.exercises.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
     },
   },
   created() {
-    this.$store.dispatch("getMeals");
+    this.$store.dispatch("getExercises");
   },
   methods: {
     search() {
@@ -85,7 +85,7 @@ export default {
         mode: this.mode,
         keyword: this.keyword,
       };
-      this.$store.dispatch("getMeals", payload);
+      this.$store.dispatch("getExercises", payload);
     },
   },
 };

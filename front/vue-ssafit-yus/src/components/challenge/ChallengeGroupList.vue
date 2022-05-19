@@ -1,31 +1,33 @@
 <template>
   <div class="container">
-    <h2>식단 목록</h2>
+    <h2>챌린지 그룹 목록</h2>
     <hr />
-    <div v-if="meals.length">
+    <div v-if="groups.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
           <b-tr>
             <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>글쓴이</b-th>
-            <b-th>칼로리</b-th>
-            <b-th>등록일</b-th>
-            <b-th>조회수</b-th>
+            <b-th>그룹명</b-th>
+            <b-th>그룹장</b-th>
+            <b-th>운동 분류</b-th>
+            <b-th>멤버</b-th>
+            <b-th>Activity Credit</b-th>
+            <b-th>가입 신청</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="meal in pageMealList" :key="meal.postNo">
-            <b-td>{{ meal.postNo }}</b-td>
+          <b-tr v-for="group in pageGroupsList" :key="group.groupNo">
+            <b-td>{{ group.groupNo }}</b-td>
             <b-td>
-              <b-link :to="`/meal/${meal.postNo}`">{{
-                meal.title
+              <b-link :to="`/challenge/detail/${group.groupNo}`">{{
+                group.groupName
               }}</b-link></b-td
             >
-            <b-td>{{ meal.userNo }}</b-td>
-            <b-td>{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }}</b-td>
-            <b-td>{{ meal.regDate }}</b-td>
-            <b-td>{{ meal.viewCnt }}</b-td>
+            <b-td>포켓몬빵순이</b-td>
+            <b-td>{{ group.exerciseType }}</b-td>
+            <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
+            <b-td>{{ group.groupPoint }}</b-td>
+            <b-t><button @click="enroll">가입 신청</button></b-t>
           </b-tr>
         </b-tbody>
       </b-table-simple>
@@ -55,7 +57,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "MealList",
+  name: "ExerciseList",
   data() {
     return {
       keyword: "",
@@ -65,19 +67,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["meals"]),
+    ...mapState(["groups"]),
     rows() {
-      return this.meals.length;
+      return this.groups.length;
     },
-    pageMealList() {
-      return this.meals.slice(
+    pageGroupsList() {
+      return this.groups.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
     },
   },
   created() {
-    this.$store.dispatch("getMeals");
+    this.$store.dispatch("getGroups");
   },
   methods: {
     search() {
@@ -85,7 +87,10 @@ export default {
         mode: this.mode,
         keyword: this.keyword,
       };
-      this.$store.dispatch("getMeals", payload);
+      this.$store.dispatch("getGroups", payload);
+    },
+    enroll() {
+      //등록하는 함수
     },
   },
 };

@@ -5,7 +5,7 @@ import router from "@/router";
 
 Vue.use(Vuex);
 
-const REST_API = `http://localhost:9999/YUSAPI`;
+const REST_API = `http://localhost:8236`;
 
 export default new Vuex.Store({
   state: {
@@ -13,6 +13,8 @@ export default new Vuex.Store({
     meal: {},
     routines: [],
     routine: {},
+    exercises: [],
+    exercise: {},
     isLogin: false,
     user_no: null,
     user_id: null,
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     CREATE_MEAL(state, payload) {
       state.meals.push(payload);
     },
+    GET_EXERCISES(state, payload) {
+      state.exercises = payload;
+    },
     USER_LOGIN(state, payload) {
       state.isLogin = true;
       state.user_no = payload.user_no;
@@ -54,7 +59,7 @@ export default new Vuex.Store({
       if (payload) {
         params = payload;
       }
-      const API_URL = `${REST_API}/meal`;
+      const API_URL = `${REST_API}/meal/info`;
       axios({
         url: API_URL,
         method: "GET",
@@ -95,6 +100,28 @@ export default new Vuex.Store({
         .then(() => {
           commit("UPDATE_MEAL", meal);
           router.push({ name: "mealDetail", params: { id: meal.post_no } });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getExercises({ commit }, payload) {
+      let params = null;
+      if (payload) {
+        params = payload;
+      }
+      const API_URL = `${REST_API}/youtube/info`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        params,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          commit("GET_EXERCISES", res.data);
         })
         .catch((err) => {
           console.log(err);
