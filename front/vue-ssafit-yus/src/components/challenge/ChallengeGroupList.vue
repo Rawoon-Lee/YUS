@@ -27,7 +27,7 @@
             <b-td>{{ group.exerciseType }}</b-td>
             <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
             <b-td>{{ group.groupPoint }}</b-td>
-            <b-t><button @click="enroll">가입 신청</button></b-t>
+            <b-td><button @click="enroll">가입 신청</button></b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>

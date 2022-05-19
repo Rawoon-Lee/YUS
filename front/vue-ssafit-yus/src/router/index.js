@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import MainView from "../views/MainView.vue";
 
 import RoutineView from "@/views/RoutineView.vue";
+import RoutineList from "@/components/routine/RoutineList.vue";
 
 import ChallengeView from "../views/ChallengeView.vue";
 import GroupList from "@/components/challenge/ChallengeGroupList.vue";
@@ -35,8 +36,14 @@ const routes = [
   },
   {
     path: "/routine",
-    name: "routine",
     component: RoutineView,
+    children: [
+      {
+        path: "",
+        name: "routineList",
+        component: RoutineList,
+      },
+    ],
   },
   {
     path: "/exercise",

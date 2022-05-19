@@ -2,7 +2,7 @@
   <div class="container">
     <h2>운동 정보 목록</h2>
     <hr />
-    <div v-if="exercises.length">
+    <div v-if="videos.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
           <b-tr>
@@ -15,10 +15,10 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="ex in pageExerciseList" :key="ex.exerciseNo">
-            <b-td>1</b-td>
+          <b-tr v-for="(ex, index) in pageVideosList" :key="index">
+            <b-td>{{ index + 1 }}</b-td>
             <b-td>
-              <b-link :to="`/exercise/detail/${ex.url}`">{{
+              <b-link :to="`/exercise/detail/${ex.videoId}`">{{
                 ex.title
               }}</b-link></b-td
             >
@@ -65,19 +65,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["exercises"]),
+    ...mapState(["videos"]),
     rows() {
-      return this.exercises.length;
+      return this.videos.length;
     },
-    pageExerciseList() {
-      return this.exercises.slice(
+    pageVideosList() {
+      return this.videos.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
     },
   },
   created() {
-    this.$store.dispatch("getExercises");
+    this.$store.dispatch("getVideos");
   },
   methods: {
     search() {
@@ -85,7 +85,7 @@ export default {
         mode: this.mode,
         keyword: this.keyword,
       };
-      this.$store.dispatch("getExercises", payload);
+      this.$store.dispatch("getVideos", payload);
     },
   },
 };

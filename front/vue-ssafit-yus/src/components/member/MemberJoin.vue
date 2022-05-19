@@ -1,6 +1,12 @@
 <template>
   <div class="container">
     <h1>회원가입</h1>
+    <b-alert v-model="showDuplicatedError" variant="danger" dismissible>
+      이미 존재하는 아이디입니다. 다른 아이디로 시도해주세요.
+    </b-alert>
+    <b-alert v-model="showInternalError" variant="danger" dismissible>
+      유효하지 않은 요청입니다. 올바르게 작성했는지 확인해주세요.
+    </b-alert>
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form-group
@@ -31,7 +37,7 @@
             placeholder="제목을 입력해주세요"
           ></b-form-input>
         </b-form-group>
-        <b-form-group
+        <!-- <b-form-group
           label="프로필"
           label-for="input-3"
           label-cols-md="2"
@@ -45,7 +51,7 @@
             :state="Boolean(imgFilePath)"
             placeholder="프로필 사진을 첨부해주세요"
           ></b-form-file>
-        </b-form-group>
+        </b-form-group> -->
         <b-form-group
           label="나이"
           label-for="age"
@@ -67,7 +73,7 @@
         <b-form-group
           label="키"
           label-for="height"
-          label-cols-xl="2"
+          label-cols-md="2"
           label-align="left"
           label-size="lg"
         >
@@ -114,18 +120,28 @@ export default {
         { text: "체중 증량", value: 2 },
       ],
       purpose_text: null,
+      showDuplicatedError: false,
+      showInternalError: false,
     };
   },
   methods: {
     insertUser() {
       let newUser = {
-        id: this.id,
-        pw: this.pw,
-        imgFilePath: this.imgFilePath,
+        userId: this.id,
+        userPassword: this.pw,
+        filepath: this.imgFilePath,
         weight: this.weight,
         height: this.height,
+        age: this.age,
+        gender: this.gender,
+        purpose: this.purpose_text,
       };
       this.$store.dispatch("createUser", newUser);
+      if (this.$store.state.isJoin == 2) {
+        this.showDuplicatedError = true;
+      } else if (this.$store.state.isJoin == 0) {
+        this.showInternalError = true;
+      }
     },
   },
 };

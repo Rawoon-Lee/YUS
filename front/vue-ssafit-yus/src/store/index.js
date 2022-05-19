@@ -9,22 +9,19 @@ const REST_API = `http://localhost:8236`;
 
 export default new Vuex.Store({
   state: {
+    groups: [],
+    group: {},
     meals: [],
     meal: {},
     routines: [],
     routine: {},
     exercises: [],
     exercise: {},
+    videos: [],
+    video: {},
+    isJoin: 0,
     isLogin: false,
     user_no: null,
-    user_id: null,
-    weight: null,
-    height: null,
-    gym_name: null,
-    prupose: null,
-    filepath: null,
-    group_no: null,
-    user_point: null,
   },
   getters: {},
   mutations: {
@@ -37,20 +34,24 @@ export default new Vuex.Store({
     CREATE_MEAL(state, payload) {
       state.meals.push(payload);
     },
+    GET_VIDEOS(state, payload) {
+      state.videos = payload;
+    },
     GET_EXERCISES(state, payload) {
       state.exercises = payload;
     },
+    GET_GROUPS(state, payload) {
+      state.groups = payload;
+    },
+    GET_ROUTINES(state, payload) {
+      state.routines = payload;
+    },
     USER_LOGIN(state, payload) {
       state.isLogin = true;
-      state.user_no = payload.user_no;
-      state.user_id = payload.user_id;
-      state.weight = payload.weight;
-      state.height = payload.height;
-      state.gym_name = payload.gym_name;
-      state.prupose = payload.prupose;
-      state.filepath = payload.filepath;
-      state.group_no = payload.group_no;
-      state.user_point = payload.user_point;
+      state.user_no = payload;
+    },
+    CREATE_USER(state, payload) {
+      state.isJoin = payload;
     },
   },
   actions: {
@@ -105,12 +106,34 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    getExercises({ commit }, payload) {
+    getVideos({ commit }, payload) {
       let params = null;
       if (payload) {
         params = payload;
       }
       const API_URL = `${REST_API}/youtube/info`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        params,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          commit("GET_VIDEOS", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getExercises({ commit }, payload) {
+      let params = null;
+      if (payload) {
+        params = payload;
+      }
+      const API_URL = `${REST_API}/exercise/info`;
       axios({
         url: API_URL,
         method: "GET",
@@ -127,18 +150,86 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    getGroups({ commit }, payload) {
+      let params = null;
+      if (payload) {
+        params = payload;
+      }
+      const API_URL = `${REST_API}/group/info`;
+      axios({
+        url: API_URL,
+        params,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          commit("GET_GROUPS", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getRoutines({ commit }, payload) {
+      let params = null;
+      if (payload) {
+        params = payload;
+      }
+      const API_URL = `${REST_API}/routine/info`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        params,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          commit("GET_ROUTINES", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     userLogin({ commit }, user) {
-      const API_URL = `${REST_API}/login`;
+      const API_URL = `${REST_API}/user/login`;
       axios({
         url: API_URL,
         method: "POST",
         params: user,
-      }).then((res) => {
-        console.log(res);
-        commit("USER_LOGIN");
-        sessionStorage.setItem("access-token", res.data["access-token"]);
-        router.push({ name: "main" });
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          commit("USER_LOGIN");
+          sessionStorage.setItem("access-token", res.data["access-token"]);
+          router.push({ name: "main" });
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(user);
+        });
+    },
+    createUser({ commit }, user) {
+      const API_URL = `${REST_API}/user/register`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: user,
+      })
+        .then((res) => {
+          console.log(res);
+          commit("CREATE_USER", 1);
+        })
+        .catch((err) => {
+          console.log(err.toJSON().status);
+          if (err.toJSON().status == 409) {
+            commit("CREATE_USER", 2);
+          } else {
+            commit("CREATE_USER", 0);
+          }
+        });
     },
   },
   modules: {},

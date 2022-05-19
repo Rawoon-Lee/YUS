@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h2>로그인 페이지</h2>
     <b-card bg-variant="light">
       <div class="m-4">
@@ -40,7 +40,7 @@
 <script>
 export default {
   name: "MemberLogin",
-  daat() {
+  data() {
     return {
       id: null,
       pw: null,
@@ -49,8 +49,8 @@ export default {
   methods: {
     loginUser() {
       let user = {
-        id: this.id,
-        pw: this.pw,
+        userId: this.id,
+        userPassword: this.pw,
       };
       this.$store.dispatch("userLogin", user);
     },
