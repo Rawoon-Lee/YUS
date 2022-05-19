@@ -10,7 +10,7 @@
 		<result column="group_point" property="groupPoint" />
 		<result column="maximum_people" property="maximumPeople" />
 		<result column="current_people" property="currentPeople" />
-		<result column="user_id" property="userId"
+		<result column="user_id" property="userId" />
 	</resultMap>
 	<select id="selectAll" resultMap="GroupInfoMap">
 		SELECT *

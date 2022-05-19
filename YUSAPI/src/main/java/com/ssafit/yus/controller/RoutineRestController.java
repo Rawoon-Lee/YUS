@@ -8,15 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafit.yus.model.dto.ExerciseInfo;
-import com.ssafit.yus.model.dto.ExercisePerRoutine;
 import com.ssafit.yus.model.dto.RoutineComm;
 import com.ssafit.yus.model.dto.RoutineInfo;
 import com.ssafit.yus.model.dto.RoutineLiked;
 import com.ssafit.yus.model.dto.RoutinePerDay;
-import com.ssafit.yus.model.service.ExerciseInfoService;
-import com.ssafit.yus.model.service.ExercisePerRoutineService;
 import com.ssafit.yus.model.service.RoutineCommService;
 import com.ssafit.yus.model.service.RoutineInfoService;
 import com.ssafit.yus.model.service.RoutineLikedService;
