@@ -1,31 +1,33 @@
 <template>
   <div class="container">
-    <h2>운동 정보 목록</h2>
+    <h2>챌린지 그룹 목록</h2>
     <hr />
-    <div v-if="exercises.length">
+    <div v-if="groups.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
           <b-tr>
             <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>유튜버</b-th>
-            <b-th>부위</b-th>
-            <b-th>찜</b-th>
-            <b-th>조회수</b-th>
+            <b-th>그룹명</b-th>
+            <b-th>그룹장</b-th>
+            <b-th>운동 분류</b-th>
+            <b-th>멤버</b-th>
+            <b-th>Activity Credit</b-th>
+            <b-th>가입 신청</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="ex in pageExerciseList" :key="ex.exerciseNo">
-            <b-td>1</b-td>
+          <b-tr v-for="group in pageGroupsList" :key="group.groupNo">
+            <b-td>{{ group.groupNo }}</b-td>
             <b-td>
-              <b-link :to="`/exercise/detail/${ex.url}`">{{
-                ex.title
+              <b-link :to="`/challenge/detail/${group.groupNo}`">{{
+                group.groupName
               }}</b-link></b-td
             >
-            <b-td>{{ ex.channelName }}</b-td>
-            <b-td>하체</b-td>
-            <b-td>찜</b-td>
-            <b-td>{{ ex.viewCnt }}</b-td>
+            <b-td>포켓몬빵순이</b-td>
+            <b-td>{{ group.exerciseType }}</b-td>
+            <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
+            <b-td>{{ group.groupPoint }}</b-td>
+            <b-t><button @click="enroll">가입 신청</button></b-t>
           </b-tr>
         </b-tbody>
       </b-table-simple>
@@ -65,19 +67,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["exercises"]),
+    ...mapState(["groups"]),
     rows() {
-      return this.exercises.length;
+      return this.groups.length;
     },
-    pageExerciseList() {
-      return this.exercises.slice(
+    pageGroupsList() {
+      return this.groups.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
     },
   },
   created() {
-    this.$store.dispatch("getExercises");
+    this.$store.dispatch("getGroups");
   },
   methods: {
     search() {
@@ -85,7 +87,10 @@ export default {
         mode: this.mode,
         keyword: this.keyword,
       };
-      this.$store.dispatch("getExercises", payload);
+      this.$store.dispatch("getGroups", payload);
+    },
+    enroll() {
+      //등록하는 함수
     },
   },
 };

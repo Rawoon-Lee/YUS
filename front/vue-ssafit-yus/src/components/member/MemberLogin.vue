@@ -14,7 +14,7 @@
             id="input-1"
             v-model="id"
             trim
-            placeholder="제목을 입력해주세요"
+            placeholder="아이디를 입력해주세요"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -28,7 +28,7 @@
             id="input-2"
             v-model="pw"
             trim
-            placeholder="제목을 입력해주세요"
+            placeholder="비밀번호를 입력해주세요"
           ></b-form-input>
         </b-form-group>
         <b-button variant="outline-success" @click="loginUser">로그인</b-button>
@@ -47,7 +47,13 @@ export default {
     };
   },
   methods: {
-    loginUser() {},
+    loginUser() {
+      let user = {
+        id: this.id,
+        pw: this.pw,
+      };
+      this.$store.dispatch("userLogin", user);
+    },
   },
 };
 </script>

@@ -38,7 +38,7 @@ export default new Vuex.Store({
       state.meals.push(payload);
     },
     GET_EXERCISES(state, payload) {
-      state.exercise = payload;
+      state.exercises = payload;
     },
     USER_LOGIN(state, payload) {
       state.isLogin = true;

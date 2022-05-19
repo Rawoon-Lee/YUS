@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-link :to="{ name: 'mealList' }"></router-link>
     <router-view></router-view>
   </div>
 </template>

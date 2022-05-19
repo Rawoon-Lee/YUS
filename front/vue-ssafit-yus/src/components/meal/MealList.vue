@@ -15,17 +15,17 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="meal in pageMealList" :key="meal.post_no">
-            <b-td>{{ meal.post_no }}</b-td>
+          <b-tr v-for="meal in pageMealList" :key="meal.postNo">
+            <b-td>{{ meal.postNo }}</b-td>
             <b-td>
-              <b-link :to="`/meal/${meal.post_no}`">{{
+              <b-link :to="`/meal/${meal.postNo}`">{{
                 meal.title
               }}</b-link></b-td
             >
-            <b-td>{{ meal.user_no }}</b-td>
+            <b-td>{{ meal.userNo }}</b-td>
             <b-td>{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }}</b-td>
-            <b-td>{{ meal.reg_date }}</b-td>
-            <b-td>{{ meal.view_cnt }}</b-td>
+            <b-td>{{ meal.regDate }}</b-td>
+            <b-td>{{ meal.viewCnt }}</b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>

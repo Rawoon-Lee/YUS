@@ -6,6 +6,7 @@ import MainView from "../views/MainView.vue";
 import RoutineView from "@/views/RoutineView.vue";
 
 import ChallengeView from "../views/ChallengeView.vue";
+import GroupList from "@/components/challenge/ChallengeGroupList.vue";
 
 import MealView from "@/views/MealView.vue";
 import MealCreate from "@/components/meal/MealCreate.vue";
@@ -112,8 +113,29 @@ const routes = [
   },
   {
     path: "/challenge",
-    name: "challenge",
     component: ChallengeView,
+    children: [
+      {
+        path: "",
+        name: "groupList",
+        component: GroupList,
+      },
+      // {
+      //   path: "create",
+      //   name: "mealCreate",
+      //   component: MealCreate,
+      // },
+      // {
+      //   path: "update",
+      //   name: "mealUpdate",
+      //   component: MealUpdate,
+      // },
+      // {
+      //   path: "detail:id",
+      //   name: "mealDetail",
+      //   component: MealDetail,
+      // },
+    ],
   },
 ];
 
