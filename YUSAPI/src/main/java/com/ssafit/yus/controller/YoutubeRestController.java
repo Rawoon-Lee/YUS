@@ -1,12 +1,15 @@
 package com.ssafit.yus.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,17 +24,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Api(tags = "유튜브 관련 api")
 @RestController
 @RequestMapping("/youtube")
 public class YoutubeRestController {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	@Autowired
 	private YoutubeCommService youtubeCommService;
 	@Autowired
-	private YoutubeInfoService youtubeInfoervice;
+	private YoutubeInfoService youtubeInfoService;
 	@Autowired
-	private YoutubeLikedService youtubeLikedervice;
+	private YoutubeLikedService youtubeLikedService;
 	
 	//유튜브 관련
 	@ApiOperation(
@@ -40,7 +46,7 @@ public class YoutubeRestController {
 	)
 	@GetMapping("/info")
 	public ResponseEntity<List<YoutubeInfo>> infoList() {
-		return new ResponseEntity<List<YoutubeInfo>>(youtubeInfoervice.getAll(), HttpStatus.OK);
+		return new ResponseEntity<List<YoutubeInfo>>(youtubeInfoService.getAll(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(
@@ -52,7 +58,7 @@ public class YoutubeRestController {
 	})
 	@GetMapping("/info/{videoId}")
 	public ResponseEntity<YoutubeInfo> infoDetail(@PathVariable String videoId) {
-		return new ResponseEntity<YoutubeInfo>(youtubeInfoervice.selectById(videoId), HttpStatus.OK);
+		return new ResponseEntity<YoutubeInfo>(youtubeInfoService.selectById(videoId), HttpStatus.OK);
 	}
 	
 	
@@ -64,8 +70,34 @@ public class YoutubeRestController {
 	
 	
 	//라이크 관련
-	@GetMapping("/liked")
-	public ResponseEntity<List<YoutubeLiked>> likedList() {
-		return new ResponseEntity<List<YoutubeLiked>>(youtubeLikedervice.getAll(), HttpStatus.OK);
+	@GetMapping("/liked/{videoId}")
+	public ResponseEntity<Map<String, String>> cntLiked(@PathVariable String videoId){
+		Map<String, String> ret = new HashMap<String, String>();
+		ret.put("count", "" + youtubeLikedService.countLikedByVideoId(videoId));
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
+	}
+	
+	@PostMapping("/liked/check")
+	public ResponseEntity<Map<String, String>> checkLiked(@RequestBody YoutubeLiked youtubeLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		ret.put("status", youtubeLikedService.checkStatus(youtubeLiked));
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
+	}
+	
+	@PostMapping("/liked/insert")
+	public ResponseEntity<Map<String, String>> isnertLiked(@RequestBody YoutubeLiked youtubeLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		youtubeLikedService.insertYoutubeLiked(youtubeLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/liked/delete")
+	public ResponseEntity<Map<String, String>> deleteLiked(@RequestBody YoutubeLiked youtubeLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		youtubeLikedService.deleteByIds(youtubeLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
 	}
 }

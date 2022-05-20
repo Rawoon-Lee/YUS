@@ -8,12 +8,12 @@
 		<result column="user_id" property="userId" />
 		<result column="video_id" property="videoId" />
 	</resultMap>
-	<select id="selectById" resultMap="YoutubeLikedMap" parameterType="String">
+	<select id="selectByVideoId" resultMap="YoutubeLikedMap" parameterType="String">
 		SELECT *
 		FROM youtube_liked
 		where video_id = #{videoId}
 	</select>
-	<select id="selectByIdNo" resultMap="YoutubeLikedMap" parameterType="YoutubeLiked">
+	<select id="selectByIds" resultMap="YoutubeLikedMap" parameterType="YoutubeLiked">
 		SELECT *
 		FROM youtube_liked
 		where video_id = #{videoId} and user_id = #{userId} 
@@ -22,7 +22,7 @@
 		INSERT INTO youtube_liked(user_id, video_id)
 		VALUES (#{userId}, #{videoId})
 	</insert>
-	<delete id="deleteByIdNo" parameterType="YoutubeLiked">
+	<delete id="deleteByIds" parameterType="YoutubeLiked">
 		DELETE FROM youtube_liked
 		WHERE video_id = #{videoId} and user_id = #{userId} 
 	</delete>

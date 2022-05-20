@@ -13,8 +13,10 @@
 		<result column="user_id" property="userId" />
 		<result column="reg_date" property="regDate" />
 	</resultMap>
-	<select id="selectAll" resultMap="YoutubeCommMap">
+	<select id="selectByVideoId" resultMap="YoutubeCommMap" parameterType="String">
 		SELECT *
 		FROM youtube_comm
+		WHERE video_id = #{videoId}
 	</select>
+	
 </mapper>
