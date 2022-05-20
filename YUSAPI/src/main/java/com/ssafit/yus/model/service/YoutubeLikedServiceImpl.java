@@ -12,11 +12,30 @@ import com.ssafit.yus.model.dto.YoutubeLiked;
 public class YoutubeLikedServiceImpl implements YoutubeLikedService{
 	@Autowired
 	YoutubeLikedDao youtubeLikedDao;
-	
+
 	@Override
-	public List<YoutubeLiked> getAll() {
-		List<YoutubeLiked> list = youtubeLikedDao.selectAll();
-		return list;
+	public void insertYoutubeLiked(YoutubeLiked youtubeLiked) {
+		youtubeLikedDao.insertYoutubeLiked(youtubeLiked);
 	}
 
+	@Override
+	public void deleteByIds(YoutubeLiked youtubeLiked) {
+		youtubeLikedDao.deleteByIds(youtubeLiked);
+	}
+
+	@Override
+	public int countLikedByVideoId(String videoId) {
+		int ret = 0;
+		List<YoutubeLiked> forCount = youtubeLikedDao.selectVideoById(videoId);
+		if (forCount != null) ret = forCount.size();
+		return ret;
+	}
+
+	@Override
+	public String checkStatus(YoutubeLiked youtubeLiked) {
+		if (youtubeLikedDao.selectByIds(youtubeLiked) != null)
+			return "true";
+		return "false";
+	}
+	
 }
