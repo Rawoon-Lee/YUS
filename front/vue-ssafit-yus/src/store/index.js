@@ -19,6 +19,7 @@ export default new Vuex.Store({
     exercise: {},
     videos: [],
     video: {},
+    VIDEOS: [],
     isJoin: 0,
     isLogin: false,
     USER_ID: null,
@@ -56,6 +57,13 @@ export default new Vuex.Store({
     },
     CREATE_USER(state, payload) {
       state.isJoin = payload;
+    },
+    LOGOUT(state) {
+      state.isLogin = false;
+    },
+    CREATE_VIDEOS_FOR_USE(state, payload) {
+      state.VIDEOS = payload;
+      console.log(state.VIDEOS);
     },
   },
   actions: {
@@ -127,6 +135,7 @@ export default new Vuex.Store({
         .then((res) => {
           console.log(res);
           commit("GET_VIDEOS", res.data);
+          console.log(typeof res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -245,6 +254,32 @@ export default new Vuex.Store({
             commit("CREATE_USER", 0);
           }
         });
+    },
+    logout({ commit }) {
+      commit("LOGOUT");
+    },
+    createVideosForUse({ commit }) {
+      console.log("실행되었음");
+      let videosUseful = [];
+      console.log(this.state.videos);
+      for (let video in this.videos) {
+        for (let ex in this.exercises) {
+          if (video.exerciseNo == ex.exerciseNo) {
+            let temp = {
+              title: video.title,
+              videoId: video.videoId,
+              channelName: video.channelName,
+              part: ex.exercisePart,
+              workout: ex.exerciseName,
+              viewCnt: video.viewCnt,
+            };
+            console.log("나 일단 만들어지긴 했음");
+            console.log(temp);
+            videosUseful.push(temp);
+          }
+        }
+      }
+      commit("CREATE_VIDEOS_FOR_USE", videosUseful);
     },
   },
   modules: {},

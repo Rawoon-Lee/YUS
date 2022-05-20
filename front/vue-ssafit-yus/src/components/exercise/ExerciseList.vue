@@ -23,7 +23,7 @@
               }}</b-link></b-td
             >
             <b-td>{{ ex.channelName }}</b-td>
-            <b-td>하체</b-td>
+            <b-td>체하</b-td>
             <b-td>찜</b-td>
             <b-td>{{ ex.viewCnt }}</b-td>
           </b-tr>
@@ -78,6 +78,8 @@ export default {
   },
   created() {
     this.$store.dispatch("getVideos");
+    this.$store.dispatch("getExercises");
+    this.$store.dispatch("createVideosForUse");
   },
   methods: {
     search() {

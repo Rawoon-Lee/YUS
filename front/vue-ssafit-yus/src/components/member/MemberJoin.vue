@@ -20,7 +20,7 @@
             id="input-1"
             v-model="id"
             trim
-            placeholder="제목을 입력해주세요"
+            placeholder="아이디를 입력해주세요"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -38,6 +38,21 @@
             type="password"
           ></b-form-input>
         </b-form-group>
+        <!-- <b-form-group
+          label="비밀번호 확인"
+          label-for="input-2"
+          label-cols-md="2"
+          label-align="left"
+          label-size="lg"
+        >
+          <b-form-input
+            id="input-2"
+            v-model="pw_check"
+            trim
+            placeholder="제목을 입력해주세요"
+            type="password"
+          ></b-form-input>
+        </b-form-group> -->
         <!-- <b-form-group
           label="프로필"
           label-for="input-3"
@@ -122,7 +137,7 @@ export default {
     return {
       id: null,
       pw: null,
-      pw_check: null,
+      // pw_check: null,
       imgFilePath: null,
       age: null,
       gender: null,

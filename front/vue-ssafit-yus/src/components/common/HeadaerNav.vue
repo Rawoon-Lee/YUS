@@ -14,7 +14,12 @@
           <b-nav-item to="/meal">식단 게시판</b-nav-item>
           <b-nav-item to="/exercise">운동정보</b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto" align="right">
+        <b-navbar-nav class="ml-auto" align="right"> </b-navbar-nav>
+        <b-navbar-nav v-show="!isLogin" class="ml-auto" align="right">
+          <b-nav-item :to="{ name: 'login' }">로그인</b-nav-item>
+          <b-nav-item to="/member/join">회원가입</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-show="isLogin" class="ml-auto" align="right">
           <b-nav-item to="/member/mypage">
             <img
               src="@/assets/profile-default.png"
@@ -22,10 +27,7 @@
               width="40px"
               height=""
           /></b-nav-item>
-        </b-navbar-nav>
-        <b-navbar-nav v-show="!isLogin" class="ml-auto" align="right">
-          <b-nav-item :to="{ name: 'login' }">로그인</b-nav-item>
-          <b-nav-item to="/member/join">회원가입</b-nav-item>
+          <button type="button" @click="logout">로그아웃</button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -39,6 +41,12 @@ export default {
   name: "HeaderNav",
   computed: {
     ...mapState(["isLogin"]),
+  },
+  methods: {
+    logout() {
+      sessionStorage.clear();
+      this.$store.dispatch("logout");
+    },
   },
 };
 </script>
