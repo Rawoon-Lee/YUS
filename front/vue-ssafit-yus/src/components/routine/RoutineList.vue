@@ -2,6 +2,7 @@
   <div class="container">
     <h2>루틴 목록</h2>
     <hr />
+    <b-button :to="{ name: 'routineCreateHealth' }">헬스 루틴 등록</b-button>
     <div v-if="routines.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>

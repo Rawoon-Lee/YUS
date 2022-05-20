@@ -43,7 +43,6 @@ export default {
         break;
       }
     }
-    // this.$store.dispatch("getVideo", id);
   },
   methods: {
     moveUpdate() {

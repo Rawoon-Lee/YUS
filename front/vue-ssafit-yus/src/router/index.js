@@ -5,6 +5,7 @@ import MainView from "../views/MainView.vue";
 
 import RoutineView from "@/views/RoutineView.vue";
 import RoutineList from "@/components/routine/RoutineList.vue";
+import RoutineCreateHealth from "@/components/routine/RoutineCreateHealth.vue";
 
 import ChallengeView from "../views/ChallengeView.vue";
 import GroupList from "@/components/challenge/ChallengeGroupList.vue";
@@ -44,9 +45,9 @@ const routes = [
         component: RoutineList,
       },
       {
-        path: "",
-        name: "routine",
-        component: RoutineList,
+        path: "create/health",
+        name: "routineCreateHealth",
+        component: RoutineCreateHealth,
       },
     ],
   },
@@ -155,6 +156,22 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(sessionStorage.getItem("access-token"));
+  console.log(to.path);
+  if (to.path == "/") {
+    next();
+  } else if (
+    !sessionStorage.getItem("access-token") &&
+    !to.path.includes("login")
+  ) {
+    alert("로그인을 완료해야 이용 가능한 기능입니다.");
+    next("/member/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

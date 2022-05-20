@@ -21,7 +21,7 @@ export default new Vuex.Store({
     video: {},
     isJoin: 0,
     isLogin: false,
-    user_no: null,
+    USER_ID: null,
   },
   getters: {},
   mutations: {
@@ -51,7 +51,8 @@ export default new Vuex.Store({
     },
     USER_LOGIN(state, payload) {
       state.isLogin = true;
-      state.user_no = payload;
+      state.USER_ID = payload;
+      console.log(state.USER_ID);
     },
     CREATE_USER(state, payload) {
       state.isJoin = payload;
@@ -215,7 +216,8 @@ export default new Vuex.Store({
       })
         .then((res) => {
           console.log(res);
-          commit("USER_LOGIN");
+          commit("USER_LOGIN", res.data.id);
+          console.log(res.data.id);
           sessionStorage.setItem("access-token", res.data["access-token"]);
           router.push({ name: "main" });
         })
