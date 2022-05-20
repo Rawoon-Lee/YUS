@@ -35,6 +35,7 @@
             v-model="pw"
             trim
             placeholder="제목을 입력해주세요"
+            type="password"
           ></b-form-input>
         </b-form-group>
         <!-- <b-form-group
@@ -59,7 +60,7 @@
           label-align="left"
           label-size="lg"
         >
-          <b-form-input id="age" v-model="age"></b-form-input>
+          <b-form-input id="age" v-model="age" type="number"></b-form-input>
         </b-form-group>
         <b-form-group
           label="몸무게"
@@ -68,7 +69,11 @@
           label-align="left"
           label-size="lg"
         >
-          <b-form-input id="weight" v-model="weight"></b-form-input>
+          <b-form-input
+            id="weight"
+            v-model="weight"
+            type="number"
+          ></b-form-input>
         </b-form-group>
         <b-form-group
           label="키"
@@ -77,7 +82,11 @@
           label-align="left"
           label-size="lg"
         >
-          <b-form-input id="height" v-model="height"></b-form-input>
+          <b-form-input
+            id="height"
+            v-model="height"
+            type="number"
+          ></b-form-input>
         </b-form-group>
         <b-form-group
           label="목적"
@@ -86,7 +95,11 @@
           label-align="left"
           label-size="lg"
         >
-          <b-form-input list="input-list" v-model="purpose_text"></b-form-input>
+          <b-form-input
+            list="input-list"
+            v-model="purpose_text"
+            type="number"
+          ></b-form-input>
           <datalist id="input-list">
             <option
               v-for="(pp, index) in purpose"
@@ -109,6 +122,7 @@ export default {
     return {
       id: null,
       pw: null,
+      pw_check: null,
       imgFilePath: null,
       age: null,
       gender: null,

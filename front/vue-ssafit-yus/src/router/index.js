@@ -43,6 +43,11 @@ const routes = [
         name: "routineList",
         component: RoutineList,
       },
+      {
+        path: "",
+        name: "routine",
+        component: RoutineList,
+      },
     ],
   },
   {
