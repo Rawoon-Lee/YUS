@@ -13,10 +13,38 @@
 		<result column="user_id" property="userId" />
 		<result column="reg_date" property="regDate" />
 	</resultMap>
+	<select id="selectMaxCommIndex" resultType="int">
+		SELECT MAX(comm_index) AS MaxCommIndex
+		FROM youtube_comm
+	</select>
 	<select id="selectByVideoId" resultMap="YoutubeCommMap" parameterType="String">
 		SELECT *
 		FROM youtube_comm
 		WHERE video_id = #{videoId}
 	</select>
-	
+	<select id="selectByCommindex" resultMap="YoutubeCommMap" parameterType="int">
+		SELECT *
+		FROM youtube_comm
+		WHERE comm_index = #{commIndex}
+	</select>
+	<insert id="InsertYoutubeComm" parameterType="YoutubeComm">
+		INSERT INTO youtube_comm(class_no, comm, order_no, comm_group, video_id, user_id)
+		VALUES (#{classNo}, #{comm}, #{orderNo}, #{commGroup}, #{videoId}, #{userId})
+	</insert>
+	<delete id="deleteByCommIndex" parameterType="int">
+		DELETE FROM youtube_comm
+		WHERE comm_index = #{commIndex}
+	</delete>
+	<update id="updateForDelete" parameterType="YoutubeComm">
+		UPDATE youtube_comm
+		SET
+		comm = #{comm},
+		user_id = #{user_id}
+		WHERE comm_index = #{commIndex}
+	</update>
+	<update id="updateByCommIndex" parameterType="YoutubeComm">
+		UPDATE youtube_comm
+		SET comm = #{comm}
+		WHERE comm_index = #{commIndex}
+	</update>
 </mapper>
