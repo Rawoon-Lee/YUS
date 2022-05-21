@@ -13,8 +13,38 @@
 		<result column="user_id" property="userId" />
 		<result column="reg_date" property="regDate" />
 	</resultMap>
-	<select id="selectAll" resultMap="RoutineCommMap">
-		SELECT *
+	<select id="selectMaxCommIndex" resultType="int">
+		SELECT MAX(comm_index) AS MaxCommIndex
 		FROM routine_comm
 	</select>
+	<select id="selectByRoutineNo" resultMap="RoutineCommMap" parameterType="int">
+		SELECT *
+		FROM routine_comm
+		WHERE routine_no = #{routineNo}
+	</select>
+	<select id="selectByCommindex" resultMap="RoutineCommMap" parameterType="int">
+		SELECT *
+		FROM routine_comm
+		WHERE comm_index = #{commIndex}
+	</select>
+	<insert id="InsertRoutineComm" parameterType="RoutineComm">
+		INSERT INTO routine_comm(class_no, comm, order_no, comm_group, routine_no, user_id)
+		VALUES (#{classNo}, #{comm}, #{orderNo}, #{commGroup}, #{routineNo}, #{userId})
+	</insert>
+	<delete id="deleteByCommIndex" parameterType="int">
+		DELETE FROM routine_comm
+		WHERE comm_index = #{commIndex}
+	</delete>
+	<update id="updateForDelete" parameterType="RoutineComm">
+		UPDATE routine_comm
+		SET
+		comm = #{comm},
+		user_id = #{user_id}
+		WHERE comm_index = #{commIndex}
+	</update>
+	<update id="updateByCommIndex" parameterType="RoutineComm">
+		UPDATE routine_comm
+		SET comm = #{comm}
+		WHERE comm_index = #{commIndex}
+	</update>
 </mapper>
