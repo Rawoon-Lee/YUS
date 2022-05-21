@@ -165,7 +165,7 @@ router.beforeEach((to, from, next) => {
     next();
   } else if (
     !sessionStorage.getItem("access-token") &&
-    !to.path.includes("login")
+    !to.path.includes("member")
   ) {
     alert("로그인을 완료해야 이용 가능한 기능입니다.");
     next("/member/login");
