@@ -14,7 +14,7 @@ public class RoutineLikedServiceImpl implements RoutineLikedService{
 	RoutineLikedDao routineLikedDao;
 	@Override
 	public List<RoutineLiked> getAll() {
-		List<RoutineLiked> list = routineLikedDao.selectAll();
+		List<RoutineLiked> list = routineLikedDao.selectByRoutineNo(1);
 		return list;
 	}
 

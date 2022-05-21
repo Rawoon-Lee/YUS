@@ -128,6 +128,8 @@ public class MealRestController {
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}
+	
+	
 	@GetMapping("/liked")
 	public ResponseEntity<List<MealLiked>> likedlist() {
 		return new ResponseEntity<List<MealLiked>>(mealLikedService.getAll(), HttpStatus.OK);

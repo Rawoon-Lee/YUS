@@ -8,8 +8,22 @@
 		<result column="user_id" property="userId" />
 		<result column="post_no" property="postNo" />
 	</resultMap>
-	<select id="selectAll" resultMap="MealLikedMap">
+	<select id="selectByPostNo" resultMap="MealLikedMap" parameterType="int">
 		SELECT *
 		FROM meal_liked
+		where post_no = #{postNo}
 	</select>
+	<select id="selectByIds" resultMap="MealLikedMap" parameterType="MealLiked">
+		SELECT *
+		FROM meal_liked
+		where post_no = #{postNo} and user_id = #{userId} 
+	</select>
+	<insert id="insertMealLiked" parameterType="MealLiked">
+		INSERT INTO meal_liked(user_id, post_no)
+		VALUES (#{userId}, #{postNo})
+	</insert>
+	<delete id="deleteByIds" parameterType="MealLiked">
+		DELETE FROM meal_liked
+		WHERE post_no = #{postNo} and user_id = #{userId} 
+	</delete>
 </mapper>

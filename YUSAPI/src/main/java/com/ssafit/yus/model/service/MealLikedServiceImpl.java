@@ -16,7 +16,7 @@ public class MealLikedServiceImpl implements MealLikedService{
 	
 	@Override
 	public List<MealLiked> getAll() {
-		List<MealLiked> list = mealLikedDao.selectAll();
+		List<MealLiked> list = mealLikedDao.selectByPostNo(1);
 		return list;
 	}
 

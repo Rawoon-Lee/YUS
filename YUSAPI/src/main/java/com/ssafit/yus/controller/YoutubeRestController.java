@@ -85,7 +85,7 @@ public class YoutubeRestController {
 		@ApiImplicitParam(name = "commIndex", value = "가져 올 댓글의 PK", required = true)
 	})
 	@GetMapping("/comm/detail/{commIndex}")
-	public ResponseEntity<YoutubeComm> commList(@PathVariable int commIndex) {
+	public ResponseEntity<YoutubeComm> commDetail(@PathVariable int commIndex) {
 		return new ResponseEntity<YoutubeComm>(youtubeCommService.selectByCommindex(commIndex), HttpStatus.OK);
 	}
 	

@@ -8,8 +8,22 @@
 		<result column="user_id" property="userId" />
 		<result column="routine_no" property="routineNo" />
 	</resultMap>
-	<select id="selectAll" resultMap="RoutineLikedMap">
+	<select id="selectByRoutineNo" resultMap="RoutineLikedMap" parameterType="int">
 		SELECT *
 		FROM routine_liked
+		where routine_no = #{routineNo}
 	</select>
+	<select id="selectByIds" resultMap="RoutineLikedMap" parameterType="RoutineLiked">
+		SELECT *
+		FROM routine_liked
+		where routine_no = #{routineNo} and user_id = #{userId} 
+	</select>
+	<insert id="insertRoutineLiked" parameterType="RoutineLiked">
+		INSERT INTO routine_liked(user_id, routine_no)
+		VALUES (#{userId}, #{routineNo})
+	</insert>
+	<delete id="deleteByIds" parameterType="RoutineLiked">
+		DELETE FROM routine_liked
+		WHERE routine_no = #{routineNo} and user_id = #{userId} 
+	</delete>
 </mapper>

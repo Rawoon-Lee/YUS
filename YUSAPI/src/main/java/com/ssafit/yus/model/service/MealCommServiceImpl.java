@@ -48,5 +48,4 @@ public class MealCommServiceImpl implements MealCommService{
 	public void updateByCommIndex(MealComm mealComm) {
 		mealCommDao.updateByCommIndex(mealComm);
 	}
-
 }

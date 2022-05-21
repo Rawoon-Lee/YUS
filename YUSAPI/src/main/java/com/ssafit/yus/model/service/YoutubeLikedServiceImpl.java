@@ -26,7 +26,7 @@ public class YoutubeLikedServiceImpl implements YoutubeLikedService{
 	@Override
 	public int countLikedByVideoId(String videoId) {
 		int ret = 0;
-		List<YoutubeLiked> forCount = youtubeLikedDao.selectVideoById(videoId);
+		List<YoutubeLiked> forCount = youtubeLikedDao.selectByVideoId(videoId);
 		if (forCount != null) ret = forCount.size();
 		return ret;
 	}
