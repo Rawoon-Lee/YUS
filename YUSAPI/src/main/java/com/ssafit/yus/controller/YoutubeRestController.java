@@ -47,8 +47,8 @@ public class YoutubeRestController {
 			notes = "나중에 페이지네이션 할때 수정해야할듯"
 	)
 	@GetMapping("/info")
-	public ResponseEntity<List<YoutubeInfo>> infoList() {
-		return new ResponseEntity<List<YoutubeInfo>>(youtubeInfoService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<Map<String, String>>>  infoList() {
+		return new ResponseEntity<List<Map<String, String>>>(youtubeInfoService.getAll(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(
@@ -60,8 +60,8 @@ public class YoutubeRestController {
 	})
 	
 	@GetMapping("/info/{videoId}")
-	public ResponseEntity<YoutubeInfo> infoDetail(@PathVariable String videoId) {
-		return new ResponseEntity<YoutubeInfo>(youtubeInfoService.selectById(videoId), HttpStatus.OK);
+	public ResponseEntity<Map<String, String>> infoDetail(@PathVariable String videoId) {
+		return new ResponseEntity<Map<String, String>>(youtubeInfoService.selectById(videoId), HttpStatus.OK);
 	}
 	
 	//===============================================코멘트 관련=============================================
@@ -150,20 +150,6 @@ public class YoutubeRestController {
 	}
 	
 	//===============================================라이크 관련=============================================
-	@ApiOperation(
-			value = "게시물 리스트 별 좋아요 갯수 측정",
-			notes = "게시물 리스트, 디테일을 불러올 때 필요함. 리스트를 렌더링 할려면 게시물 마다 요청 보내줘야 함"
-	)
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "videoId", value = "좋아요 갯수를 측정 할 영상의 videoId", required = true)
-	})
-	@GetMapping("/liked/{videoId}")
-	public ResponseEntity<Map<String, String>> cntLiked(@PathVariable String videoId){
-		Map<String, String> ret = new HashMap<String, String>();
-		ret.put("count", "" + youtubeLikedService.countLikedByVideoId(videoId));
-		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
-	}
-	
 	@ApiOperation(
 			value = "사용자의 영상 좋아요 여부",
 			notes = "front로 status를 전송 해줌. 눌렸으면 true, 아니면 false"
