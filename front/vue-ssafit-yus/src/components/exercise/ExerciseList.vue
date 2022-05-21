@@ -79,7 +79,6 @@ export default {
   created() {
     this.$store.dispatch("getVideos");
     this.$store.dispatch("getExercises");
-    this.$store.dispatch("createVideosForUse");
   },
   methods: {
     search() {

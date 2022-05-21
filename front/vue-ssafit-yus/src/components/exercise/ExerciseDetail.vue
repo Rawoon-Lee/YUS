@@ -32,7 +32,9 @@
               <td>{{ video.viewCnt }}</td>
               <td>{{ video.liked }}</td>
               <td>
-                <button type="button" @click="like">&#128147;</button>
+                <button :disabled="isLiked" type="button" @click="like">
+                  &#128147;
+                </button>
               </td>
             </tr>
           </tbody>
@@ -59,13 +61,12 @@ export default {
   computed: {
     ...mapState(["exercises"]),
     ...mapState(["videos"]),
-    // ...mapState(["liked"]),
+    ...mapState(["isLiked"]),
   },
   created() {
     // this.$store.dispatch("createVideosForUse");
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
-    console.log(id);
     let videosUseful = [];
     for (let video of this.videos) {
       for (let ex of this.exercises) {
@@ -88,14 +89,15 @@ export default {
     for (let video of videosUseful) {
       if (video.videoId == id) {
         this.video = video;
-        console.log(video);
         break;
       }
     }
+    this.$store.dispatch("getIsLiked");
   },
   methods: {
     like() {
-      //좋아요 처리할 함수
+      console.log(this.USER_Id);
+      console.log("버튼 눌렸다");
     },
   },
 };

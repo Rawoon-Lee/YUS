@@ -159,8 +159,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(sessionStorage.getItem("access-token"));
-  console.log(to.path);
   if (to.path == "/") {
     next();
   } else if (

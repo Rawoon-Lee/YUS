@@ -22,6 +22,7 @@ export default new Vuex.Store({
     VIDEOS: [],
     isJoin: 0,
     isLogin: false,
+    isLiked: false,
     USER_ID: null,
   },
   getters: {},
@@ -64,6 +65,9 @@ export default new Vuex.Store({
     CREATE_VIDEOS_FOR_USE(state, payload) {
       state.VIDEOS = payload;
       console.log(state.VIDEOS);
+    },
+    GET_ISLIKED(state, payload) {
+      state.isLiked = payload;
     },
   },
   actions: {
@@ -280,6 +284,26 @@ export default new Vuex.Store({
         }
       }
       commit("CREATE_VIDEOS_FOR_USE", videosUseful);
+    },
+    getIsLiked({ commit }, liked) {
+      const API_URL = `${REST_API}/youtube/liked/check`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          if (res.data.status) {
+            console.log("나 좋아요 했음");
+            commit("GET_ISLIKED", true);
+          }
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
     },
   },
   modules: {},
