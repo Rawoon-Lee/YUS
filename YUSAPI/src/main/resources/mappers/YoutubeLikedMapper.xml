@@ -8,15 +8,15 @@
 		<result column="user_id" property="userId" />
 		<result column="video_id" property="videoId" />
 	</resultMap>
-	<select id="selectByVideoId" resultMap="YoutubeLikedMap" parameterType="String">
-		SELECT *
+	<select id="countLikedByVideoId" resultType="int" parameterType="String">
+		SELECT COUNT(*) AS count
 		FROM youtube_liked
-		where video_id = #{videoId}
+		WHERE video_id = #{videoId} 
 	</select>
 	<select id="selectByIds" resultMap="YoutubeLikedMap" parameterType="YoutubeLiked">
 		SELECT *
 		FROM youtube_liked
-		where video_id = #{videoId} and user_id = #{userId} 
+		WHERE video_id = #{videoId} and user_id = #{userId} 
 	</select>
 	<insert id="insertYoutubeLiked" parameterType="YoutubeLiked">
 		INSERT INTO youtube_liked(user_id, video_id)

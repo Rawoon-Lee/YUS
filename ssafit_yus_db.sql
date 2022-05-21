@@ -158,11 +158,19 @@ CREATE TABLE meal_comm (
 );
 
 INSERT INTO exercise_info (exercise_name, exercise_part)
-VALUES ('스쿼트', '하체'),
+VALUES ("사이드 레터럴 레이즈", "어깨"),
+("밀리터리 프레스", "어깨"),
+("페이스 풀", "어깨"),
+("벤치 프레스", "가슴"),
+("인클라인 벤치프레스", "가슴"),
+("딥스", "가슴"),
+("체스트 프레스", "가슴"),
+("렛풀다운", "등"),
+("시티드 케이블 로우", "등"),
+("바벨 로우", "등"),
+('스쿼트', '하체'),
 ("레그 프레스", "하체"),
-("레그 익스텐션", "하체"),
-("숄더 프레스", "어깨"),
-("벤치 프레스", "가슴");
+("레그 익스텐션", "하체");
 SELECT * FROM exercise_info;
 
 INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no)
