@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListForRoutine {
-	private int isIn;
 	private RoutineInfo routineInfo;
 	private List<ExercisePerRoutine> eprlist;
 }
