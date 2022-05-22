@@ -1,7 +1,5 @@
 package com.ssafit.yus.model.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +32,4 @@ public class YoutubeLikedServiceImpl implements YoutubeLikedService{
 			return "true";
 		return "false";
 	}
-	
 }

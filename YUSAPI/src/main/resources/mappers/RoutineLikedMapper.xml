@@ -8,10 +8,10 @@
 		<result column="user_id" property="userId" />
 		<result column="routine_no" property="routineNo" />
 	</resultMap>
-	<select id="selectByRoutineNo" resultMap="RoutineLikedMap" parameterType="int">
-		SELECT *
+	<select id="countLikedByRoutineNo" resultType="int" parameterType="int">
+		SELECT COUNT(*) AS count
 		FROM routine_liked
-		where routine_no = #{routineNo}
+		WHERE routine_no = #{routineNo} 
 	</select>
 	<select id="selectByIds" resultMap="RoutineLikedMap" parameterType="RoutineLiked">
 		SELECT *

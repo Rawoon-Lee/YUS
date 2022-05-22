@@ -1,7 +1,5 @@
 package com.ssafit.yus.model.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +10,26 @@ import com.ssafit.yus.model.dto.RoutineLiked;
 public class RoutineLikedServiceImpl implements RoutineLikedService{
 	@Autowired
 	RoutineLikedDao routineLikedDao;
+	
 	@Override
-	public List<RoutineLiked> getAll() {
-		List<RoutineLiked> list = routineLikedDao.selectByRoutineNo(1);
-		return list;
+	public void insertRoutineLiked(RoutineLiked routineLiked) {
+		routineLikedDao.insertRoutineLiked(routineLiked);
 	}
 
+	@Override
+	public void deleteByIds(RoutineLiked routineLiked) {
+		routineLikedDao.deleteByIds(routineLiked);
+	}
+
+	@Override
+	public int countLikedByRoutineNo(int routineNo) {
+		return routineLikedDao.countLikedByRoutineNo(routineNo);
+	}
+
+	@Override
+	public String checkStatus(RoutineLiked routineLiked) {
+		if (routineLikedDao.selectByIds(routineLiked) != null)
+			return "true";
+		return "false";
+	}
 }

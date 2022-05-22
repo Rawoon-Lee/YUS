@@ -5,8 +5,7 @@ USE ssafit_yus;
 
 DROP TABLE IF EXISTS exercise_info;
 CREATE TABLE exercise_info (
-	exercise_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    exercise_name VARCHAR(40) NOT NULL,
+    exercise_name VARCHAR(40) NOT NULL PRIMARY KEY,
 	exercise_part VARCHAR(40) NOT NULL
 );
 
@@ -27,7 +26,6 @@ CREATE TABLE user_info (
 CREATE TABLE group_info (
 	group_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     group_name VARCHAR(20) NOT NULL,
-	exercise_type INT DEFAULT 0,
     group_point INT DEFAULT 0,
     maximum_people INT DEFAULT 0,
     current_people INT DEFAULT 0,
@@ -40,19 +38,19 @@ CREATE TABLE youtube_info (
     url VARCHAR(200) NOT NULL,
     title VARCHAR(200) NOT NULL,
     channel_name VARCHAR(40) NOT NULL,
-    exercise_no INT,
-    FOREIGN KEY (exercise_no) REFERENCES exercise_info (exercise_no),
+    exercise_name VARCHAR(40) NOT NULL,
+    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name),
     view_cnt INT DEFAULT 0
 );
 
 CREATE TABLE routine_info (
 	routine_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(40) NOT NULL,
-    exercise_type INT DEFAULT 0,
 	user_id VARCHAR(20),
     FOREIGN KEY (user_id) REFERENCES user_info (user_id),
     view_cnt INT DEFAULT 0,
-    reg_date TIMESTAMP DEFAULT now()
+    reg_date TIMESTAMP DEFAULT now(),
+    content TEXT NOT NULL
 );
 
 CREATE TABLE meal_board (
@@ -73,8 +71,11 @@ CREATE TABLE exercise_per_routine (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     routine_no INT,
     FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no),
-	exercise_no INT,
-    FOREIGN KEY (exercise_no) REFERENCES exercise_info (exercise_no)
+	exercise_name VARCHAR(40) NOT NULL,
+    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name),
+    routine_set INT NOT NULL,
+    routine_rep INT NOT NULL,
+    order_no INT NOT NULL
 );
 
 CREATE TABLE routine_per_day (
@@ -176,41 +177,42 @@ SELECT * FROM exercise_info;
 INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no)
 VALUES ("JunhoLee", "1e9c98989e7afb35e311334e79aad5ba5895182db8aa8d0ec28cb675fc8a4d0f", 67, 178, 32, 0, "강남비싼헬스장", 1, 1),
 ("Hwasa", "af3fce2230d8b03e584f253b1ad38a70c0142ca88488a073a8eb69f7af19ff34", 44, 160, 28, 1, "이태원비싼헬스장", 1, 2),
-("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 3);
+("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 3),
+("rawoon", "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", 90, 186, 27, 0, "매탄동휘트니스", 0, 1);
 -- iamhandsome, iamsexy, 121314, ssafityus
 INSERT INTO user_info(user_id, user_password)
 VALUES ("deletedcomm", "2c4a12c037cc5893af1c594156c339fe39963354ae4b37ef43e217ce4bb44d68");
 SELECT * FROM user_info;
 
-INSERT INTO group_info (group_name, exercise_type, maximum_people, user_id)
-VALUES ("놀기위해 운동한다", 0, 20, "junhoLee"),
-("체력이 국력", 1, 10, "Hwasa"),
-("오늘은 내가 핫바디", 1, 15, "hyunklee");
+INSERT INTO group_info (group_name, maximum_people, user_id)
+VALUES ("놀기위해 운동한다", 20, "junhoLee"),
+("체력이 국력", 10, "Hwasa"),
+("오늘은 내가 핫바디", 15, "hyunklee");
 SELECT * FROM group_info;
 
-INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_no)
-VALUES ("gMaB-fG4u4g", "www.youtube.com/embed/gMaB-fG4u4g", "전신 다이어트 최고의 운동 [칼소폭 찐 핵핵매운맛]", "Thankyou BUBU", 1),
-("CTojmKLkWTo", "www.youtube.com/embed/CTojmKLkWTo", "전신 다이어트 최고의 운동 [칼소폭 핵매운맛]", "Thankyou BUBU", 1),
-("lKwZ2DU4P-A", "www.youtube.com/embed/lKwZ2DU4P-A", "집에서 칼로리 불태우는 최고의 유산소운동 [칼소폭 매운맛]", "Thankyou BUBU", 2),
-("q6hBSSfokzY", "www.youtube.com/embed/q6hBSSfokzY", "ENG)하루10분 스쿼트로 기초 체력 기르기!", "힙으뜸", 3),
-("oYiBDWhmrX8", "www.youtube.com/embed/oYiBDWhmrX8", "런지의 기본과 간과하기 쉬운 몇가지들", "말왕TV", 4);
+INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_name)
+VALUES ("gMaB-fG4u4g", "www.youtube.com/embed/gMaB-fG4u4g", "전신 다이어트 최고의 운동 [칼소폭 찐 핵핵매운맛]", "Thankyou BUBU", "레그 익스텐션"),
+("CTojmKLkWTo", "www.youtube.com/embed/CTojmKLkWTo", "전신 다이어트 최고의 운동 [칼소폭 핵매운맛]", "Thankyou BUBU", "페이스 풀"),
+("lKwZ2DU4P-A", "www.youtube.com/embed/lKwZ2DU4P-A", "집에서 칼로리 불태우는 최고의 유산소운동 [칼소폭 매운맛]", "Thankyou BUBU", "렛풀다운"),
+("q6hBSSfokzY", "www.youtube.com/embed/q6hBSSfokzY", "ENG)하루10분 스쿼트로 기초 체력 기르기!", "힙으뜸", "스쿼트"),
+("oYiBDWhmrX8", "www.youtube.com/embed/oYiBDWhmrX8", "런지의 기본과 간과하기 쉬운 몇가지들", "말왕TV", "딥스");
 SELECT * FROM youtube_info;
 
-INSERT INTO routine_info (exercise_type, user_id, title)
-VALUES (0, "JunhoLee", "아무나 따라하셈"),
-(1, "Hwasa", "저장용");
+INSERT INTO routine_info (user_id, title, content)
+VALUES ("JunhoLee", "아무나 따라하셈", "이대로 하면 3개월만에 몸짱가능 ㅋ"),
+("Hwasa", "저장용", "저만 볼거니까 보지마세염 ㅋㅋ");
 SELECT * FROM routine_info;
 
 INSERT INTO meal_board (title, filepath, content, carb, protein, fat, user_id)
 VALUES ("오늘의 식단 인증", "static/profile/me.jpg", "치팅데이 다음 날에는 꼭 이렇게 먹어줘야 마음이 편해요", 90, 100, 40, "JunhoLee");
 
-INSERT INTO exercise_per_routine (routine_no, exercise_no)
-VALUES (1, 1),
-(1, 2), 
-(1, 3),
-(1, 4),
-(2, 1),
-(2, 5);
+INSERT INTO exercise_per_routine (routine_no, exercise_name, routine_set, routine_rep, order_no)
+VALUES (1, "스쿼트", 5, 10, 1),
+(1, "렛풀다운", 5, 12, 2), 
+(1, "벤치 프레스", 5, 10, 3),
+(1, "바벨 로우", 4, 8, 4),
+(2, "스쿼트", 5, 10, 1),
+(2, "밀리터리 프레스", 5, 12, 2);
 
 INSERT INTO routine_per_day (days, group_no, routine_no)
 VALUES (0, 1, 1),

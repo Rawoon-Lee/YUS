@@ -6,7 +6,6 @@
 	<resultMap type="GroupInfo" id="GroupInfoMap">
 		<result column="group_no" property="groupNo" />
 		<result column="group_name" property="groupName" />
-		<result column="exercise_type" property="exerciseType" />
 		<result column="group_point" property="groupPoint" />
 		<result column="maximum_people" property="maximumPeople" />
 		<result column="current_people" property="currentPeople" />

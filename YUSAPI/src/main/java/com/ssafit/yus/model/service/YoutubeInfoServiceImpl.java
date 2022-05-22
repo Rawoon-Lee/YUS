@@ -29,7 +29,7 @@ public class YoutubeInfoServiceImpl implements YoutubeInfoService{
 			temp.put("url", item.getUrl());
 			temp.put("title", item.getTitle());
 			temp.put("channelName", item.getChannelName());
-			temp.put("exerciseNo", Integer.toString(item.getExerciseNo()));
+			temp.put("exerciseName", item.getExerciseName());
 			temp.put("viewCnt", Integer.toString(item.getViewCnt()));
 			temp.put("LikedCnt", Integer.toString(youtubeLikedDao.countLikedByVideoId(item.getVideoId())));
 			ret.add(temp);
@@ -44,7 +44,7 @@ public class YoutubeInfoServiceImpl implements YoutubeInfoService{
 		ret.put("url", item.getUrl());
 		ret.put("title", item.getTitle());
 		ret.put("channelName", item.getChannelName());
-		ret.put("exerciseNo", Integer.toString(item.getExerciseNo()));
+		ret.put("exerciseName", item.getExerciseName());
 		ret.put("viewCnt", Integer.toString(item.getViewCnt()));
 		ret.put("LikedCnt", Integer.toString(youtubeLikedDao.countLikedByVideoId(item.getVideoId())));
 		return ret;

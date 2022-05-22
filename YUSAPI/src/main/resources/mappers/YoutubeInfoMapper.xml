@@ -8,7 +8,7 @@
 		<result column="url" property="url" />
 		<result column="title" property="title" />
 		<result column="channel_name" property="channelName" />
-		<result column="exercise_no" property="exerciseNo" />
+		<result column="exercise_name" property="exerciseName" />
 		<result column="view_cnt" property="viewCnt" />
 	</resultMap>
 	<select id="selectAll" resultMap="YoutubeInfoMap">

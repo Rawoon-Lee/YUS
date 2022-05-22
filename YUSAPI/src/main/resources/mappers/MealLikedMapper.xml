@@ -8,10 +8,10 @@
 		<result column="user_id" property="userId" />
 		<result column="post_no" property="postNo" />
 	</resultMap>
-	<select id="selectByPostNo" resultMap="MealLikedMap" parameterType="int">
-		SELECT *
+	<select id="countLikedByPostNo" resultType="int" parameterType="int">
+		SELECT COUNT(*) AS count
 		FROM meal_liked
-		where post_no = #{postNo}
+		WHERE post_no = #{postNo} 
 	</select>
 	<select id="selectByIds" resultMap="MealLikedMap" parameterType="MealLiked">
 		SELECT *

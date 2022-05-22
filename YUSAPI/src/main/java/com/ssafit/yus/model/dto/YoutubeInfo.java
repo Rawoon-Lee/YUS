@@ -12,6 +12,6 @@ public class YoutubeInfo {
 	private String url;
 	private String title;
 	private String channelName;
-	private int exerciseNo;
+	private String exerciseName;
 	private int viewCnt;
 }

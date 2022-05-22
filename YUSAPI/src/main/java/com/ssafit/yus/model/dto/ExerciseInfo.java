@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExerciseInfo {
-	private int exerciseNo;
 	private String exerciseName;
 	private String exercisePart;
 }
