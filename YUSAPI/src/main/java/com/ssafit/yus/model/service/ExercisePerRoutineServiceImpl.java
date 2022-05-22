@@ -15,7 +15,7 @@ public class ExercisePerRoutineServiceImpl implements ExercisePerRoutineService{
 	
 	@Override
 	public List<ExercisePerRoutine> getAll() {
-		List<ExercisePerRoutine> list = exercisePerRoutineDao.selectAll();
+		List<ExercisePerRoutine> list = exercisePerRoutineDao.selectByRoutineNo(1);
 		return list;
 	}
 

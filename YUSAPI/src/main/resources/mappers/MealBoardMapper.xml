@@ -19,4 +19,33 @@
 		SELECT *
 		FROM meal_board
 	</select>
+	<select id="selectByPostNo" parameterType="int">
+		SELECT *
+		FROM meal_board
+		WHERE post_no = #{postNo}
+	</select>
+	<insert id="insertMealBoard" parameterType="MealBoard">
+		INSERT INTO meal_board(title, content, filepath, carb, protein, fat, user_id)
+		VALUES(#{title}, #{content}, #{filepath}, #{crab}, #{protein}, #{fat}, #{userId})
+	</insert>
+	<update id="updateMealBoard" parameterType="MealBoard">
+		UPDATE meal_board
+		SET
+		title = #{title},
+		content = #{content},
+		filepath = #{filepath},
+		carb = #{carb},
+		protein = #{protein},
+		fat = #{fat}
+		WHERE post_no = #{postNo}
+	</update>
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE meal_board
+		SET view_cnt = view_cnt + 1
+		WHERE post_no = #{postNo}
+	</update>
+	<delete id="deleteMealBoard" parameterType="int">
+		DELETE FROM meal_board
+		WHERE post_no = #{postNo}
+	</delete>
 </mapper>

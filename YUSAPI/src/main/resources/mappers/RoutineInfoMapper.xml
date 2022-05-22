@@ -15,6 +15,22 @@
 		SELECT *
 		FROM routine_info
 	</select>
-	<select id="selectByRoutineNo" parameterType="int">
+	<select id="selectByRoutineNo" parameterType="int" resultMap="RoutineInfoMap">
+		SELECT *
+		FROM routine_info
+		WHERE routine_no = #{routineNo}
 	</select>
+	<select id="selectMaxRoutineNo" resultType="int">
+		SELECT MAX(routine_no)
+		FROM routine_info
+	</select>
+	<insert id="insertRoutineInfo" parameterType="RoutineInfo">
+		INSERT INTO routine_info(user_id, title, content)
+		VALUES (#{userId}, #{title}, #{content})
+	</insert>
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE routine_info
+		SET view_cnt = view_cnt + 1
+		WHERE routine_no = #{routineNo}
+	</update>
 </mapper>

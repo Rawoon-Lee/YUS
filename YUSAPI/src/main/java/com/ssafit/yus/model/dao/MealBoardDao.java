@@ -6,4 +6,9 @@ import com.ssafit.yus.model.dto.MealBoard;
 
 public interface MealBoardDao {
 	List<MealBoard> selectAll();
+	MealBoard selectByPostNo(int postNo);
+	void insertMealBoard(MealBoard mealBoard);
+	void updateMealBoard(MealBoard mealBoard);
+	void updateViewCnt(int postNo);
+	void deleteMealBoard(int postNo);
 }
