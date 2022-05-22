@@ -33,7 +33,7 @@
               <td>{{ videoDetail.liked }}</td>
               <td>
                 <button v-show="!isYouLiked" type="button" @click="addLike">
-                  &#128153;
+                  <v-icon>mdi-heart</v-icon>
                 </button>
                 <button v-show="isYouLiked" type="button" @click="delLike">
                   &#128150;

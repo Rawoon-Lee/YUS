@@ -15,14 +15,14 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="meal in pageMealList" :key="meal.postNo">
-            <b-td>{{ meal.postNo }}</b-td>
+          <b-tr v-for="(meal, index) in pageMealList" :key="index">
+            <b-td>{{ index + 1 }}</b-td>
             <b-td>
               <b-link :to="`/meal/${meal.postNo}`">{{
                 meal.title
               }}</b-link></b-td
             >
-            <b-td>{{ meal.userNo }}</b-td>
+            <b-td>{{ meal.userId }}</b-td>
             <b-td>{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }}</b-td>
             <b-td>{{ meal.regDate }}</b-td>
             <b-td>{{ meal.viewCnt }}</b-td>
