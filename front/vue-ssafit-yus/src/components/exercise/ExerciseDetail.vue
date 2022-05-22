@@ -32,10 +32,10 @@
               <td>{{ videoDetail.viewCnt }}</td>
               <td>{{ videoDetail.liked }}</td>
               <td>
-                <button v-show="!isLiked" type="button" @click="addLike">
+                <button v-show="!isYouLiked" type="button" @click="addLike">
                   &#128153;
                 </button>
-                <button v-show="isLiked" type="button" @click="delLike">
+                <button v-show="isYouLiked" type="button" @click="delLike">
                   &#128150;
                 </button>
               </td>
@@ -90,13 +90,12 @@ export default {
           options: ["스쿼트", "레그 프레스", "레그 익스텐션"],
         },
       ],
-      // liked: null,
     };
   },
   computed: {
     // ...mapState(["exercises"]),
     ...mapState(["video"]),
-    ...mapState(["isLiked"]),
+    ...mapState(["isYouLiked"]),
   },
   watch: {
     video(value) {
@@ -106,6 +105,11 @@ export default {
   created() {
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
+    let liked = {
+      userId: sessionStorage.getItem("USER_ID"),
+      videoId: id,
+    };
+    this.$store.dispatch("getIsLikedYou", liked);
     this.videoId = id;
     this.calVideo(this.video);
   },
@@ -115,7 +119,6 @@ export default {
       this.videoDetail.title = video.title;
       this.videoDetail.channelName = video.channelName;
       for (let i = 0; i < this.workouts.length; i++) {
-        console.log(this.workouts[i]["options"]);
         if (this.workouts[i]["options"].includes(video.exerciseName)) {
           this.videoDetail.part = this.workouts[i].label;
           break;

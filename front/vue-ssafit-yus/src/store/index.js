@@ -22,7 +22,9 @@ export default new Vuex.Store({
     VIDEOS: [],
     isJoin: 0,
     isLogin: false,
-    isLiked: false,
+    isYouLiked: false,
+    isRouLiked: false,
+    isCreatedRou: false,
     USER_ID: null,
   },
   getters: {},
@@ -51,6 +53,13 @@ export default new Vuex.Store({
     GET_ROUTINES(state, payload) {
       state.routines = payload;
     },
+    GET_ROUTINE(state, payload) {
+      state.routine = payload;
+    },
+    CREATE_ROUTINE(state, payload) {
+      state.isRouCreated = payload;
+      console.log(state.isRouCreated);
+    },
     USER_LOGIN(state, payload) {
       state.isLogin = true;
       state.USER_ID = payload;
@@ -65,8 +74,8 @@ export default new Vuex.Store({
       state.VIDEOS = payload;
       console.log(state.VIDEOS);
     },
-    GET_ISLIKED(state, payload) {
-      state.isLiked = payload;
+    GET_YOU_ISLIKED(state, payload) {
+      state.isYouLiked = payload;
       console.log(state.isLiked);
     },
   },
@@ -227,6 +236,46 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    getRoutine({ commit }, id) {
+      const API_URL = `${REST_API}/routine/info/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          commit("GET_ROUTINE", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    createRoutine({ commit }, list) {
+      console.log("루틴 등록 시작");
+      const API_URL = `${REST_API}/routine/info`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: list,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          console.log("일단 실행은 성공");
+          commit("CREATE_ROUTINE", true);
+          router.push({ name: "routineList" });
+        })
+        .catch((err) => {
+          console.log("실행되긴 했는데 못 들어감ㄴ");
+          console.log(err.toJSON().status);
+          commit("CREATE_ROUTINE", false);
+        });
+    },
     userLogin({ commit }, user) {
       const API_URL = `${REST_API}/user/login`;
       axios({
@@ -293,7 +342,7 @@ export default new Vuex.Store({
       }
       commit("CREATE_VIDEOS_FOR_USE", videosUseful);
     },
-    getIsLiked({ commit }, liked) {
+    getIsLikedYou({ commit }, liked) {
       const API_URL = `${REST_API}/youtube/liked/check`;
       axios({
         url: API_URL,
@@ -305,9 +354,9 @@ export default new Vuex.Store({
       })
         .then((res) => {
           if (res.data.status == "true") {
-            commit("GET_ISLIKED", true);
+            commit("GET_YOU_ISLIKED", true);
           } else {
-            commit("GET_ISLIKED", false);
+            commit("GET_YOU_ISLIKED", false);
           }
         })
         .catch((err) => {
@@ -327,7 +376,7 @@ export default new Vuex.Store({
         .then((res) => {
           // commit("GET_ISLIKED", true);
           res;
-          dispatch("getIsLiked", liked);
+          dispatch("getIsLikedYou", liked);
           dispatch("getVideo", liked.videoId);
         })
         .catch((err) => {
@@ -346,7 +395,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           res;
-          dispatch("getIsLiked", liked);
+          dispatch("getIsLikedYou", liked);
           dispatch("getVideo", liked.videoId);
         })
         .catch((err) => {

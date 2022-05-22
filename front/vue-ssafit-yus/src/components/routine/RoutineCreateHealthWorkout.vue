@@ -37,7 +37,7 @@
         >
           <b-form-input id="rep" v-model="rep" type="number"></b-form-input>
         </b-form-group>
-        <button @click="upload">확인</button>
+        <button :disabled="isDone" @click="upload">확인</button>
       </b-form>
     </div>
     <!-- </b-card> -->
@@ -51,6 +51,7 @@ export default {
       workout: null,
       set: 0,
       rep: 0,
+      isDone: false,
       workouts: [
         {
           label: "어깨",
@@ -91,11 +92,13 @@ export default {
   methods: {
     upload() {
       let exercise = {
+        routineNo: 0,
         exerciseName: this.workout,
-        set: this.set,
-        rep: this.rep,
+        routineSet: this.set,
+        routineRep: this.rep,
         orderNo: 0,
       };
+      this.isDone = true;
       this.$emit("upload", exercise);
     },
   },

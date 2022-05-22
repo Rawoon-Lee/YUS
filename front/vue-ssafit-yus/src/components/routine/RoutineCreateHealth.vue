@@ -86,13 +86,14 @@ export default {
     },
     createRoutine() {
       let newRoutine = {
-        routineNo: 0,
+        // routineNo: 0,
         userId: sessionStorage.getItem("USER_ID"),
         title: this.title,
         content: this.title,
       };
-
-      console.log(newRoutine);
+      this.routines.unshift(newRoutine);
+      // console.log(this.routines);
+      this.$store.dispatch("createRoutine", this.routines);
     },
   },
   components: {

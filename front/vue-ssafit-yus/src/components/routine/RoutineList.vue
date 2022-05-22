@@ -10,9 +10,9 @@
             <b-th>번호</b-th>
             <b-th>제목</b-th>
             <b-th>글쓴이</b-th>
-            <b-th>운동 분류</b-th>
             <b-th>등록일</b-th>
             <b-th>조회수</b-th>
+            <b-th>좋아요</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
@@ -23,10 +23,10 @@
                 rout.title
               }}</b-link></b-td
             >
-            <b-td>{{ rout.userNo }}</b-td>
-            <b-td>{{ exTypes[rout.exerciseType] }}</b-td>
+            <b-td>{{ rout.userId }}</b-td>
             <b-td>{{ rout.regDate }}</b-td>
             <b-td>{{ rout.viewCnt }}</b-td>
+            <b-td>{{ rout.LikedCnt }}</b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>
