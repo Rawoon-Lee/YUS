@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ssafit.yus.model.dto.UserInfo;
+import com.ssafit.yus.model.dto.YoutubeLiked;
 import com.ssafit.yus.model.service.UserInfoService;
 import com.ssafit.yus.util.JWTUtil;
 import com.ssafit.yus.util.SHA256;
@@ -22,7 +23,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-@Api(tags = "회원정보")
+@Api(tags = "회원정보 관련 api")
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -39,7 +40,7 @@ public class UserRestController {
 					+ "id : 사용자 id, msg : success or fail, status : 상태코드"
 	)
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userInfo", value = "id & pw를 담은 userInfo객체", required = true)
+		@ApiImplicitParam(name = "userInfo", value = "id & pw를 담은 userInfo객체", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody UserInfo userInfo) {
@@ -68,7 +69,7 @@ public class UserRestController {
 			notes = "form태그의 정보들을 userInfo객체로 받아 db에 insert"
 	)
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userInfo", value = "회원정보를 담은 객체", required = true)
+		@ApiImplicitParam(name = "userInfo", value = "회원정보를 담은 객체", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody UserInfo userInfo) throws NoSuchAlgorithmException {
@@ -93,7 +94,7 @@ public class UserRestController {
 					+ "user/info/{아이디}를 실어서 getrequest 하면 됨"
 	)
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userId", value = "로그인 할때 보내준 userId", required = true)
+		@ApiImplicitParam(name = "userId", value = "로그인 할때 보내준 userId", dataTypeClass = String.class, required = true)
 	})
 	@GetMapping("/info/{userId}")
 	public ResponseEntity<UserInfo> getInfo(@PathVariable("userId") String userId){
@@ -112,7 +113,7 @@ public class UserRestController {
 					+ "userPoint가 증가 했을때도 같은 방법으로 회원정보 요청하고 userPoint만 바꿔서 전달"
 	)
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", required = true)
+		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/info")
 	public ResponseEntity<String> updateInfo(@RequestBody UserInfo userInfo){

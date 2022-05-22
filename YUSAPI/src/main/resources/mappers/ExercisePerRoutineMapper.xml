@@ -11,8 +11,14 @@
 		<result column="routine_rep" property="routineRep" />
 		<result column="order_no" property="orderNo" />
 	</resultMap>
-	<select id="selectAll" resultMap="ExercisePerRoutineMap">
+	<select id="selectByRoutineNo" parameterType="int" resultMap="ExercisePerRoutineMap">
 		SELECT *
 		FROM exercise_per_routine
+		WHERE routine_no = #{routineNo}
+		ORDER BY order_no ASC;
 	</select>
+	<insert id="InsertEPR" parameterType="ExercisePerRoutine">
+		INSERT INTO exercise_per_routine(routine_no, exercise_name, routine_set, routine_rep, order_no)
+		VALUES (#{routineNo}, #{exerciseName}, #{routineSet}, #{routineRep}, #{orderNo})
+	</insert>
 </mapper>
