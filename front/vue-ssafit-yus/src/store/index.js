@@ -54,7 +54,6 @@ export default new Vuex.Store({
     USER_LOGIN(state, payload) {
       state.isLogin = true;
       state.USER_ID = payload;
-      console.log(state.USER_ID);
     },
     CREATE_USER(state, payload) {
       state.isJoin = payload;
@@ -232,6 +231,7 @@ export default new Vuex.Store({
           commit("USER_LOGIN", res.data.id);
           console.log(res.data.id);
           sessionStorage.setItem("access-token", res.data["access-token"]);
+          sessionStorage.setItem("USER_ID", user.userId);
           router.push({ name: "main" });
         })
         .catch((err) => {
@@ -296,9 +296,49 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
+          console.log("좋아요 여부 확인하기");
           if (res.data.status) {
-            console.log("나 좋아요 했음");
             commit("GET_ISLIKED", true);
+          } else {
+            commit("GET_ISLIKED", false);
+          }
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addLiked({ dispatch }, liked) {
+      const API_URL = `${REST_API}/youtube/liked/add`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          // commit("GET_ISLIKED", true);
+          console.log(res);
+          dispatch("getIsLiked", liked);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delLiked({ dispatch }, liked) {
+      const API_URL = `${REST_API}/youtube/liked/del`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          if (res.data.status) {
+            dispatch("getIsLiked", liked);
           }
         })
         .catch((err) => {

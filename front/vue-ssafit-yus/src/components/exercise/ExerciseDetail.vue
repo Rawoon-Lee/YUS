@@ -32,8 +32,11 @@
               <td>{{ video.viewCnt }}</td>
               <td>{{ video.liked }}</td>
               <td>
-                <button :disabled="isLiked" type="button" @click="like">
-                  &#128147;
+                <button v-show="!isLiked" type="button" @click="addLike">
+                  &#128153;
+                </button>
+                <button v-show="isLiked" type="button" @click="delLike">
+                  &#128150;
                 </button>
               </td>
             </tr>
@@ -54,8 +57,9 @@ export default {
   name: "ExerciseDetail",
   data() {
     return {
+      userId: null,
       video: null,
-      //liked: null;
+      // liked: null,
     };
   },
   computed: {
@@ -67,7 +71,13 @@ export default {
     // this.$store.dispatch("createVideosForUse");
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
+    this.userId = id;
     let videosUseful = [];
+    let liked = {
+      userId: sessionStorage.getItem("USER_ID"),
+      videoId: id,
+    };
+    this.$store.dispatch("getIsLiked", liked);
     for (let video of this.videos) {
       for (let ex of this.exercises) {
         if (video.exerciseNo == ex.exerciseNo) {
@@ -92,12 +102,25 @@ export default {
         break;
       }
     }
-    this.$store.dispatch("getIsLiked");
   },
   methods: {
-    like() {
-      console.log(this.USER_Id);
-      console.log("버튼 눌렸다");
+    addLike() {
+      let liked = {
+        userId: sessionStorage.getItem("USER_ID"),
+        videoId: this.userId,
+      };
+      this.$store.dispatch("addLiked", liked);
+      console.log("좋아요");
+      console.log(this.isLiked);
+    },
+    delLike() {
+      let liked = {
+        userId: sessionStorage.getItem("USER_ID"),
+        videoId: this.userId,
+      };
+      this.$store.dispatch("delLiked", liked);
+      console.log("좋아요 취소하기");
+      console.log(this.isLiked);
     },
   },
 };

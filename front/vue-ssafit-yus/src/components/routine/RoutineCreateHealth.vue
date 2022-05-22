@@ -59,7 +59,7 @@ export default {
       // user_id:,
       title: null,
       content: null,
-      workouts: [],
+      workouts: [RoutineCreateHealthWorkout],
       workout: null,
       set: null,
       rep: null,
@@ -72,7 +72,7 @@ export default {
     createRoutine() {
       let newRoutine = {
         exerciseType: 0,
-        userId: this.USER_ID,
+        userId: sessionStorage.getItem("USER_ID"),
         title: this.title,
       };
       console.log(newRoutine);
