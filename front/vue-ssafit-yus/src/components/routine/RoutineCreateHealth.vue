@@ -36,8 +36,14 @@
         <routine-create-health-workout
           v-for="(item, index) in workouts"
           :key="index"
+          @upload="addEx"
         ></routine-create-health-workout>
-        <button type="button" class="btn btn-dark" @click="add">
+        <button
+          :disabled="!isChecked"
+          type="button"
+          class="btn btn-dark"
+          @click="add"
+        >
           루틴 추가
         </button>
         <br />
@@ -60,21 +66,32 @@ export default {
       title: null,
       content: null,
       workouts: [RoutineCreateHealthWorkout],
-      workout: null,
-      set: null,
-      rep: null,
+      routines: [],
+      isChecked: false,
+      order: 0,
     };
   },
   methods: {
     add() {
       this.workouts.push(RoutineCreateHealthWorkout);
+      this.isChecked = false;
+    },
+    addEx(exercise) {
+      this.order++;
+      exercise.orderNo = this.order;
+      console.log(this.order);
+      this.routines.push(exercise);
+      this.isChecked = true;
+      console.log(this.routines);
     },
     createRoutine() {
       let newRoutine = {
-        exerciseType: 0,
+        routineNo: 0,
         userId: sessionStorage.getItem("USER_ID"),
         title: this.title,
+        content: this.title,
       };
+
       console.log(newRoutine);
     },
   },

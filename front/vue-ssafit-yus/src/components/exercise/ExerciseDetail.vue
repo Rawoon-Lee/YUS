@@ -6,7 +6,7 @@
         <b-embed
           type="iframe"
           aspect="16by9"
-          :src="`https://www.youtube.com/embed/${video.videoId}`"
+          :src="`https://www.youtube.com/embed/${videoId}`"
           allowfullscreen
         ></b-embed>
       </div>
@@ -16,8 +16,8 @@
             <tr>
               <th scope="col">제목</th>
               <th scope="col">유튜버</th>
-              <th scope="col">운동</th>
               <th scope="col">부위</th>
+              <th scope="col">운동</th>
               <th scope="col">조회수</th>
               <th scope="col">좋아요 수</th>
               <th scope="col">좋아요</th>
@@ -25,12 +25,12 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ video.title }}</td>
-              <td>{{ video.channelName }}</td>
-              <td>{{ video.workout }}</td>
-              <td>{{ video.part }}</td>
-              <td>{{ video.viewCnt }}</td>
-              <td>{{ video.liked }}</td>
+              <td>{{ videoDetail.title }}</td>
+              <td>{{ videoDetail.channelName }}</td>
+              <td>{{ videoDetail.part }}</td>
+              <td>{{ videoDetail.exerciseName }}</td>
+              <td>{{ videoDetail.viewCnt }}</td>
+              <td>{{ videoDetail.liked }}</td>
               <td>
                 <button v-show="!isLiked" type="button" @click="addLike">
                   &#128153;
@@ -57,77 +57,93 @@ export default {
   name: "ExerciseDetail",
   data() {
     return {
-      userId: null,
-      video: null,
+      videoId: null,
+      videoDetail: {
+        videoId: null,
+        title: null,
+        channelName: null,
+        part: null,
+        exerciseName: null,
+        viewCnt: null,
+        liked: null,
+      },
+      workouts: [
+        {
+          label: "어깨",
+          options: ["사이드 레터럴 레이즈", "밀리터리 프레스", "페이스 풀"],
+        },
+        {
+          label: "가슴",
+          options: [
+            "벤치 프레스",
+            "인클라인 벤치프레스",
+            "딥스",
+            "체스트 프레스",
+          ],
+        },
+        {
+          label: "등",
+          options: ["렛풀다운", "시티드 케이블 로우", "바벨 로우"],
+        },
+        {
+          label: "하체",
+          options: ["스쿼트", "레그 프레스", "레그 익스텐션"],
+        },
+      ],
       // liked: null,
     };
   },
   computed: {
-    ...mapState(["exercises"]),
-    ...mapState(["videos"]),
+    // ...mapState(["exercises"]),
+    ...mapState(["video"]),
     ...mapState(["isLiked"]),
   },
+  watch: {
+    video(value) {
+      this.calVideo(value);
+    },
+  },
   created() {
-    // this.$store.dispatch("createVideosForUse");
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
-    this.userId = id;
-    let videosUseful = [];
-    let liked = {
-      userId: sessionStorage.getItem("USER_ID"),
-      videoId: id,
-    };
-    this.$store.dispatch("getIsLiked", liked);
-    for (let video of this.videos) {
-      for (let ex of this.exercises) {
-        if (video.exerciseNo == ex.exerciseNo) {
-          let temp = {
-            title: video.title,
-            videoId: video.videoId,
-            channelName: video.channelName,
-            part: ex.exercisePart,
-            workout: ex.exerciseName,
-            viewCnt: video.viewCnt,
-            liked: -1,
-          };
-          // console.log("나 일단 만들어지긴 했음");
-          // console.log(temp);
-          videosUseful.push(temp);
-        }
-      }
-    }
-    for (let video of videosUseful) {
-      if (video.videoId == id) {
-        this.video = video;
-        break;
-      }
-    }
-    console.log(this.isLiked);
+    this.videoId = id;
+    this.calVideo(this.video);
   },
   methods: {
+    calVideo(video) {
+      this.$store.dispatch("getVideo", this.videoId);
+      this.videoDetail.title = video.title;
+      this.videoDetail.channelName = video.channelName;
+      for (let i = 0; i < this.workouts.length; i++) {
+        console.log(this.workouts[i]["options"]);
+        if (this.workouts[i]["options"].includes(video.exerciseName)) {
+          this.videoDetail.part = this.workouts[i].label;
+          break;
+        }
+      }
+      this.videoDetail.exerciseName = video.exerciseName;
+      this.videoDetail.viewCnt = video.viewCnt;
+      this.videoDetail.liked = video.LikedCnt;
+    },
     addLike() {
       let liked = {
         userId: sessionStorage.getItem("USER_ID"),
-        videoId: this.userId,
+        videoId: this.videoId,
       };
       this.$store.dispatch("addLiked", liked);
-      console.log("좋아요");
-      console.log(this.isLiked);
     },
     delLike() {
       let liked = {
         userId: sessionStorage.getItem("USER_ID"),
-        videoId: this.userId,
+        videoId: this.videoId,
       };
       this.$store.dispatch("delLiked", liked);
-      console.log("좋아요 취소하기");
-      console.log(this.isLiked);
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 button {
   border: 0;
   background-color: rgba(0, 0, 0, 0);

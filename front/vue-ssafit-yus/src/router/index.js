@@ -19,8 +19,13 @@ import MealUpdate from "@/components/meal/MealUpdate.vue";
 import ExerciseView from "@/views/ExerciseView.vue";
 import ExerciseCreate from "@/components/exercise/ExerciseCreate.vue";
 import ExerciseDetail from "@/components/exercise/ExerciseDetail.vue";
+
 import ExerciseList from "@/components/exercise/ExerciseList.vue";
-import ExerciseUpdate from "@/components/exercise/ExerciseUpdate.vue";
+import ExerciseListAll from "@/components/exercise/ExerciseListAll.vue";
+import ExerciseListShoulder from "@/components/exercise/ExerciseListShoulder.vue";
+import ExerciseListChest from "@/components/exercise/ExerciseListChest.vue";
+import ExerciseListBack from "@/components/exercise/ExerciseListBack.vue";
+import ExerciseListLegs from "@/components/exercise/ExerciseListLegs.vue";
 
 import MemberView from "@/views/MemberView.vue";
 import MemberLogin from "@/components/member/MemberLogin.vue";
@@ -59,16 +64,38 @@ const routes = [
         path: "",
         name: "exerciseList",
         component: ExerciseList,
+        children: [
+          {
+            path: "all",
+            name: "exerciseListAll",
+            component: ExerciseListAll,
+          },
+          {
+            path: "shoulder",
+            name: "exerciseListShoulder",
+            component: ExerciseListShoulder,
+          },
+          {
+            path: "chest",
+            name: "exerciseListChest",
+            component: ExerciseListChest,
+          },
+          {
+            path: "back",
+            name: "exerciseListBack",
+            component: ExerciseListBack,
+          },
+          {
+            path: "legs",
+            name: "exerciseListLegs",
+            component: ExerciseListLegs,
+          },
+        ],
       },
       {
         path: "create",
         name: "exerciseCreate",
         component: ExerciseCreate,
-      },
-      {
-        path: "update",
-        name: "exerciseUpdate",
-        component: ExerciseUpdate,
       },
       {
         path: "detail/:id",

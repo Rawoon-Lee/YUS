@@ -1,59 +1,21 @@
 <template>
   <div class="container">
-    <h2>운동 정보 목록</h2>
     <hr />
-    <div v-if="videos.length">
-      <b-table-simple hover responsive class="text-center">
-        <b-thead>
-          <b-tr>
-            <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>유튜버</b-th>
-            <b-th>부위</b-th>
-            <b-th>찜</b-th>
-            <b-th>조회수</b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="(ex, index) in pageVideosList" :key="index">
-            <b-td>{{ index + 1 }}</b-td>
-            <b-td>
-              <b-link :to="`/exercise/detail/${ex.videoId}`">{{
-                ex.title
-              }}</b-link></b-td
-            >
-            <b-td>{{ ex.channelName }}</b-td>
-            <b-td>체하</b-td>
-            <b-td>찜</b-td>
-            <b-td>{{ ex.viewCnt }}</b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
-    </div>
-    <div v-else>등록된 게시글이 없습니다.</div>
-    <div>
-      <select v-model="mode">
-        <option value="1">제목</option>
-        <option value="2">내용</option>
-        <option value="3">제목+내용</option>
-      </select>
-      <input type="text" v-model="keyword" />
-      <button @click="search">검색</button>
-    </div>
-
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-      align="center"
-    ></b-pagination>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-nav class="ml">
+        <b-nav-item :to="{ name: 'exerciseListAll' }">전체</b-nav-item>
+        <b-nav-item :to="{ name: 'exerciseListAll' }">순위</b-nav-item>
+        <b-nav-item :to="{ name: 'exerciseListShoulder' }">어깨</b-nav-item>
+        <b-nav-item :to="{ name: 'exerciseListChest' }">가슴</b-nav-item>
+        <b-nav-item :to="{ name: 'exerciseListBack' }">등</b-nav-item>
+        <b-nav-item :to="{ name: 'exerciseListLegs' }">하체</b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "ExerciseList",
   data() {
@@ -64,30 +26,9 @@ export default {
       perPage: 10,
     };
   },
-  computed: {
-    ...mapState(["videos"]),
-    rows() {
-      return this.videos.length;
-    },
-    pageVideosList() {
-      return this.videos.slice(
-        (this.currentPage - 1) * this.perPage,
-        this.currentPage * this.perPage
-      );
-    },
-  },
   created() {
     this.$store.dispatch("getVideos");
-    this.$store.dispatch("getExercises");
-  },
-  methods: {
-    search() {
-      const payload = {
-        mode: this.mode,
-        keyword: this.keyword,
-      };
-      this.$store.dispatch("getVideos", payload);
-    },
+    // this.$store.dispatch("getExercises");
   },
 };
 </script>

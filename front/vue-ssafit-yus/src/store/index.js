@@ -145,15 +145,22 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    getVideo({ commit }, id) {
-      for (let video of this.$store.state.videos) {
-        console.log(video);
-        if (video.videoId == id) {
-          commit("GET_VIDEO", video);
-          console.log(video);
-          break;
-        }
-      }
+    getVideo({ commit }, videoId) {
+      console.log("비디오 상세정보 가져올게");
+      const API_URL = `${REST_API}/youtube/info/${videoId}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          commit("GET_VIDEO", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     getExercises({ commit }, payload) {
       let params = null;
@@ -297,8 +304,6 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log("좋아요 여부 확인하기");
-          console.log(res.data.status);
           if (res.data.status == "true") {
             commit("GET_ISLIKED", true);
           } else {
@@ -321,8 +326,9 @@ export default new Vuex.Store({
       })
         .then((res) => {
           // commit("GET_ISLIKED", true);
-          console.log(res);
+          res;
           dispatch("getIsLiked", liked);
+          dispatch("getVideo", liked.videoId);
         })
         .catch((err) => {
           console.log(err.toJSON());
@@ -341,6 +347,7 @@ export default new Vuex.Store({
         .then((res) => {
           res;
           dispatch("getIsLiked", liked);
+          dispatch("getVideo", liked.videoId);
         })
         .catch((err) => {
           console.log(err.toJSON());
