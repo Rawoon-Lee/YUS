@@ -24,6 +24,6 @@
 		INSERT INTO group_info(group_name, maximum_people, user_id)
 		VALUES(#{groupName}, #{maximumPeople}, #{userId})
 	</insert>
-	<update id="updatePoint">
+	<update id="updatePoint" parameter>
 	</update>
 </mapper>
