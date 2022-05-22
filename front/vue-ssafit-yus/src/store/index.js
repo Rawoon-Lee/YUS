@@ -67,6 +67,7 @@ export default new Vuex.Store({
     },
     GET_ISLIKED(state, payload) {
       state.isLiked = payload;
+      console.log(state.isLiked);
     },
   },
   actions: {
@@ -297,7 +298,8 @@ export default new Vuex.Store({
       })
         .then((res) => {
           console.log("좋아요 여부 확인하기");
-          if (res.data.status) {
+          console.log(res.data.status);
+          if (res.data.status == "true") {
             commit("GET_ISLIKED", true);
           } else {
             commit("GET_ISLIKED", false);
@@ -337,9 +339,8 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          if (res.data.status) {
-            dispatch("getIsLiked", liked);
-          }
+          res;
+          dispatch("getIsLiked", liked);
         })
         .catch((err) => {
           console.log(err.toJSON());
