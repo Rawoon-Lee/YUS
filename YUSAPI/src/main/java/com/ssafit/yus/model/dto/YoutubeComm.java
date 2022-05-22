@@ -1,9 +1,11 @@
 package com.ssafit.yus.model.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@ApiModel(value = "YoutubeCommDTO", description = "유튜브댓글 정보")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

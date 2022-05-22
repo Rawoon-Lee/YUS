@@ -15,4 +15,15 @@
 		SELECT *
 		FROM group_info
 	</select>
+	<select id="selectByGroupNo" parameterType="int">
+		SELECT *
+		FROM group_info
+		WHERE group_no = #{groupNo}
+	</select>
+	<insert id="InsertGroupInfo" parameterType="GroupInfo">
+		INSERT INTO group_info(group_name, maximum_people, user_id)
+		VALUES(#{groupName}, #{maximumPeople}, #{userId})
+	</insert>
+	<update id="updatePoint" parameter>
+	</update>
 </mapper>
