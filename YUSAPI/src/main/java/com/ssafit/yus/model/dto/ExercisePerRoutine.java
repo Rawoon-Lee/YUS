@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 public class ExercisePerRoutine {
 	private int id;
 	private int routineNo;
-	private int exerciseNo;
+	private String exerciseName;
+	private int routineSet;
+	private int routineRep;
+	private int orderNo;
 }

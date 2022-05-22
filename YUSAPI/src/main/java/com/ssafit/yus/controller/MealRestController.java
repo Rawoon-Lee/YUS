@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafit.yus.model.dto.MealBoard;
 import com.ssafit.yus.model.dto.MealComm;
 import com.ssafit.yus.model.dto.MealLiked;
+import com.ssafit.yus.model.dto.RoutineLiked;
 import com.ssafit.yus.model.service.MealBoardService;
 import com.ssafit.yus.model.service.MealCommService;
 import com.ssafit.yus.model.service.MealLikedService;
@@ -130,8 +131,49 @@ public class MealRestController {
 	}
 	
 	
-	@GetMapping("/liked")
-	public ResponseEntity<List<MealLiked>> likedlist() {
-		return new ResponseEntity<List<MealLiked>>(mealLikedService.getAll(), HttpStatus.OK);
+//===============================================라이크 관련=============================================
+	@ApiOperation(
+			value = "사용자의 식단 게시물 좋아요 여부",
+			notes = "front로 status를 전송 해줌. 눌렸으면 true, 아니면 false"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "RoutineLiked", value = "userId와 postNo 필요", required = true)
+	})
+	@PostMapping("/liked/check")
+	public ResponseEntity<Map<String, String>> checkLiked(@RequestBody MealLiked mealLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		ret.put("status", mealLikedService.checkStatus(mealLiked));
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
+	}
+	
+	@ApiOperation(
+			value = "좋아요 추가",
+			notes = "좋아요 버튼을 눌렸으면 해당 api에 요청 보내서 status를 true로 만들기 위한 용도(db도 채우고)"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "YoutubeLiked", value = "userId와 postNo 필요", required = true)
+	})
+	@PostMapping("/liked/add")
+	public ResponseEntity<Map<String, String>> addLiked(@RequestBody MealLiked mealLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		mealLikedService.insertMealLiked(mealLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.CREATED);
+	}
+	
+	@ApiOperation(
+			value = "좋아요 취소",
+			notes = "좋아요 취소 버튼을 눌렸으면 해당 api에 요청 보내서 status를 false로 만들기 위한 용도(db도 비우고)"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "YoutubeLiked", value = "userId와 postNo 필요", required = true)
+	})
+	@PostMapping("/liked/del")
+	public ResponseEntity<Map<String, String>> delLiked(@RequestBody MealLiked mealLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		mealLikedService.deleteByIds(mealLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
 	}
 }

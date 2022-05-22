@@ -18,6 +18,7 @@ import com.ssafit.yus.model.dto.RoutineComm;
 import com.ssafit.yus.model.dto.RoutineInfo;
 import com.ssafit.yus.model.dto.RoutineLiked;
 import com.ssafit.yus.model.dto.RoutinePerDay;
+import com.ssafit.yus.model.dto.YoutubeLiked;
 import com.ssafit.yus.model.service.RoutineCommService;
 import com.ssafit.yus.model.service.RoutineInfoService;
 import com.ssafit.yus.model.service.RoutineLikedService;
@@ -46,10 +47,6 @@ public class RoutineRestController {
 	@GetMapping("/info")
 	public ResponseEntity<List<RoutineInfo>> infolist() {
 		return new ResponseEntity<List<RoutineInfo>>(routineInfoService.getAll(), HttpStatus.OK);
-	}
-	@GetMapping("/liked")
-	public ResponseEntity<List<RoutineLiked>> likedlist() {
-		return new ResponseEntity<List<RoutineLiked>>(routineLikedService.getAll(), HttpStatus.OK);
 	}
 //===============================================코멘트 관련=============================================
 	@ApiOperation(
@@ -138,5 +135,50 @@ public class RoutineRestController {
 	@GetMapping("/rpd")
 	public ResponseEntity<List<RoutinePerDay>> rpdlist() {
 		return new ResponseEntity<List<RoutinePerDay>>(routinePerDayService.getAll(), HttpStatus.OK);
+	}
+//===============================================라이크 관련=============================================
+	@ApiOperation(
+			value = "사용자의 루틴 좋아요 여부",
+			notes = "front로 status를 전송 해줌. 눌렸으면 true, 아니면 false"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "RoutineLiked", value = "userId와 routineNo 필요", required = true)
+	})
+	@PostMapping("/liked/check")
+	public ResponseEntity<Map<String, String>> checkLiked(@RequestBody RoutineLiked routineLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		ret.put("status", routineLikedService.checkStatus(routineLiked));
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
+	}
+	
+	@ApiOperation(
+			value = "좋아요 추가",
+			notes = "좋아요 버튼을 눌렸으면 해당 api에 요청 보내서 status를 true로 만들기 위한 용도(db도 채우고)"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "YoutubeLiked", value = "userId와 routineNo 필요", required = true)
+	})
+	@PostMapping("/liked/add")
+	public ResponseEntity<Map<String, String>> addLiked(@RequestBody RoutineLiked routineLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		routineLikedService.insertRoutineLiked(routineLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.CREATED);
+	}
+	
+	@ApiOperation(
+			value = "좋아요 취소",
+			notes = "좋아요 취소 버튼을 눌렸으면 해당 api에 요청 보내서 status를 false로 만들기 위한 용도(db도 비우고)"
+	)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "YoutubeLiked", value = "userId와 routineNo 필요", required = true)
+	})
+	@PostMapping("/liked/del")
+	public ResponseEntity<Map<String, String>> delLiked(@RequestBody RoutineLiked routineLiked){
+		Map<String, String> ret = new HashMap<String, String>();
+		routineLikedService.deleteByIds(routineLiked);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
 	}
 }

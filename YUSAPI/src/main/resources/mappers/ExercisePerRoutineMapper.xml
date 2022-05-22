@@ -6,7 +6,10 @@
 	<resultMap type="ExercisePerRoutine" id="ExercisePerRoutineMap">
 		<result column="id" property="id" />
 		<result column="routine_no" property="routineNo" />
-		<result column="exercise_no" property="exerciseNo" />
+		<result column="exercise_name" property="exerciseName" />
+		<result column="routine_set" property="routineSet" />
+		<result column="routine_rep" property="routineRep" />
+		<result column="order_no" property="orderNo" />
 	</resultMap>
 	<select id="selectAll" resultMap="ExercisePerRoutineMap">
 		SELECT *

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoutineInfo {
 	private int routineNo;
-	private int exerciseType;
 	private String userId;
 	private int viewCnt;
 	private String regDate;
 	private String title;
+	private String content;
 }
