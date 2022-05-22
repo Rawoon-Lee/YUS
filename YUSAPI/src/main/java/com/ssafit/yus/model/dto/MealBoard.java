@@ -1,9 +1,11 @@
 package com.ssafit.yus.model.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@ApiModel(value = "MealBoardDTO", description = "식단게시물 정보")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

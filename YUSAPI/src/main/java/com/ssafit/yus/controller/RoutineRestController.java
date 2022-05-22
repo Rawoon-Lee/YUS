@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafit.yus.model.dto.ExercisePerRoutine;
+import com.ssafit.yus.model.dto.ListForRoutine;
 import com.ssafit.yus.model.dto.RoutineComm;
 import com.ssafit.yus.model.dto.RoutineInfo;
 import com.ssafit.yus.model.dto.RoutineLiked;
@@ -77,10 +80,12 @@ public class RoutineRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "list", value = "RoutineInfo + EPR 객체 배열", dataTypeClass = List.class, required = true)
 	})
+	
 	@PostMapping("/info")
-	public ResponseEntity<Map<String, String>> addRoutine(@RequestBody List<Object> list){
+	public ResponseEntity<Map<String, String>> addRoutine(@RequestBody ListForRoutine listForRoutine){
 		Map<String, String> ret = new HashMap<String, String>();
-		routineInfoService.insertRoutineInfo(list);
+		System.out.println(listForRoutine.toString());
+//		routineInfoService.insertRoutineInfo(resList);
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}

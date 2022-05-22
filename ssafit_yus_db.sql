@@ -25,10 +25,10 @@ CREATE TABLE user_info (
 
 CREATE TABLE group_info (
 	group_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(20) NOT NULL,
+    group_name VARCHAR(40) NOT NULL,
     group_point INT DEFAULT 0,
-    maximum_people INT DEFAULT 0,
-    current_people INT DEFAULT 0,
+    maximum_people INT NOT NULL,
+    current_people INT DEFAULT 1 NOT NULL,
     user_id VARCHAR(20),
     FOREIGN KEY (user_id) REFERENCES user_info (user_id)
 );
