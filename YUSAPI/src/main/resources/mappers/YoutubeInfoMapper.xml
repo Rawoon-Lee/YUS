@@ -20,4 +20,9 @@
 		FROM youtube_info
 		WHERE video_id = #{videoId}
 	</select>
+	<update id="updateViewCnt" parameterType="String">
+		UPDATE youtube_info
+		SET view_cnt = view_cnt + 1
+		WHERE video_id = #{videoId}
+	</update>
 </mapper>

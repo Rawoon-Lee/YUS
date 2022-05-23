@@ -20,8 +20,35 @@
 		FROM group_info
 		WHERE group_no = #{groupNo}
 	</select>
+	<select id="selectMaxGroupNo" resultType="int">
+		SELECT MAX(group_no)
+		FROM group_info
+	</select>
 	<insert id="InsertGroupInfo" parameterType="GroupInfo">
 		INSERT INTO group_info(group_name, maximum_people, user_id)
 		VALUES(#{groupName}, #{maximumPeople}, #{userId})
 	</insert>
+	<update id="updateCurrentPeople" parameterType="GroupInfo">
+		UPDATE group_info
+		SET
+		current_people = current_people + 1
+		WHERE group_no = #{groupNo}
+	</update>
+	<update id="updateGroupPoint" parameterType="GroupInfo">
+		UPDATE group_info
+		SET
+		group_point = group_point + #{groupPoint}
+		WHERE group_no = #{groupNo}
+	</update>
+	<update id="updateGroupInfo" parameterType="GroupInfo">
+		UPDATE group_info
+		SET
+		group_name = #{groupName},
+		maximum_people = #{maximumPeople}
+		WHERE group_no = #{groupNo}
+	</update>
+	<delete id="deleteGroup" parameterType="GroupInfo">
+		DELETE FROM group_info
+		WHERE group_no = #{groupNo}
+	</delete>
 </mapper>

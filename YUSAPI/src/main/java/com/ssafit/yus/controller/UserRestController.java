@@ -113,12 +113,13 @@ public class UserRestController {
 					+ "userPoint가 증가 했을때도 같은 방법으로 회원정보 요청하고 userPoint만 바꿔서 전달"
 	)
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "mode", value = "0 : userInfo, 1 : userPoint, 2 : userGroup", dataTypeClass = int.class, required = true),
 		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", dataTypeClass = UserInfo.class, required = true)
 	})
-	@PostMapping("/info")
-	public ResponseEntity<String> updateInfo(@RequestBody UserInfo userInfo){
+	@PostMapping("/info/{mode}")
+	public ResponseEntity<String> updateInfo(@PathVariable int mode, @RequestBody UserInfo userInfo){
 		System.out.println(userInfo);
-		userInfoService.updateUserInfo(userInfo);
+		userInfoService.updateUserInfo(mode, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 }

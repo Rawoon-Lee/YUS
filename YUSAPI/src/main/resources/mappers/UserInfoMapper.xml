@@ -33,12 +33,27 @@
 		age = #{age},
 		gym_name = #{gymName},
 		purpose = #{purpose},
+		WHERE user_id = #{userId}
+	</update>
+	<update id="updateUserPoint" parameterType="UserInfo">
+		UPDATE user_info
+		SET
+		user_point = user_point + #{userPoint}
+		WHERE user_id = #{userId}
+	</update>
+	<update id="updateUserGroup" parameterType="UserInfo">
+		UPDATE user_info
+		SET
 		group_no = #{groupNo},
-		user_point = #{userPoint}
 		WHERE user_id = #{userId}
 	</update>
 	<delete id="deleteUserInfo" parameterType="String">
 		DELETE FROM user_info
 		WHERE user_id = #{id}
 	</delete>
+	<select id="selectByGroupNo" parameterType="int">
+		SELECT user_id
+		FROM user_info
+		WHERE group_no = #{groupNo}
+	</select>
 </mapper>

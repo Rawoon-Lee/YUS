@@ -65,6 +65,14 @@ public class YoutubeRestController {
 		return new ResponseEntity<Map<String, String>>(youtubeInfoService.selectById(videoId), HttpStatus.OK);
 	}
 	
+	@GetMapping("/info/view/{videoId}")
+	public ResponseEntity<Map<String, String>> updateview(@PathVariable String videoId) {
+		Map<String, String> ret = new HashMap<String, String>();
+		youtubeInfoService.updateViewCnt(videoId);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.CREATED);
+	}
+	
 	//===============================================코멘트 관련=============================================
 	@ApiOperation(
 			value = "유튜브 게시물의 댓글 조회",
