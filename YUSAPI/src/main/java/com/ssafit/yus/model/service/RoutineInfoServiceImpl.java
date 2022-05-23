@@ -12,6 +12,7 @@ import com.ssafit.yus.model.dao.ExercisePerRoutineDao;
 import com.ssafit.yus.model.dao.RoutineInfoDao;
 import com.ssafit.yus.model.dao.RoutineLikedDao;
 import com.ssafit.yus.model.dto.ExercisePerRoutine;
+import com.ssafit.yus.model.dto.ListForRoutine;
 import com.ssafit.yus.model.dto.RoutineInfo;
 import com.ssafit.yus.model.dto.RoutineWithLiked;
 import com.ssafit.yus.model.dto.YoutubeInfo;
@@ -57,11 +58,11 @@ public class RoutineInfoServiceImpl implements RoutineInfoService{
 	}
 
 	@Override
-	public void insertRoutineInfo(List<Object> list) {
-		routineInfoDao.insertRoutineInfo((RoutineInfo)list.get(0));
+	public void insertRoutineInfo(ListForRoutine lfr) {
+		routineInfoDao.insertRoutineInfo(lfr.getRoutineInfo());
 		int routineNo = routineInfoDao.selectMaxRoutineNo();
-		for (int i = 1; i < list.size(); i++) {
-			ExercisePerRoutine item = (ExercisePerRoutine)list.get(i);
+		List<ExercisePerRoutine> list = lfr.getEprlist();
+		for (ExercisePerRoutine item : list) {
 			item.setRoutineNo(routineNo);
 			eprDao.InsertEPR(item);
 		}

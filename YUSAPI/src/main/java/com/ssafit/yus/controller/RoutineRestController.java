@@ -1,5 +1,6 @@
 package com.ssafit.yus.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +35,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Api(tags = "루틴 관련 api")
 @RestController
@@ -80,12 +82,11 @@ public class RoutineRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "list", value = "RoutineInfo + EPR 객체 배열", dataTypeClass = List.class, required = true)
 	})
-	
 	@PostMapping("/info")
-	public ResponseEntity<Map<String, String>> addRoutine(@RequestBody ListForRoutine listForRoutine){
+	public ResponseEntity<Map<String, String>> addRoutine(@RequestBody ListForRoutine lfr){
 		Map<String, String> ret = new HashMap<String, String>();
-		System.out.println(listForRoutine.toString());
-//		routineInfoService.insertRoutineInfo(resList);
+		System.out.println(lfr.toString());
+		routineInfoService.insertRoutineInfo(lfr);
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}
@@ -97,10 +98,11 @@ public class RoutineRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "routineNo", value = "어떤 게시물인지 전달", dataTypeClass = int.class, required = true)
 	})
-	@PostMapping("/info/view")
-	public ResponseEntity<Map<String, String>> updateViewCnt(@RequestBody int routineNo){
+	
+	@PutMapping("/info/view")
+	public ResponseEntity<Map<String, String>> updateViewCnt(@RequestBody RoutineInfo routineInfo){
 		Map<String, String> ret = new HashMap<String, String>();
-		routineInfoService.updateViewCnt(routineNo);
+		routineInfoService.updateViewCnt(routineInfo.getRoutineNo());
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}
