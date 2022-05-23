@@ -92,12 +92,14 @@ export default {
         content: this.title,
       };
       let newRoutine = {
-        isIn: Routine,
+        routineInfo: Routine,
         eprlist: this.routines,
       };
       // this.routines.unshift(newRoutine);
-      console.log(newRoutine);
-      this.$store.dispatch("createRoutine", this.routines);
+      let JSONRoutine = JSON.stringify(newRoutine);
+      console.log(JSON.stringify(newRoutine));
+      // newRoutine = encodeURI(newRoutine)
+      this.$store.dispatch("createRoutine", JSONRoutine);
     },
   },
   components: {

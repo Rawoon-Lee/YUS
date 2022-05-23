@@ -76,7 +76,11 @@ export default new Vuex.Store({
     },
     GET_YOU_ISLIKED(state, payload) {
       state.isYouLiked = payload;
-      console.log(state.isLiked);
+      console.log(state.isYouLiked);
+    },
+    GET_ROU_ISLIKED(state, payload) {
+      state.isRouLiked = payload;
+      console.log(state.isRouLiked);
     },
   },
   actions: {
@@ -155,7 +159,7 @@ export default new Vuex.Store({
         });
     },
     getVideo({ commit }, videoId) {
-      console.log("비디오 상세정보 가져올게");
+      console.log("비디오 상세정보 가져올게" + videoId);
       const API_URL = `${REST_API}/youtube/info/${videoId}`;
       axios({
         url: API_URL,
@@ -259,9 +263,10 @@ export default new Vuex.Store({
       axios({
         url: API_URL,
         method: "POST",
-        params: list,
+        data: list,
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
         },
       })
         .then((res) => {
@@ -281,14 +286,17 @@ export default new Vuex.Store({
       axios({
         url: API_URL,
         method: "POST",
-        params: user,
+        data: user,
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
         .then((res) => {
           console.log(res);
           commit("USER_LOGIN", res.data.id);
           console.log(res.data.id);
           sessionStorage.setItem("access-token", res.data["access-token"]);
-          sessionStorage.setItem("USER_ID", user.userId);
+          sessionStorage.setItem("USER_ID", res.data.id);
           router.push({ name: "main" });
         })
         .catch((err) => {
@@ -347,9 +355,10 @@ export default new Vuex.Store({
       axios({
         url: API_URL,
         method: "POST",
-        params: liked,
+        data: liked,
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
         },
       })
         .then((res) => {
@@ -363,40 +372,109 @@ export default new Vuex.Store({
           console.log(err.toJSON());
         });
     },
-    addLiked({ dispatch }, liked) {
-      const API_URL = `${REST_API}/youtube/liked/add`;
+    getIsLikedRou({ commit }, liked) {
+      const API_URL = `${REST_API}/routine/liked/check`;
       axios({
         url: API_URL,
         method: "POST",
-        params: liked,
+        data: liked,
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (res.data.status == "true") {
+            commit("GET_ROU_ISLIKED", true);
+          } else {
+            commit("GET_ROU_ISLIKED", false);
+          }
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addLikedYou({ dispatch }, liked) {
+      const API_URL = `${REST_API}/youtube/liked/add`;
+      let JSONparsed = JSON.parse(liked);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
         },
       })
         .then((res) => {
           // commit("GET_ISLIKED", true);
           res;
           dispatch("getIsLikedYou", liked);
-          dispatch("getVideo", liked.videoId);
+          dispatch("getVideo", JSONparsed.videoId);
         })
         .catch((err) => {
           console.log(err.toJSON());
         });
     },
-    delLiked({ dispatch }, liked) {
+    delLikedYou({ dispatch }, liked) {
       const API_URL = `${REST_API}/youtube/liked/del`;
+      let JSONparsed = JSON.parse(liked);
       axios({
         url: API_URL,
         method: "POST",
-        params: liked,
+        data: liked,
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
         },
       })
         .then((res) => {
           res;
           dispatch("getIsLikedYou", liked);
-          dispatch("getVideo", liked.videoId);
+          dispatch("getVideo", JSONparsed.videoId);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addLikedRou({ dispatch }, liked) {
+      const API_URL = `${REST_API}/routine/liked/add`;
+      let JSONparsed = JSON.parse(liked);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          // commit("GET_ISLIKED", true);
+          res;
+          dispatch("getIsLikedRou", liked);
+          dispatch("getRoutine", JSONparsed.routineNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delLikedRou({ dispatch }, liked) {
+      const API_URL = `${REST_API}/routine/liked/del`;
+      let JSONparsed = JSON.parse(liked);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getIsLikedRou", liked);
+          dispatch("getRoutine", JSONparsed.routineNo);
         })
         .catch((err) => {
           console.log(err.toJSON());

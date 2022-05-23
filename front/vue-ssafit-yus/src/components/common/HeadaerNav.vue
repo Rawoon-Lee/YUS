@@ -39,6 +39,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "HeaderNav",
+  data() {
+    return {
+      isLogin: sessionStorage.getItem("access-token") ? true : false,
+    };
+  },
   computed: {
     ...mapState(["isLiked"]),
   },
