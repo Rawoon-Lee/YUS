@@ -40,7 +40,7 @@ import { mapState } from "vuex";
 export default {
   name: "HeaderNav",
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState(["isLiked"]),
   },
   methods: {
     logout() {

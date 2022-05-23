@@ -31,9 +31,15 @@
               <td>{{ videoDetail.exerciseName }}</td>
               <td>{{ videoDetail.viewCnt }}</td>
               <td>{{ videoDetail.liked }}</td>
-              <td>
-                <button v-show="!isYouLiked" type="button" @click="addLike">
+              <td class="iconBtn">
+                <!-- <v-btn icon color="green" v-show="!isYouLiked" @click="addLike">
                   <v-icon>mdi-heart</v-icon>
+                </v-btn>
+                <v-btn icon color="pink" v-show="isYouLiked" @click="delLike">
+                  <v-icon>mdi-heart</v-icon>
+                </v-btn> -->
+                <button v-show="!isYouLiked" type="button" @click="addLike">
+                  <v-icon>&#128153;</v-icon>
                 </button>
                 <button v-show="isYouLiked" type="button" @click="delLike">
                   &#128150;
@@ -97,11 +103,6 @@ export default {
     ...mapState(["video"]),
     ...mapState(["isYouLiked"]),
   },
-  watch: {
-    video(value) {
-      this.calVideo(value);
-    },
-  },
   created() {
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
@@ -134,6 +135,7 @@ export default {
         videoId: this.videoId,
       };
       this.$store.dispatch("addLiked", liked);
+      this.calVideo(this.video);
     },
     delLike() {
       let liked = {
@@ -141,13 +143,15 @@ export default {
         videoId: this.videoId,
       };
       this.$store.dispatch("delLiked", liked);
+      this.calVideo(this.video);
     },
   },
 };
 </script>
 
 <style scoped>
-button {
+.iconBtn {
+  color: pink;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
 }

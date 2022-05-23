@@ -1,36 +1,36 @@
 <template>
-  <div class="container">
+  <div>
     <h2>운동 정보 목록</h2>
-    <hr />
-    <div v-if="videos.length">
-      <b-table-simple hover responsive class="text-center">
-        <b-thead>
-          <b-tr>
-            <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>유튜버</b-th>
-            <b-th>운동</b-th>
-            <b-th>좋아요</b-th>
-            <b-th>조회수</b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="(ex, index) in pageVideosList" :key="index">
-            <b-td>{{ index + 1 }}</b-td>
-            <b-td>
+    <v-simple-table>
+      <hr />
+      <template v-if="videos.length">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>유튜버</th>
+            <th>운동</th>
+            <th>좋아요</th>
+            <th>조회수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(ex, index) in pageVideosList" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>
               <b-link :to="`/exercise/detail/${ex.videoId}`">{{
                 ex.title
-              }}</b-link></b-td
-            >
-            <b-td>{{ ex.channelName }}</b-td>
-            <b-td>{{ ex.exerciseName }}</b-td>
-            <b-td>{{ ex.LikedCnt }}</b-td>
-            <b-td>{{ ex.viewCnt }}</b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
-    </div>
-    <div v-else>등록된 게시글이 없습니다.</div>
+              }}</b-link>
+            </td>
+            <td>{{ ex.channelName }}</td>
+            <td>{{ ex.exerciseName }}</td>
+            <td>{{ ex.LikedCnt }}</td>
+            <td>{{ ex.viewCnt }}</td>
+          </tr>
+        </tbody>
+      </template>
+      <div v-else>등록된 게시글이 없습니다.</div>
+    </v-simple-table>
     <div>
       <select v-model="mode">
         <option value="1">제목</option>
