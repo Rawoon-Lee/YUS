@@ -27,6 +27,7 @@
           <b-form-input
             id="input-2"
             v-model="pw"
+            type="password"
             trim
             placeholder="비밀번호를 입력해주세요"
           ></b-form-input>
@@ -52,7 +53,8 @@ export default {
         userId: this.id,
         userPassword: this.pw,
       };
-      this.$store.dispatch("userLogin", user);
+      let newUser = JSON.stringify(user);
+      this.$store.dispatch("userLogin", newUser);
     },
   },
 };

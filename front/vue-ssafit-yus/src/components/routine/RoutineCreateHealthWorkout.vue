@@ -94,8 +94,8 @@ export default {
       let exercise = {
         routineNo: 0,
         exerciseName: this.workout,
-        routineSet: this.set,
-        routineRep: this.rep,
+        routineSet: Number(this.set),
+        routineRep: Number(this.rep),
         orderNo: 0,
       };
       this.isDone = true;

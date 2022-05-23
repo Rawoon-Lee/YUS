@@ -6,6 +6,7 @@ import MainView from "../views/MainView.vue";
 import RoutineView from "@/views/RoutineView.vue";
 import RoutineList from "@/components/routine/RoutineList.vue";
 import RoutineCreateHealth from "@/components/routine/RoutineCreateHealth.vue";
+import RoutineDetail from "@/components/routine/RoutineDetail.vue";
 
 import ChallengeView from "../views/ChallengeView.vue";
 import GroupList from "@/components/challenge/ChallengeGroupList.vue";
@@ -53,6 +54,11 @@ const routes = [
         path: "create/health",
         name: "routineCreateHealth",
         component: RoutineCreateHealth,
+      },
+      {
+        path: ":id",
+        name: "routineDetail",
+        component: RoutineDetail,
       },
     ],
   },

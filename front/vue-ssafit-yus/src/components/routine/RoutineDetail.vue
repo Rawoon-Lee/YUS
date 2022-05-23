@@ -22,45 +22,12 @@
               <td>{{ routine[0].userId }}</td>
               <td>{{ routine[0].regDate }}</td>
               <td>{{ routine[0].viewCnt }}</td>
-              <td>{{ routine[0].LikedCnt }}</td>
+              <td>{{ routine[0].likedCnt }}</td>
               <td>
-                <button v-show="!isLiked" type="button" @click="addLike">
+                <button v-show="!isRouLiked" type="button" @click="addLike">
                   &#128153;
                 </button>
-                <button v-show="isLiked" type="button" @click="delLike">
-                  &#128150;
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">제목</th>
-              <th scope="col">설명</th>
-              <th scope="col">부위</th>
-              <th scope="col">운동</th>
-              <th scope="col">조회수</th>
-              <th scope="col">좋아요 수</th>
-              <th scope="col">좋아요</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ routine.title }}</td>
-              <td>{{ routine.channelName }}</td>
-              <td>{{ routine.part }}</td>
-              <td>{{ routine.exerciseName }}</td>
-              <td>{{ routine.viewCnt }}</td>
-              <td>{{ routine.liked }}</td>
-              <td>
-                <button v-show="!isLiked" type="button" @click="addLike">
-                  &#128153;
-                </button>
-                <button v-show="isLiked" type="button" @click="delLike">
+                <button v-show="isRouLiked" type="button" @click="delLike">
                   &#128150;
                 </button>
               </td>
@@ -69,99 +36,73 @@
         </table>
       </div>
       <div>
-        <b-button to="/exercise">목록으로 돌아가기</b-button>
+        <b-button to="/routine">목록으로 돌아가기</b-button>
       </div>
+      <routine-detail-exercise
+        v-for="(workout, index) in workouts"
+        :key="index"
+        :exerciseName="workout.exerciseName"
+        :rep="workout.routineSet"
+        :set="workout.routineRep"
+      ></routine-detail-exercise>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
+
+const pathName = new URL(document.location).pathname.split("/");
+const id = pathName[pathName.length - 1];
 
 export default {
-  name: "ExerciseDetail",
+  name: "RoutineDetail",
   data() {
     return {
-      videoId: null,
-      videoDetail: {
-        videoId: null,
-        title: null,
-        channelName: null,
-        part: null,
-        exerciseName: null,
-        viewCnt: null,
-        liked: null,
-      },
-      workouts: [
-        {
-          label: "어깨",
-          options: ["사이드 레터럴 레이즈", "밀리터리 프레스", "페이스 풀"],
-        },
-        {
-          label: "가슴",
-          options: [
-            "벤치 프레스",
-            "인클라인 벤치프레스",
-            "딥스",
-            "체스트 프레스",
-          ],
-        },
-        {
-          label: "등",
-          options: ["렛풀다운", "시티드 케이블 로우", "바벨 로우"],
-        },
-        {
-          label: "하체",
-          options: ["스쿼트", "레그 프레스", "레그 익스텐션"],
-        },
-      ],
-      // liked: null,
+      routineId: null,
+      workouts: [],
     };
+  },
+  components: {
+    RoutineDetailExercise,
   },
   computed: {
     ...mapState(["routine"]),
     ...mapState(["isRouLiked"]),
   },
-  watch: {
-    video(value) {
-      this.calVideo(value);
-    },
-  },
   created() {
-    const pathName = new URL(document.location).pathname.split("/");
-    const id = pathName[pathName.length - 1];
-    this.videoId = id;
-    this.calVideo(this.video);
+    this.calRoutine(id);
+    this.routineId = id;
+    let liked = {
+      userId: sessionStorage.getItem("USER_ID"),
+      routineNo: this.routineId,
+    };
+    this.$store.dispatch("getIsLikedRou", JSON.stringify(liked));
+    for (let i = 1; i < this.routine.length; i++) {
+      this.workouts.push(this.routine[i]);
+    }
   },
   methods: {
-    calVideo(video) {
-      this.$store.dispatch("getVideo", this.videoId);
-      this.videoDetail.title = video.title;
-      this.videoDetail.channelName = video.channelName;
-      for (let i = 0; i < this.workouts.length; i++) {
-        console.log(this.workouts[i]["options"]);
-        if (this.workouts[i]["options"].includes(video.exerciseName)) {
-          this.videoDetail.part = this.workouts[i].label;
-          break;
-        }
-      }
-      this.videoDetail.exerciseName = video.exerciseName;
-      this.videoDetail.viewCnt = video.viewCnt;
-      this.videoDetail.liked = video.LikedCnt;
+    calRoutine(routineId) {
+      this.$store.dispatch("getRoutine", routineId);
+      console.log(this.routine);
     },
     addLike() {
       let liked = {
         userId: sessionStorage.getItem("USER_ID"),
-        videoId: this.videoId,
+        routineNo: this.routineId,
       };
-      this.$store.dispatch("addLiked", liked);
+      this.$store.dispatch("addLikedRou", JSON.stringify(liked));
+      this.calRoutine(this.routineId);
     },
     delLike() {
       let liked = {
         userId: sessionStorage.getItem("USER_ID"),
-        videoId: this.videoId,
+        routineNo: this.routineId,
       };
-      this.$store.dispatch("delLiked", liked);
+      this.$store.dispatch("delLikedRou", JSON.stringify(liked));
+      this.calRoutine(this.routineId);
     },
   },
 };

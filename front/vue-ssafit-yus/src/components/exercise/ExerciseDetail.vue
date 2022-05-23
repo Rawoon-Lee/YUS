@@ -106,16 +106,16 @@ export default {
   created() {
     const pathName = new URL(document.location).pathname.split("/");
     const id = pathName[pathName.length - 1];
+    this.videoId = id;
     let liked = {
       userId: sessionStorage.getItem("USER_ID"),
       videoId: id,
     };
     this.$store.dispatch("getIsLikedYou", liked);
-    this.videoId = id;
-    this.calVideo(this.video);
   },
   methods: {
     calVideo(video) {
+      console.log(this.videoId);
       this.$store.dispatch("getVideo", this.videoId);
       this.videoDetail.title = video.title;
       this.videoDetail.channelName = video.channelName;
@@ -134,7 +134,9 @@ export default {
         userId: sessionStorage.getItem("USER_ID"),
         videoId: this.videoId,
       };
-      this.$store.dispatch("addLiked", liked);
+      let JSONliked = JSON.stringify(liked);
+      console.log(JSONliked);
+      this.$store.dispatch("addLikedYou", JSONliked);
       this.calVideo(this.video);
     },
     delLike() {
@@ -142,7 +144,9 @@ export default {
         userId: sessionStorage.getItem("USER_ID"),
         videoId: this.videoId,
       };
-      this.$store.dispatch("delLiked", liked);
+      let JSONliked = JSON.stringify(liked);
+      console.log(JSONliked);
+      this.$store.dispatch("delLikedYou", JSONliked);
       this.calVideo(this.video);
     },
   },
