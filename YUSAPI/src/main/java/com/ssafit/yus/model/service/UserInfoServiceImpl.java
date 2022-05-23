@@ -5,7 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafit.yus.model.dao.GroupInfoDao;
 import com.ssafit.yus.model.dao.UserInfoDao;
+import com.ssafit.yus.model.dto.GroupInfo;
 import com.ssafit.yus.model.dto.UserInfo;
 import com.ssafit.yus.util.SHA256;
 
@@ -13,6 +15,8 @@ import com.ssafit.yus.util.SHA256;
 public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	UserInfoDao userInfoDao;
+	@Autowired
+	GroupInfoDao groupInfoDao;
 
 	@Override
 	public UserInfo selectUserInfo(String id) {
@@ -32,8 +36,19 @@ public class UserInfoServiceImpl implements UserInfoService{
 	}
 
 	@Override
-	public void updateUserInfo(UserInfo userInfo){
-		userInfoDao.updateUserInfo(userInfo);
+	public void updateUserInfo(int mode, UserInfo userInfo){
+		if (mode == 0)
+			userInfoDao.updateUserInfo(userInfo);
+		else if (mode == 1)
+			userInfoDao.updateUserPoint(userInfo);
+		else {
+			if (userInfo.getGroupNo() != 0) {
+				GroupInfo groupInfo = new GroupInfo();
+				groupInfo.setGroupNo(userInfo.getGroupNo());
+				groupInfoDao.updateCurrentPeople(groupInfo);
+			}
+			userInfoDao.updateUserGroup(userInfo);
+		}
 	}
 	
 }

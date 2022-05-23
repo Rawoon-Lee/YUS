@@ -12,10 +12,13 @@ import com.ssafit.yus.model.dto.RoutinePerDay;
 public class RoutinePerDayServiceImpl implements RoutinePerDayService{
 	@Autowired
 	RoutinePerDayDao routinePerDayDao;
+	
 	@Override
-	public List<RoutinePerDay> getAll() {
-		List<RoutinePerDay> list = routinePerDayDao.selectAll();
-		return list;
+	public List<RoutinePerDay> selectByGroupNo(int groupNo) {
+		return routinePerDayDao.selectByGroupNo(groupNo);
 	}
-
+	@Override
+	public void insertRoutinePerDay(RoutinePerDay routinePerDay) {
+		routinePerDayDao.insertRoutinePerDay(routinePerDay);
+	}
 }

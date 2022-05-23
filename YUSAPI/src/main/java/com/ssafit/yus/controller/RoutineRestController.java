@@ -191,10 +191,6 @@ public class RoutineRestController {
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}
-	@GetMapping("/rpd")
-	public ResponseEntity<List<RoutinePerDay>> rpdlist() {
-		return new ResponseEntity<List<RoutinePerDay>>(routinePerDayService.getAll(), HttpStatus.OK);
-	}
 //===============================================라이크 관련=============================================
 	@ApiOperation(
 			value = "사용자의 루틴 좋아요 여부",

@@ -8,4 +8,5 @@ import com.ssafit.yus.model.dto.YoutubeInfo;
 public interface YoutubeInfoService {
 	List<Map<String, String>> getAll();
 	Map<String, String> selectById(String videoId);
+	void updateViewCnt(String videoId);
 }

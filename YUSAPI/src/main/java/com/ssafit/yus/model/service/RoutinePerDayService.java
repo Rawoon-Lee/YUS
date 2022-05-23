@@ -5,5 +5,6 @@ import java.util.List;
 import com.ssafit.yus.model.dto.RoutinePerDay;
 
 public interface RoutinePerDayService {
-	List<RoutinePerDay> getAll();
+	List<RoutinePerDay> selectByGroupNo(int groupNo);
+	void insertRoutinePerDay(RoutinePerDay routinePerDay);
 }

@@ -12,10 +12,16 @@ import com.ssafit.yus.model.dto.Success;
 public class SuccessServiceImpl implements SuccessService{
 	@Autowired
 	SuccessDao successDao;
+
 	@Override
-	public List<Success> getAll() {
-		List<Success> list = successDao.selectAll();
-		return list;
+	public List<Success> selectByUserId(String userId) {
+		return successDao.selectByUserId(userId);
 	}
+
+	@Override
+	public void InsertSuccess(Success success) {
+		successDao.insertSuccess(success);
+	}
+
 
 }

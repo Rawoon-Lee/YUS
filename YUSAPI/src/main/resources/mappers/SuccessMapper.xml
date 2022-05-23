@@ -8,8 +8,17 @@
 		<result column="is_done" property="isDone" />
 		<result column="user_id" property="userId" />
 	</resultMap>
-	<select id="selectAll" resultMap="SuccessMap">
+	<select id="selectByUserId" resultMap="SuccessMap" parameterType="String">
 		SELECT *
 		FROM success
+		where user_id = #{userId}
 	</select>
+	<insert id="insertSuccess" parameterType="Success">
+		INSERT INTO success(user_id)
+		VALUES(#{userId})
+	</insert>
+	<delete id="deleteByUserId" parameterType="String">
+		DELETE FROM success
+		WHERE user_id = #{userId}
+	</delete>
 </mapper>

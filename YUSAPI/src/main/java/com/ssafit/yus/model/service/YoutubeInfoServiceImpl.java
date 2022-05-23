@@ -49,5 +49,8 @@ public class YoutubeInfoServiceImpl implements YoutubeInfoService{
 		ret.put("LikedCnt", Integer.toString(youtubeLikedDao.countLikedByVideoId(item.getVideoId())));
 		return ret;
 	}
-
+	@Override
+	public void updateViewCnt(String videoId) {
+		youtubeInfoDao.updateViewCnt(videoId);
+	}
 }

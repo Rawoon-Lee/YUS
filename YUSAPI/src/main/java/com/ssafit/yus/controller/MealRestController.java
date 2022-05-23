@@ -1,18 +1,27 @@
 package com.ssafit.yus.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ssafit.yus.model.dto.MealBoard;
 import com.ssafit.yus.model.dto.MealComm;
 import com.ssafit.yus.model.dto.MealLiked;
@@ -40,8 +49,32 @@ public class MealRestController {
 	private MealCommService mealCommService;
 	@Autowired
 	private MealLikedService mealLikedService;
+	@Autowired
+	private ServletContext servletContext;
 	
 //===============================================식단 관련=============================================
+	
+	@PostMapping("/test")
+	public ResponseEntity<Map<String, String>> test(@RequestPart MultipartFile uploadFile){
+		Map<String, String> ret = new HashMap<String, String>();
+		if( uploadFile.getSize() != 0 ) {
+			String uploadPath = servletContext.getRealPath("/file");
+			String fileName = uploadFile.getOriginalFilename();
+			String saveName = UUID.randomUUID()+".png";
+			File target = new File(uploadPath, saveName);
+			if( !new File(uploadPath).exists() )
+				new File(uploadPath).mkdirs();
+			try {
+				FileCopyUtils.copy(uploadFile.getBytes(), target);
+				System.out.println(fileName);
+				System.out.println(target.getCanonicalPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
+	}
 	@ApiOperation(
 			value = "식단 게시물 전체(리스트) 조회",
 			notes = "LikedCnt도 함께 전달 됨"

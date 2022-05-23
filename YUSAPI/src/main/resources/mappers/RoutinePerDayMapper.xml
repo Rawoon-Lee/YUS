@@ -9,8 +9,15 @@
 		<result column="group_no" property="groupNo" />
 		<result column="routine_no" property="routineNo" />
 	</resultMap>
-	<select id="selectAll" resultMap="RoutinePerDayMap">
+	<select id="selectByGroupNo" resultMap="RoutinePerDayMap">
 		SELECT *
 		FROM routine_per_day
+		WHERE group_no = #{groupNo}
 	</select>
+	<insert id="insertRoutinePerDay" parameterType="RoutinePerDay">
+		INSERT INTO routine_per_day(days, group_no, routine_no)
+		VALUES(#{days}, #{groupNo}, #{routineNo})
+	</insert>
+	<delete id="deleteBy">
+	</delete>
 </mapper>
