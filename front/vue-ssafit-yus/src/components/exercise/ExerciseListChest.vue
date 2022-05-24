@@ -1,44 +1,30 @@
 <template>
-  <div class="container">
-    <h2>운동 정보 목록</h2>
-    <hr />
-    <div v-if="videos.length">
-      <b-table-simple hover responsive class="text-center">
-        <b-thead>
-          <b-tr>
-            <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>유튜버</b-th>
-            <b-th>부위</b-th>
-            <b-th>좋아요</b-th>
-            <b-th>조회수</b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="(ex, index) in pageVideosList" :key="index">
-            <b-td>{{ index + 1 }}</b-td>
-            <b-td>
-              <b-link :to="`/exercise/detail/${ex.videoId}`">{{
-                ex.title
-              }}</b-link></b-td
-            >
-            <b-td>{{ ex.channelName }}</b-td>
-            <b-td>{{ ex.exerciseName }}</b-td>
-            <b-td>{{ ex.LikedCnt }}</b-td>
-            <b-td>{{ ex.viewCnt }}</b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
-    </div>
-    <div v-else>등록된 게시글이 없습니다.</div>
-    <div>
-      <select v-model="mode">
-        <option value="1">제목</option>
-        <option value="2">내용</option>
-        <option value="3">제목+내용</option>
-      </select>
-      <input type="text" v-model="keyword" />
-      <button @click="search">검색</button>
+  <div>
+    <div class="d-flex justify-content-center flex-wrap .container-md">
+      <div v-for="video in pageVideosList" :key="video.videoId">
+          <!-- 카드 -->
+          <div class="card h-200" style="width: 310px">
+            <iframe
+              :src="`https://www.youtube.com/embed/${video.videoId}`"
+            ></iframe>
+            <div class="card-body">
+              <h5 class="videotitle">
+                <b-link :to="`/exercise/detail/${video.videoId}`">
+                {{video.title}}
+                </b-link>
+              </h5>
+              <div class="videotext">
+                <div>{{ video.channelName }}</div>
+                <div><b-icon-eye-fill></b-icon-eye-fill> : {{ video.viewCnt }}</div>
+                <div><b-suit-heart-fill></b-suit-heart-fill></div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-flex justify-content-start flex-wrap"
+            style="margin: 1%"
+          ></div>
+      </div>
     </div>
 
     <b-pagination
