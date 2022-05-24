@@ -37,7 +37,7 @@
             </tr>
           </tbody>
         </table>
-        <div>
+        <!-- <div>
           <v-timeline dense dark>
             <v-timeline-item
               v-for="(workout, index) in workouts"
@@ -55,22 +55,22 @@
               </v-card>
             </v-timeline-item>
           </v-timeline>
-        </div>
+        </div> -->
       </div>
-      <!-- <routine-detail-exercise
+      <routine-detail-exercise
         v-for="(workout, index) in workouts"
         :key="index"
         :exerciseName="workout.exerciseName"
         :rep="workout.routineSet"
         :set="workout.routineRep"
-      ></routine-detail-exercise> -->
+      ></routine-detail-exercise>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-// import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
+import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
 
 export default {
   name: "RoutineDetail",
@@ -79,9 +79,9 @@ export default {
       routineId: null,
     };
   },
-  // components: {
-  //   RoutineDetailExercise,
-  // },
+  components: {
+    RoutineDetailExercise,
+  },
   computed: {
     ...mapState(["routine"]),
     ...mapState(["workouts"]),
@@ -91,7 +91,6 @@ export default {
   created() {
     const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
-    console.log("??? created");
     this.$store.dispatch("getRoutine", id);
     this.calRoutine(id);
     this.routineId = id;
@@ -100,14 +99,11 @@ export default {
       routineNo: this.routineId,
     };
     this.$store.dispatch("getIsLikedRou", JSON.stringify(liked));
-    console.log(5);
   },
   methods: {
     calRoutine(routineId) {
-      console.log(2);
       this.$store.dispatch("getRoutine", routineId);
       console.log(this.routine);
-      console.log(4);
     },
     addLike() {
       let liked = {

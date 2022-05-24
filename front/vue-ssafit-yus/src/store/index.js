@@ -11,6 +11,8 @@ export default new Vuex.Store({
   state: {
     groups: [],
     group: {},
+    groupMem: [],
+    keys: [],
     meals: [],
     meal: {},
     routines: [],
@@ -29,7 +31,11 @@ export default new Vuex.Store({
     isCreatedRou: false,
     USER_ID: null,
   },
-  getters: {},
+  getters: {
+    getGroupMem(state) {
+      return state.groupMem;
+    },
+  },
   mutations: {
     GET_MEALS(state, payload) {
       state.meals = payload;
@@ -52,12 +58,20 @@ export default new Vuex.Store({
     GET_GROUPS(state, payload) {
       state.groups = payload;
     },
+    GET_GROUP(state, payload) {
+      state.group = payload;
+    },
+    GET_MEM(state, payload) {
+      state.groupMem = payload;
+    },
+    GET_KEYS(state, payload) {
+      state.keys = payload;
+    },
     GET_ROUTINES(state, payload) {
       state.routines = payload;
     },
     GET_ROUTINE(state, payload) {
       state.routine = payload;
-      console.log(7);
     },
     GET_WORKOUTS(state, payload) {
       state.workouts = payload;
@@ -227,8 +241,25 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    getGroup({ commit }, id) {
+      const API_URL = `${REST_API}/group/info/${id}`;
+      axios({
+        url: API_URL,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          commit("GET_GROUP", res.data.groupInfo);
+          delete res.data.groupInfo;
+          commit("GET_MEM", res.data);
+          commit("GET_KEYS", Object.keys(res.data));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     createGroup({ commit }, group) {
-      console.log("그룹 등록 시작");
       const API_URL = `${REST_API}/group/info`;
       axios({
         url: API_URL,
@@ -240,13 +271,11 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log(res);
-          console.log("일단 실행은 성공");
+          res;
           commit("CREATE_ROUTINE", true);
           router.push({ name: "challengeList" });
         })
         .catch((err) => {
-          console.log("실행되긴 했는데 못 들어감");
           console.log(err.toJSON().status);
           commit("CREATE_ROUTINE", false);
         });
