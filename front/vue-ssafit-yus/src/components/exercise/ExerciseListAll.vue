@@ -1,46 +1,31 @@
 <template>
   <div>
-    <h2>운동 정보 목록</h2>
-    <v-simple-table>
-      <hr />
-      <template v-if="videos.length">
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>유튜버</th>
-            <th>운동</th>
-            <th>좋아요</th>
-            <th>조회수</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(ex, index) in pageVideosList" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>
-              <b-link :to="`/exercise/detail/${ex.videoId}`">{{
-                ex.title
-              }}</b-link>
-            </td>
-            <td>{{ ex.channelName }}</td>
-            <td>{{ ex.exerciseName }}</td>
-            <td>{{ ex.LikedCnt }}</td>
-            <td>{{ ex.viewCnt }}</td>
-          </tr>
-        </tbody>
-      </template>
-      <div v-else>등록된 게시글이 없습니다.</div>
-    </v-simple-table>
-    <div>
-      <select v-model="mode">
-        <option value="1">제목</option>
-        <option value="2">내용</option>
-        <option value="3">제목+내용</option>
-      </select>
-      <input type="text" v-model="keyword" />
-      <button @click="search">검색</button>
+    <div class="d-flex justify-content-center flex-wrap .container-md">
+      <div v-for="video in pageVideosList" :key="video.videoId">
+          <!-- 카드 -->
+          <div class="card h-200" style="width: 310px">
+            <iframe
+              :src="`https://www.youtube.com/embed/${video.videoId}`"
+            ></iframe>
+            <div class="card-body">
+              <h5 class="videotitle">
+                <b-link :to="`/exercise/detail/${video.videoId}`">
+                {{video.title}}
+                </b-link>
+              </h5>
+              <div class="videotext">
+                <div>{{ video.channelName }}</div>
+                <div><b-icon-eye-fill></b-icon-eye-fill> : {{ video.viewCnt }}</div>
+                <div><b-suit-heart-fill></b-suit-heart-fill></div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-flex justify-content-start flex-wrap"
+            style="margin: 1%"
+          ></div>
+      </div>
     </div>
-
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
@@ -61,7 +46,7 @@ export default {
       keyword: "",
       mode: 1,
       currentPage: 1,
-      perPage: 10,
+      perPage: 20,
       workouts: [
         {
           label: "어깨",
