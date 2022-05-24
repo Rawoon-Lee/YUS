@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafit.yus.model.dao.MealBoardDao;
 import com.ssafit.yus.model.dto.MealBoard;
+import com.ssafit.yus.model.dto.MealBoardWithFile;
 import com.ssafit.yus.model.dto.MealComm;
 import com.ssafit.yus.model.dto.MealLiked;
 import com.ssafit.yus.model.dto.RoutineLiked;
@@ -48,13 +50,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MealRestController {
 	private static final String SUCCESS = "success";
-	private static final String FAIL = "fail";	
+	private static final String FAIL = "fail";
+	private static final String PATH = new File("").getAbsolutePath();
+	private static final String macOS = "/../front/vue-ssafit-yus/src/assets/MealBoard/";
+	private static final String windowOS = "\\..\\front\\vue-ssafit-yus\\src\\assets\\MealBoard\\";
 	@Autowired
 	private MealBoardService mealBoardService;
 	@Autowired
 	private MealCommService mealCommService;
 	@Autowired
 	private MealLikedService mealLikedService;
+	@Autowired
+	private MealBoardDao mealBoardDao;
 	
 //===============================================식단 관련=============================================
 	@ApiOperation(
@@ -101,8 +108,20 @@ public class MealRestController {
 		@ApiImplicitParam(name = "mealBoard", value = "추가 할 게시물의 속성들", dataTypeClass = MealBoard.class, required = true)
 	})
 	@PostMapping("/info")
-	public ResponseEntity<Map<String, String>> addMeal(@RequestBody MealBoard mealBoard){
+	public ResponseEntity<Map<String, String>> addMeal(MealBoardWithFile mealBoard){
 		Map<String, String> ret = new HashMap<String, String>();
+		if (!mealBoard.getFile().isEmpty()) {
+			String uuid = UUID.randomUUID() + "";
+			File dest = new File(PATH + macOS + uuid + ".png");
+            try {
+            	mealBoard.getFile().transferTo(dest);
+            } catch (IllegalStateException e) {
+               e.printStackTrace();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+            mealBoard.setFilepath(uuid);
+		}
 		mealBoardService.insertMealBoard(mealBoard);
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.CREATED);
@@ -116,8 +135,21 @@ public class MealRestController {
 		@ApiImplicitParam(name = "mealBoard", value = "수정 할 게시물의 속성들", dataTypeClass = MealBoard.class, required = true)
 	})
 	@PostMapping("/info/modify")
-	public ResponseEntity<Map<String, String>> modifyMeal(@RequestBody MealBoard mealBoard){
+	public ResponseEntity<Map<String, String>> modifyMeal(MealBoardWithFile mealBoard){
 		Map<String, String> ret = new HashMap<String, String>();
+		if (!mealBoard.getFile().isEmpty()) {
+			String uuid = mealBoardDao.selectByPostNo(mealBoard.getPostNo()).getFilepath();
+			if (uuid == null) uuid = UUID.randomUUID() + "";
+			File dest = new File(PATH + macOS + uuid + ".png");
+            try {
+            	mealBoard.getFile().transferTo(dest);
+            } catch (IllegalStateException e) {
+               e.printStackTrace();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+            mealBoard.setFilepath(uuid);
+		}
 		mealBoardService.updateMealBoard(mealBoard);
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.CREATED);

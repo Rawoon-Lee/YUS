@@ -9,6 +9,7 @@ import com.ssafit.yus.model.dao.GroupInfoDao;
 import com.ssafit.yus.model.dao.UserInfoDao;
 import com.ssafit.yus.model.dto.GroupInfo;
 import com.ssafit.yus.model.dto.UserInfo;
+import com.ssafit.yus.model.dto.UserInfoWithFile;
 import com.ssafit.yus.util.SHA256;
 
 @Service
@@ -50,5 +51,4 @@ public class UserInfoServiceImpl implements UserInfoService{
 			userInfoDao.updateUserGroup(userInfo);
 		}
 	}
-	
 }

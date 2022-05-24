@@ -33,6 +33,7 @@
 		age = #{age},
 		gym_name = #{gymName},
 		purpose = #{purpose},
+		filepath = #{filepath}
 		WHERE user_id = #{userId}
 	</update>
 	<update id="updateUserPoint" parameterType="UserInfo">

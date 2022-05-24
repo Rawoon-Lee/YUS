@@ -26,7 +26,7 @@
 	</select>
 	<insert id="insertMealBoard" parameterType="MealBoard">
 		INSERT INTO meal_board(title, content, filepath, carb, protein, fat, user_id)
-		VALUES(#{title}, #{content}, #{filepath}, #{crab}, #{protein}, #{fat}, #{userId})
+		VALUES(#{title}, #{content}, #{filepath}, #{carb}, #{protein}, #{fat}, #{userId})
 	</insert>
 	<update id="updateMealBoard" parameterType="MealBoard">
 		UPDATE meal_board

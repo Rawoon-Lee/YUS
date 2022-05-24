@@ -3,6 +3,7 @@ package com.ssafit.yus.model.service;
 import java.security.NoSuchAlgorithmException;
 
 import com.ssafit.yus.model.dto.UserInfo;
+import com.ssafit.yus.model.dto.UserInfoWithFile;
 
 public interface UserInfoService {
 	UserInfo selectUserInfo(String id);

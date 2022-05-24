@@ -30,7 +30,7 @@ CREATE TABLE group_info (
     maximum_people INT NOT NULL,
     current_people INT DEFAULT 1 NOT NULL,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id)
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE youtube_info (
@@ -39,7 +39,7 @@ CREATE TABLE youtube_info (
     title VARCHAR(200) NOT NULL,
     channel_name VARCHAR(40) NOT NULL,
     exercise_name VARCHAR(40) NOT NULL,
-    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name),
+    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name) ON DELETE CASCADE,
     view_cnt INT DEFAULT 0
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE routine_info (
 	routine_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(40) NOT NULL,
 	user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
     view_cnt INT DEFAULT 0,
     reg_date TIMESTAMP DEFAULT now(),
     content TEXT NOT NULL
@@ -62,7 +62,7 @@ CREATE TABLE meal_board (
     protein INT DEFAULT 0,
     fat INT DEFAULT 0,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
     view_cnt INT DEFAULT 0,
     reg_date TIMESTAMP DEFAULT now()
 );
@@ -70,9 +70,9 @@ CREATE TABLE meal_board (
 CREATE TABLE exercise_per_routine (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     routine_no INT,
-    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no),
+    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no) ON DELETE CASCADE,
 	exercise_name VARCHAR(40) NOT NULL,
-    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name),
+    FOREIGN KEY (exercise_name) REFERENCES exercise_info (exercise_name) ON DELETE CASCADE,
     routine_set INT NOT NULL,
     routine_rep INT NOT NULL,
     order_no INT NOT NULL
@@ -82,9 +82,9 @@ CREATE TABLE routine_per_day (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     days INT NOT NULL,
 	group_no INT,
-    FOREIGN KEY (group_no) REFERENCES group_info (group_no),
+    FOREIGN KEY (group_no) REFERENCES group_info (group_no) ON DELETE CASCADE,
     routine_no INT,
-    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no)
+    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS success;
@@ -92,31 +92,31 @@ CREATE TABLE success (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     is_done TIMESTAMP DEFAULT now(),
 	user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id)
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE youtube_liked (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
 	video_id VARCHAR(40) NOT NULL,
-    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id)
+    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id) ON DELETE CASCADE
 );
 
 CREATE TABLE routine_liked (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
 	routine_no INT,
-    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no)
+    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no) ON DELETE CASCADE
 );
 
 CREATE TABLE meal_liked (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
 	post_no INT,
-    FOREIGN KEY (post_no) REFERENCES meal_board (post_no)
+    FOREIGN KEY (post_no) REFERENCES meal_board (post_no) ON DELETE CASCADE
 );
 
 CREATE TABLE youtube_comm (
@@ -126,9 +126,9 @@ CREATE TABLE youtube_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	video_id VARCHAR(40) NOT NULL,
-    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id),
+    FOREIGN KEY (video_id) REFERENCES youtube_info (video_id) ON DELETE CASCADE,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
     reg_date TIMESTAMP DEFAULT now()
 );
 
@@ -139,9 +139,9 @@ CREATE TABLE routine_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	routine_no INT,
-    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no),
+    FOREIGN KEY (routine_no) REFERENCES routine_info (routine_no) ON DELETE CASCADE,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
     reg_date TIMESTAMP DEFAULT now()
 );
 
@@ -152,9 +152,9 @@ CREATE TABLE meal_comm (
     order_no INT DEFAULT 0,
     comm_group INT DEFAULT 0,
 	post_no INT,
-    FOREIGN KEY (post_no) REFERENCES meal_board (post_no),
+    FOREIGN KEY (post_no) REFERENCES meal_board (post_no) ON DELETE CASCADE,
     user_id VARCHAR(20),
-    FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+    FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE,
     reg_date TIMESTAMP DEFAULT now()
 );
 

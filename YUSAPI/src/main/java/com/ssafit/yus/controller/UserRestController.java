@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafit.yus.model.dto.UserInfo;
+import com.ssafit.yus.model.dto.UserInfoWithFile;
 import com.ssafit.yus.model.dto.YoutubeLiked;
 import com.ssafit.yus.model.service.UserInfoService;
 import com.ssafit.yus.util.JWTUtil;
@@ -34,6 +35,9 @@ import io.swagger.annotations.ApiOperation;
 public class UserRestController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String PATH = new File("").getAbsolutePath();
+	private static final String macOS = "/../front/vue-ssafit-yus/src/assets/UserInfo/";
+	private static final String windowOS = "\\..\\front\\vue-ssafit-yus\\src\\assets\\UserInfo\\";
 	@Autowired
 	private UserInfoService userInfoService;
 	@Autowired
@@ -71,33 +75,21 @@ public class UserRestController {
 	
 	@ApiOperation(
 			value = "회원가입",
-			notes = "form태그의 정보들을 userInfo객체로 받아 db에 insert"
+			notes = "form태그의 정보들을 userInfo객체로 받아 db에 insert, 프로필 사진 추가로 FormData 필요"
 	)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "userInfo", value = "회원정보를 담은 객체", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestParam MultipartFile file, @RequestParam String userId, @RequestParam String userPassword, 
-			@RequestParam String weight, @RequestParam String height, @RequestParam String age,
-			@RequestParam String gender, @RequestParam String gymName, @RequestParam String purpose ) throws NoSuchAlgorithmException {
+	public ResponseEntity<String> register(UserInfoWithFile userInfo) throws NoSuchAlgorithmException {
 		HttpStatus status = HttpStatus.CONFLICT;
 		String msg = FAIL;
 		try {
-			if (userInfoService.selectUserInfo(userId) == null) {
-				File path = new File("");
-				UserInfo userInfo = new UserInfo();
-				userInfo.setUserId(userId);
-				userInfo.setUserPassword(userPassword);
-				userInfo.setWeight(Float.parseFloat(weight));
-				userInfo.setHeight(Float.parseFloat(height));
-				userInfo.setAge(Integer.parseInt(age));
-				userInfo.setGender(Integer.parseInt(gender));
-				userInfo.setGymName(gymName);
-				userInfo.setPurpose(Integer.parseInt(purpose));
-				if (!file.isEmpty()) {
-					File dest = new File(path.getAbsoluteFile().toString() + "\\..\\front\\vue-ssafit-yus\\src\\assets\\UserInfo\\" + userInfo.getUserId() + ".png");
+			if (userInfoService.selectUserInfo(userInfo.getUserId()) == null) {
+				if (!userInfo.getFile().isEmpty()) {
+					File dest = new File(PATH + macOS + userInfo.getUserId() + ".png");
 		            try {
-		               file.transferTo(dest);
+		            	userInfo.getFile().transferTo(dest);
 		            } catch (IllegalStateException e) {
 		               e.printStackTrace();
 		            } catch (IOException e) {
@@ -114,24 +106,6 @@ public class UserRestController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<String>(msg, status);
-	}
-	@PostMapping("/testup")
-	public ResponseEntity<String> createFeed(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
-          // 시간과 originalFilename으로 매핑 시켜서 src 주소를 만들어 낸다.
-		  File path = new File("");
-          StringBuilder sb = new StringBuilder();
-          if (!file.isEmpty()) {
-        	File dest = new File(path.getAbsoluteFile().toString() + "\\..\\front\\vue-ssafit-yus\\src\\assets\\UserInfo\\" + userId + ".png");
-            try {
-               file.transferTo(dest);
-            } catch (IllegalStateException e) {
-               e.printStackTrace();
-            } catch (IOException e) {
-               e.printStackTrace();
-            }
-          // db에 파일 위치랑 번호 등록
-          }
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	@ApiOperation(
 			value = "회원조희",
@@ -162,8 +136,19 @@ public class UserRestController {
 		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/info/{mode}")
-	public ResponseEntity<String> updateInfo(@PathVariable int mode, @RequestBody UserInfo userInfo){
-		System.out.println(userInfo);
+	public ResponseEntity<String> updateInfo(@PathVariable int mode, UserInfoWithFile userInfo){
+		if (!userInfo.getFile().isEmpty()) {
+			File dest = new File(PATH + macOS + userInfo.getUserId() + ".png");
+            try {
+            	userInfo.getFile().transferTo(dest);
+            } catch (IllegalStateException e) {
+               e.printStackTrace();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+            userInfo.setFilepath(userInfo.getUserId());
+		}
+		System.out.println(userInfo.toString());
 		userInfoService.updateUserInfo(mode, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
