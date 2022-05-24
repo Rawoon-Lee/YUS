@@ -102,12 +102,6 @@ export default {
     this.$store.dispatch("getIsLikedRou", JSON.stringify(liked));
     console.log(5);
   },
-  // mounted() {
-  //   console.log("??? mounted");
-  //   for (let i = 1; i < this.routine.length; i++) {
-  //     this.workouts.push(this.routine[i]);
-  //   }
-  // },
   methods: {
     calRoutine(routineId) {
       console.log(2);
