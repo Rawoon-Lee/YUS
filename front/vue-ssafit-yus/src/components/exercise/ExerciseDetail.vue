@@ -42,7 +42,7 @@
         </table>
       </div>
       <div>
-        <b-button to="/exercise">목록으로 돌아가기</b-button>
+        <b-button to="/exercise/all">목록으로 돌아가기</b-button>
       </div>
     </div>
     <div v-if="commsYou">
