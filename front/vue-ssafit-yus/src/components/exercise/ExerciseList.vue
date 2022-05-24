@@ -1,16 +1,36 @@
 <template>
   <div class="container">
     <hr />
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-nav class="ml">
-        <b-nav-item :to="{ name: 'exerciseListAll' }">전체</b-nav-item>
-        <b-nav-item :to="{ name: 'exerciseListAll' }">순위</b-nav-item>
-        <b-nav-item :to="{ name: 'exerciseListShoulder' }">어깨</b-nav-item>
-        <b-nav-item :to="{ name: 'exerciseListChest' }">가슴</b-nav-item>
-        <b-nav-item :to="{ name: 'exerciseListBack' }">등</b-nav-item>
-        <b-nav-item :to="{ name: 'exerciseListLegs' }">하체</b-nav-item>
-      </b-navbar-nav>
-    </b-navbar>
+    <v-btn 
+    class="pink white--text"
+    :to="{ name: 'exerciseListAll' }"
+    >전체
+    </v-btn>
+    <v-btn 
+    color="grey darken-4"
+    :to="{ name: 'exerciseListAll' }"
+    >순위
+    </v-btn>
+    <v-btn 
+    color="grey darken-3"
+    :to="{ name: 'exerciseListShoulder' }"
+    >어깨
+    </v-btn>
+    <v-btn 
+    color="grey darken-3"
+    :to="{ name: 'exerciseListChest' }"
+    >가슴
+    </v-btn>
+    <v-btn 
+    color="grey darken-3"
+    :to="{ name: 'exerciseListBack' }"
+    >등
+    </v-btn>
+    <v-btn 
+    color="grey darken-3"
+    :to="{ name: 'exerciseListLegs' }"
+    >하체
+    </v-btn>
     <router-view></router-view>
   </div>
 </template>
