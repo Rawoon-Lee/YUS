@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>동영상 상세보기</h2>
-    <div class="m-4">
+    <h2>루틴 상세 내용</h2>
+    <div class="m-4" v-if="routine">
       <div class="container">
         <table class="table">
           <thead>
@@ -17,12 +17,12 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ routine[0].title }}</td>
-              <td>{{ routine[0].content }}</td>
-              <td>{{ routine[0].userId }}</td>
-              <td>{{ routine[0].regDate }}</td>
-              <td>{{ routine[0].viewCnt }}</td>
-              <td>{{ routine[0].likedCnt }}</td>
+              <td>{{ routine.title }}</td>
+              <td>{{ routine.content }}</td>
+              <td>{{ routine.userId }}</td>
+              <td>{{ routine.regDate }}</td>
+              <td>{{ routine.viewCnt }}</td>
+              <td>{{ routine.likedCnt }}</td>
               <td>
                 <button v-show="!isRouLiked" type="button" @click="addLike">
                   &#128153;
@@ -53,15 +53,11 @@
 import { mapState } from "vuex";
 import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
 
-const pathName = new URL(document.location).pathname.split("/");
-const id = pathName[pathName.length - 1];
-
 export default {
   name: "RoutineDetail",
   data() {
     return {
       routineId: null,
-      workouts: [],
     };
   },
   components: {
@@ -69,9 +65,15 @@ export default {
   },
   computed: {
     ...mapState(["routine"]),
+    ...mapState(["workouts"]),
     ...mapState(["isRouLiked"]),
+    ...mapState(["commsYou"]),
   },
   created() {
+    const pathName = this.$route.path.split("/");
+    const id = pathName[pathName.length - 1];
+    console.log("??? created");
+    this.$store.dispatch("getRoutine", id);
     this.calRoutine(id);
     this.routineId = id;
     let liked = {
@@ -79,14 +81,20 @@ export default {
       routineNo: this.routineId,
     };
     this.$store.dispatch("getIsLikedRou", JSON.stringify(liked));
-    for (let i = 1; i < this.routine.length; i++) {
-      this.workouts.push(this.routine[i]);
-    }
+    console.log(5);
   },
+  // mounted() {
+  //   console.log("??? mounted");
+  //   for (let i = 1; i < this.routine.length; i++) {
+  //     this.workouts.push(this.routine[i]);
+  //   }
+  // },
   methods: {
     calRoutine(routineId) {
+      console.log(2);
       this.$store.dispatch("getRoutine", routineId);
       console.log(this.routine);
+      console.log(4);
     },
     addLike() {
       let liked = {

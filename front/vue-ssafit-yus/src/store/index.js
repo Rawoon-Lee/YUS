@@ -15,11 +15,13 @@ export default new Vuex.Store({
     meal: {},
     routines: [],
     routine: {},
+    workouts: [],
     exercises: [],
     exercise: {},
     videos: [],
     video: {},
     VIDEOS: [],
+    commsYou: [],
     isJoin: 0,
     isLogin: false,
     isYouLiked: false,
@@ -55,6 +57,10 @@ export default new Vuex.Store({
     },
     GET_ROUTINE(state, payload) {
       state.routine = payload;
+      console.log(7);
+    },
+    GET_WORKOUTS(state, payload) {
+      state.workouts = payload;
     },
     CREATE_ROUTINE(state, payload) {
       state.isRouCreated = payload;
@@ -81,6 +87,9 @@ export default new Vuex.Store({
     GET_ROU_ISLIKED(state, payload) {
       state.isRouLiked = payload;
       console.log(state.isRouLiked);
+    },
+    GET_COMM_YOU(state, payload) {
+      state.commsYou = payload;
     },
   },
   actions: {
@@ -250,8 +259,8 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log(res);
-          commit("GET_ROUTINE", res.data);
+          commit("GET_ROUTINE", res.data[0]);
+          commit("GET_WORKOUTS", res.data.slice(1));
         })
         .catch((err) => {
           console.log(err);
@@ -292,9 +301,7 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log(res);
           commit("USER_LOGIN", res.data.id);
-          console.log(res.data.id);
           sessionStorage.setItem("access-token", res.data["access-token"]);
           sessionStorage.setItem("USER_ID", res.data.id);
           router.push({ name: "main" });
@@ -477,6 +484,24 @@ export default new Vuex.Store({
           dispatch("getRoutine", JSONparsed.routineNo);
         })
         .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    getCommentsYou({ commit }, id) {
+      const API_URL = `${REST_API}/youtube/comm/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log("댓글 가져옴");
+          commit("GET_COMM_YOU", res.data);
+        })
+        .catch((err) => {
+          console.log("미안 댓글 못가져옴");
           console.log(err.toJSON());
         });
     },

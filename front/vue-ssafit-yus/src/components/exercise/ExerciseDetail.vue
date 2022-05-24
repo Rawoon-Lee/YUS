@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>동영상 상세보기</h2>
-    <div class="m-4">
+    <div class="m-4" v-if="video">
       <div>
         <b-embed
           type="iframe"
@@ -16,7 +16,6 @@
             <tr>
               <th scope="col">제목</th>
               <th scope="col">유튜버</th>
-              <th scope="col">부위</th>
               <th scope="col">운동</th>
               <th scope="col">조회수</th>
               <th scope="col">좋아요 수</th>
@@ -25,21 +24,14 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ videoDetail.title }}</td>
-              <td>{{ videoDetail.channelName }}</td>
-              <td>{{ videoDetail.part }}</td>
-              <td>{{ videoDetail.exerciseName }}</td>
-              <td>{{ videoDetail.viewCnt }}</td>
-              <td>{{ videoDetail.liked }}</td>
-              <td class="iconBtn">
-                <!-- <v-btn icon color="green" v-show="!isYouLiked" @click="addLike">
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon color="pink" v-show="isYouLiked" @click="delLike">
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn> -->
+              <td>{{ video.title }}</td>
+              <td>{{ video.channelName }}</td>
+              <td>{{ video.exerciseName }}</td>
+              <td>{{ video.viewCnt }}</td>
+              <td>{{ video.LikedCnt }}</td>
+              <td>
                 <button v-show="!isYouLiked" type="button" @click="addLike">
-                  <v-icon>&#128153;</v-icon>
+                  &#128153;
                 </button>
                 <button v-show="isYouLiked" type="button" @click="delLike">
                   &#128150;
@@ -53,11 +45,15 @@
         <b-button to="/exercise">목록으로 돌아가기</b-button>
       </div>
     </div>
+    <div v-if="commsYou">
+      <comment-list :commsYou="commsYou" :videoId="videoId"></comment-list>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import CommentList from "@/components/comments/CommentList.vue";
 
 export default {
   name: "ExerciseDetail",
@@ -71,7 +67,7 @@ export default {
         part: null,
         exerciseName: null,
         viewCnt: null,
-        liked: null,
+        likedCnt: null,
       },
       workouts: [
         {
@@ -98,14 +94,21 @@ export default {
       ],
     };
   },
+  components: {
+    CommentList,
+  },
   computed: {
     // ...mapState(["exercises"]),
+    ...mapState(["commsYou"]),
     ...mapState(["video"]),
     ...mapState(["isYouLiked"]),
   },
   created() {
-    const pathName = new URL(document.location).pathname.split("/");
+    const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
+    console.log("???" + id);
+    this.$store.dispatch("getVideo", id);
+    this.$store.dispatch("getCommentsYou", id);
     this.videoId = id;
     let liked = {
       userId: sessionStorage.getItem("USER_ID"),
@@ -114,20 +117,19 @@ export default {
     this.$store.dispatch("getIsLikedYou", liked);
   },
   methods: {
-    calVideo(video) {
-      console.log(this.videoId);
-      this.$store.dispatch("getVideo", this.videoId);
-      this.videoDetail.title = video.title;
-      this.videoDetail.channelName = video.channelName;
-      for (let i = 0; i < this.workouts.length; i++) {
-        if (this.workouts[i]["options"].includes(video.exerciseName)) {
-          this.videoDetail.part = this.workouts[i].label;
-          break;
-        }
-      }
-      this.videoDetail.exerciseName = video.exerciseName;
-      this.videoDetail.viewCnt = video.viewCnt;
-      this.videoDetail.liked = video.LikedCnt;
+    calVideo(videoId) {
+      this.$store.dispatch("getVideo", videoId);
+      // this.videoDetail.title = video.title;
+      // this.videoDetail.channelName = video.channelName;
+      // for (let i = 0; i < this.workouts.length; i++) {
+      // if (this.workouts[i]["options"].includes(video.exerciseName)) {
+      // this.videoDetail.part = this.workouts[i].label;
+      // break;
+      // }
+      // }
+      // this.videoDetail.exerciseName = video.exerciseName;
+      // this.videoDetail.viewCnt = video.viewCnt;
+      // this.videoDetail.likedCnt = video.LikedCnt;
     },
     addLike() {
       let liked = {
@@ -137,7 +139,7 @@ export default {
       let JSONliked = JSON.stringify(liked);
       console.log(JSONliked);
       this.$store.dispatch("addLikedYou", JSONliked);
-      this.calVideo(this.video);
+      this.calVideo(this.videoId);
     },
     delLike() {
       let liked = {
@@ -147,7 +149,7 @@ export default {
       let JSONliked = JSON.stringify(liked);
       console.log(JSONliked);
       this.$store.dispatch("delLikedYou", JSONliked);
-      this.calVideo(this.video);
+      this.calVideo(this.videoId);
     },
   },
 };
