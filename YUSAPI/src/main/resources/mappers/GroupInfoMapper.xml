@@ -15,7 +15,7 @@
 		SELECT *
 		FROM group_info
 	</select>
-	<select id="selectByGroupNo" parameterType="int">
+	<select id="selectByGroupNo" parameterType="int" resultMap="GroupInfoMap">
 		SELECT *
 		FROM group_info
 		WHERE group_no = #{groupNo}

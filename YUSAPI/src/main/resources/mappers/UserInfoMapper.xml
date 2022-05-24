@@ -51,8 +51,8 @@
 		DELETE FROM user_info
 		WHERE user_id = #{id}
 	</delete>
-	<select id="selectByGroupNo" parameterType="int">
-		SELECT user_id
+	<select id="selectByGroupNo" parameterType="int" resultMap="UserInfoMap">
+		SELECT *
 		FROM user_info
 		WHERE group_no = #{groupNo}
 	</select>

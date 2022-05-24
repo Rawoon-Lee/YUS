@@ -1,6 +1,8 @@
 package com.ssafit.yus.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.ssafit.yus.model.dao.UserInfoDao;
 import com.ssafit.yus.model.dto.GroupInfo;
 import com.ssafit.yus.model.dto.ListForGroup;
 import com.ssafit.yus.model.dto.RoutinePerDay;
+import com.ssafit.yus.model.dto.UserInfo;
 
 @Service
 public class GroupInfoServiceImpl implements GroupInfoService{
@@ -30,8 +33,13 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	}
 
 	@Override
-	public GroupInfo selectByGroupNo(int groupNo) {
-		return groupInfoDao.selectByGroupNo(groupNo);
+	public Map<String, Object> selectByGroupNo(int groupNo) {
+		Map<String, Object> ret = new HashMap<>();
+		List<UserInfo>names = userInfoDao.selectByGroupNo(groupNo);
+		ret.put("groupInfo", groupInfoDao.selectByGroupNo(groupNo));
+		for (UserInfo name : names)
+			ret.put(name.getUserId(), successDao.selectByUserId(name.getUserId()));
+		return ret;
 	}
 
 	@Override
@@ -58,9 +66,13 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	@Override
 	public void deleteGroup(GroupInfo groupInfo) {
 		groupInfoDao.deleteGroup(groupInfo);
-		List<String>list = userInfoDao.selectByGroupNo(groupInfo.getGroupNo());
-		for (String item : list) {
-			successDao.deleteByUserId(item);
+		List<UserInfo>list = userInfoDao.selectByGroupNo(groupInfo.getGroupNo());
+		for (UserInfo item : list) {
+			successDao.deleteByUserId(item.getUserId());
+			UserInfo userInfo = new UserInfo();
+			userInfo.setGroupNo(0);
+			userInfo.setUserId(item.getUserId());
+			userInfoDao.updateUserGroup(userInfo);
 		}
 	}
 	
