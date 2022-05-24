@@ -1,5 +1,6 @@
 package com.ssafit.yus.controller;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,10 +36,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import lombok.extern.slf4j.Slf4j;
 
 @Api(tags = "식단게시판 관련 api")
 @RestController
 @RequestMapping("/meal")
+@Slf4j
 public class MealRestController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
@@ -68,6 +71,7 @@ public class MealRestController {
 				FileCopyUtils.copy(uploadFile.getBytes(), target);
 				System.out.println(fileName);
 				System.out.println(target.getCanonicalPath());
+				System.out.println(uploadPath);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
