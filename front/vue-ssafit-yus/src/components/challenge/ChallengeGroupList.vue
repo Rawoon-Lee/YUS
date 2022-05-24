@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h2>챌린지 그룹 목록</h2>
+    <b-button to="challenge/create">그룹 만들기</b-button>
     <hr />
     <div v-if="groups.length">
       <b-table-simple hover responsive class="text-center">
@@ -9,7 +10,6 @@
             <b-th>번호</b-th>
             <b-th>그룹명</b-th>
             <b-th>그룹장</b-th>
-            <b-th>운동 분류</b-th>
             <b-th>멤버</b-th>
             <b-th>Activity Credit</b-th>
             <b-th>가입 신청</b-th>
@@ -24,10 +24,9 @@
               }}</b-link></b-td
             >
             <b-td>포켓몬빵순이</b-td>
-            <b-td>{{ group.exerciseType }}</b-td>
             <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
             <b-td>{{ group.groupPoint }}</b-td>
-            <b-td><button @click="enroll">가입 신청</button></b-td>
+            <b-td><b-button @click="enroll">가입 신청</b-button></b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>

@@ -227,6 +227,30 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    createGroup({ commit }, group) {
+      console.log("그룹 등록 시작");
+      const API_URL = `${REST_API}/group/info`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: group,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          console.log("일단 실행은 성공");
+          commit("CREATE_ROUTINE", true);
+          router.push({ name: "challengeList" });
+        })
+        .catch((err) => {
+          console.log("실행되긴 했는데 못 들어감");
+          console.log(err.toJSON().status);
+          commit("CREATE_ROUTINE", false);
+        });
+    },
     getRoutines({ commit }, payload) {
       let params = null;
       if (payload) {
