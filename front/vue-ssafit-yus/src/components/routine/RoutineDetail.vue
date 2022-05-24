@@ -3,6 +3,9 @@
     <h2>루틴 상세 내용</h2>
     <div class="m-4" v-if="routine">
       <div class="container">
+        <div>
+          <b-button to="/routine">목록으로 돌아가기</b-button>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -34,24 +37,40 @@
             </tr>
           </tbody>
         </table>
+        <div>
+          <v-timeline dense>
+            <v-timeline-item
+              v-for="(workout, index) in workouts"
+              :key="index"
+              color="primary"
+              fill-dot
+            >
+              <span slot="opposite">{{ workout.orderNo }}</span>
+              <v-card class="elevation-2">
+                <v-card-title class="text-h5">
+                  {{ workout.exerciseName }}
+                </v-card-title>
+                <v-card-text> set: {{ workout.routineSet }} </v-card-text>
+                <v-card-text> rep: {{ workout.routineRep }} </v-card-text>
+              </v-card>
+            </v-timeline-item>
+          </v-timeline>
+        </div>
       </div>
-      <div>
-        <b-button to="/routine">목록으로 돌아가기</b-button>
-      </div>
-      <routine-detail-exercise
+      <!-- <routine-detail-exercise
         v-for="(workout, index) in workouts"
         :key="index"
         :exerciseName="workout.exerciseName"
         :rep="workout.routineSet"
         :set="workout.routineRep"
-      ></routine-detail-exercise>
+      ></routine-detail-exercise> -->
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
+// import RoutineDetailExercise from "@/components/routine/RoutineDetailExercise.vue";
 
 export default {
   name: "RoutineDetail",
@@ -60,9 +79,9 @@ export default {
       routineId: null,
     };
   },
-  components: {
-    RoutineDetailExercise,
-  },
+  // components: {
+  //   RoutineDetailExercise,
+  // },
   computed: {
     ...mapState(["routine"]),
     ...mapState(["workouts"]),
