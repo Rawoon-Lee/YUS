@@ -38,11 +38,11 @@
           </tbody>
         </table>
         <div>
-          <v-timeline dense>
+          <v-timeline dense dark>
             <v-timeline-item
               v-for="(workout, index) in workouts"
               :key="index"
-              color="primary"
+              light
               fill-dot
             >
               <span slot="opposite">{{ workout.orderNo }}</span>
