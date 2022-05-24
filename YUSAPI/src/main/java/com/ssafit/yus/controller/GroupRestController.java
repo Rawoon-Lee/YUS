@@ -38,8 +38,8 @@ public class GroupRestController {
 		return new ResponseEntity<List<GroupInfo>>(groupInfoService.selectAll(), HttpStatus.OK);
 	}
 	@GetMapping("/info/{groupNo}")
-	public ResponseEntity<GroupInfo> detail(@PathVariable int groupNo){
-		return new ResponseEntity<GroupInfo>(groupInfoService.selectByGroupNo(groupNo), HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> detail(@PathVariable int groupNo){
+		return new ResponseEntity<Map<String, Object>>(groupInfoService.selectByGroupNo(groupNo), HttpStatus.OK);
 	}
 	@PostMapping("/info")
 	public ResponseEntity<Map<String, String>> insert(@RequestBody ListForGroup lfg){

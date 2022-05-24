@@ -12,6 +12,7 @@
 		SELECT *
 		FROM success
 		where user_id = #{userId}
+		AND is_done BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW()
 	</select>
 	<insert id="insertSuccess" parameterType="Success">
 		INSERT INTO success(user_id)

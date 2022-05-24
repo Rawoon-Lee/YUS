@@ -12,5 +12,5 @@ public interface UserInfoDao {
 	void updateUserGroup(UserInfo userInfo);
 	void updateUserPoint(UserInfo userInfo);
 	void deleteUserInfo(String id);
-	List<String> selectByGroupNo(int groupNo);
+	List<UserInfo> selectByGroupNo(int groupNo);
 }
