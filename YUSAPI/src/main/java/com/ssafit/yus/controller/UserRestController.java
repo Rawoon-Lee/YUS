@@ -1,5 +1,7 @@
 package com.ssafit.yus.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ssafit.yus.model.dto.UserInfo;
 import com.ssafit.yus.model.dto.YoutubeLiked;
 import com.ssafit.yus.model.service.UserInfoService;
@@ -72,11 +77,34 @@ public class UserRestController {
 		@ApiImplicitParam(name = "userInfo", value = "회원정보를 담은 객체", dataTypeClass = UserInfo.class, required = true)
 	})
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody UserInfo userInfo) throws NoSuchAlgorithmException {
+	public ResponseEntity<String> register(@RequestParam MultipartFile file, @RequestParam String userId, @RequestParam String userPassword, 
+			@RequestParam String weight, @RequestParam String height, @RequestParam String age,
+			@RequestParam String gender, @RequestParam String gymName, @RequestParam String purpose ) throws NoSuchAlgorithmException {
 		HttpStatus status = HttpStatus.CONFLICT;
 		String msg = FAIL;
 		try {
-			if (userInfoService.selectUserInfo(userInfo.getUserId()) == null) {
+			if (userInfoService.selectUserInfo(userId) == null) {
+				File path = new File("");
+				UserInfo userInfo = new UserInfo();
+				userInfo.setUserId(userId);
+				userInfo.setUserPassword(userPassword);
+				userInfo.setWeight(Float.parseFloat(weight));
+				userInfo.setHeight(Float.parseFloat(height));
+				userInfo.setAge(Integer.parseInt(age));
+				userInfo.setGender(Integer.parseInt(gender));
+				userInfo.setGymName(gymName);
+				userInfo.setPurpose(Integer.parseInt(purpose));
+				if (!file.isEmpty()) {
+					File dest = new File(path.getAbsoluteFile().toString() + "\\..\\front\\vue-ssafit-yus\\src\\assets\\UserInfo\\" + userInfo.getUserId() + ".png");
+		            try {
+		               file.transferTo(dest);
+		            } catch (IllegalStateException e) {
+		               e.printStackTrace();
+		            } catch (IOException e) {
+		               e.printStackTrace();
+		            }
+		            userInfo.setFilepath(userInfo.getUserId());
+				}
 				userInfoService.insertUserInfo(userInfo);
 				msg = SUCCESS;
 				status = HttpStatus.CREATED;
@@ -87,7 +115,24 @@ public class UserRestController {
 		}
 		return new ResponseEntity<String>(msg, status);
 	}
-	
+	@PostMapping("/testup")
+	public ResponseEntity<String> createFeed(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
+          // 시간과 originalFilename으로 매핑 시켜서 src 주소를 만들어 낸다.
+		  File path = new File("");
+          StringBuilder sb = new StringBuilder();
+          if (!file.isEmpty()) {
+        	File dest = new File(path.getAbsoluteFile().toString() + "\\..\\front\\vue-ssafit-yus\\src\\assets\\UserInfo\\" + userId + ".png");
+            try {
+               file.transferTo(dest);
+            } catch (IllegalStateException e) {
+               e.printStackTrace();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+          // db에 파일 위치랑 번호 등록
+          }
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 	@ApiOperation(
 			value = "회원조희",
 			notes = "id를 통해서 회원정보를 조회. 각종 회원정보가 필요한 기능을 이용할 때 호출 하세용"
