@@ -66,12 +66,12 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	@Override
 	public void deleteGroup(GroupInfo groupInfo) {
 		groupInfoDao.deleteGroup(groupInfo);
-		List<String>list = userInfoDao.selectByGroupNo(groupInfo.getGroupNo());
-		for (String item : list) {
-			successDao.deleteByUserId(item);
+		List<UserInfo>list = userInfoDao.selectByGroupNo(groupInfo.getGroupNo());
+		for (UserInfo item : list) {
+			successDao.deleteByUserId(item.getUserId());
 			UserInfo userInfo = new UserInfo();
 			userInfo.setGroupNo(0);
-			userInfo.setUserId(item);
+			userInfo.setUserId(item.getUserId());
 			userInfoDao.updateUserGroup(userInfo);
 		}
 	}
