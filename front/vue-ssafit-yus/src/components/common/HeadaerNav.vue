@@ -12,7 +12,7 @@
           <b-nav-item to="/routine">루틴</b-nav-item>
           <b-nav-item to="/challenge">운동 챌린지</b-nav-item>
           <b-nav-item to="/meal">식단 게시판</b-nav-item>
-          <b-nav-item to="/exercise">운동정보</b-nav-item>
+          <b-nav-item to="/exercise/all">운동정보</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" align="right"> </b-navbar-nav>
         <b-navbar-nav v-show="!isLogin" class="ml-auto" align="right">
