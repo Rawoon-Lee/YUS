@@ -3,31 +3,32 @@
     <div class="d-flex justify-content-center flex-wrap .container-md">
       <div v-for="video in pageVideosList" :key="video.videoId">
           <!-- 카드 -->
-          <div class="card h-200" style="width: 310px">
+          <div class="card h-200" style="width: 370px">
             <iframe
               :src="`https://www.youtube.com/embed/${video.videoId}`"
             ></iframe>
             <div class="card-body">
               <h5 class="videotitle">
-                <b-link :to="`/exercise/detail/${video.videoId}`">
+                <b-link style="color: #646464" :to="`/exercise/detail/${video.videoId}`">
                 {{video.title}}
                 </b-link>
               </h5>
-              <div class="videotext">
-                <div>{{ video.channelName }}</div>
-                <div><b-icon-eye-fill></b-icon-eye-fill> : {{ video.viewCnt }}</div>
-                <div><b-suit-heart-fill></b-suit-heart-fill></div>
+              <div style="text-align:right; font-weight: bold;">{{ video.channelName }}</div>
+              <div class="videotext" style="text-align:right">
+                <div><b-icon-eye-fill></b-icon-eye-fill> {{ video.viewCnt }}</div>
+                <div><b-icon icon="heart-fill" style="color: red"></b-icon> {{ video.LikedCnt }}</div>
               </div>
             </div>
           </div>
           <div
             class="d-flex justify-content-start flex-wrap"
-            style="margin: 1%"
+            style="margin: 3%"
           ></div>
       </div>
     </div>
 
     <b-pagination
+      page-class="customPage"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"

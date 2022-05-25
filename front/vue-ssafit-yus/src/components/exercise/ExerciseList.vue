@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <hr />
+    <br>
     <v-btn 
     class="pink white--text"
     :to="{ name: 'exerciseListAll' }"
@@ -31,6 +31,7 @@
     :to="{ name: 'exerciseListLegs' }"
     >하체
     </v-btn>
+    <hr>
     <router-view></router-view>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-nav></header-nav>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
@@ -13,3 +13,9 @@ export default {
   },
 };
 </script>
+<style>
+.customPage.page-item.active .page-link {
+  background-color: #646464;
+  border-color: black;
+}
+</style>

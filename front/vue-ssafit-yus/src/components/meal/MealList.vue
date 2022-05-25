@@ -42,6 +42,7 @@
     </div>
 
     <b-pagination
+      page-class="customPage"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
