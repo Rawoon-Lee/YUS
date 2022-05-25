@@ -30,6 +30,7 @@ export default new Vuex.Store({
     isRouLiked: false,
     isCreatedRou: false,
     USER_ID: null,
+    userInfo: null,
   },
   getters: {
     getGroupMem(state) {
@@ -81,8 +82,10 @@ export default new Vuex.Store({
       console.log(state.isRouCreated);
     },
     USER_LOGIN(state, payload) {
-      state.isLogin = true;
       state.USER_ID = payload;
+    },
+    USER_ISLOGIN(state, payload) {
+      state.isLogin = payload;
     },
     CREATE_USER(state, payload) {
       state.isJoin = payload;
@@ -104,6 +107,9 @@ export default new Vuex.Store({
     },
     GET_COMM_YOU(state, payload) {
       state.commsYou = payload;
+    },
+    GET_USER_INFO(state, payload) {
+      state.userInfo = payload;
     },
   },
   actions: {
@@ -343,7 +349,7 @@ export default new Vuex.Store({
           commit("CREATE_ROUTINE", false);
         });
     },
-    userLogin({ commit }, user) {
+    userLogin({ commit, dispatch }, user) {
       const API_URL = `${REST_API}/user/login`;
       axios({
         url: API_URL,
@@ -357,11 +363,38 @@ export default new Vuex.Store({
           commit("USER_LOGIN", res.data.id);
           sessionStorage.setItem("access-token", res.data["access-token"]);
           sessionStorage.setItem("USER_ID", res.data.id);
+          dispatch("userIsLogin");
           router.push({ name: "main" });
         })
         .catch((err) => {
           console.log(err);
           console.log(user);
+        });
+    },
+    userIsLogin({ commit }) {
+      let userId = sessionStorage.getItem("USER_ID");
+      if (userId) {
+        commit("USER_ISLOGIN", true);
+      } else {
+        commit("USER_ISLOGIN", false);
+      }
+    },
+    getUserInfo({ commit }, userId) {
+      const API_URL = `${REST_API}/user/info/${userId}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          commit("GET_USER_INFO", res.data);
+          console.log("user 데이터 가져왔다링");
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+          console.log("유저 정보 못가져옴............");
         });
     },
     createUser({ commit }, user) {

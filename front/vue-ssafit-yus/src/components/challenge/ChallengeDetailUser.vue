@@ -1,28 +1,19 @@
 <template>
   <div>
-    {{ member }}
-    {{ user }}
-    {{ Date(member[0].isDone) }}
-    <hr />
-    {{ isSameDate(new Date(member[0].isDone), week[0]) }}
-    <!-- <svg width="400" height="100">
-      <text x="20" y="50" text-anchor="middle">{{ week[0] }}</text>
-      <rect
-        x="20"
-        y="60"
-        rx="6"
-        fill="#BFADF8"
-        v-for="date in member"
-        :key="date.id"
-      ></rect>
-    </svg> -->
-    <div
-      id="rect"
-      width="30"
-      height="30"
-      style="border: 1px solid lightblue"
-      background-color="#000000"
-    ></div>
+    <div>
+      <div style="width: 80px; float: left; margin-left: 20px">{{ user }}</div>
+      <div
+        v-for="(date, index) in week"
+        :key="index"
+        :class="[isSameDate(date) ? 'colored' : 'uncolored']"
+        width="30"
+        height="30"
+        style="border: 0px; float: left; margin-right: 8px"
+        background-color="#000000"
+      ></div>
+    </div>
+    <br />
+    <br />
   </div>
 </template>
 
@@ -30,7 +21,6 @@
 export default {
   data() {
     return {
-      // weekBefore: null,
       week: [],
     };
   },
@@ -59,24 +49,40 @@ export default {
       this.week.push(resultDate);
     }
     console.log(this.week);
+    console.log(typeof this.member[0]);
   },
   methods: {
-    isSameDate(date1, date2) {
-      return (
-        date1.getMonth() === date2.getMonth() &&
-        date1.getDate() === date2.getDate()
-      );
+    isSameDate(date1) {
+      let flag = false;
+      for (let date2 of this.member) {
+        // console.log(JSON.stringify(date2));
+        // console.log(date2["isDone"]);
+        if (
+          new Date(date1).getMonth() === new Date(date2["isDone"]).getMonth() &&
+          new Date(date1).getDate() === new Date(date2["isDone"]).getDate()
+        ) {
+          flag = true;
+          break;
+        }
+      }
+      return flag;
     },
   },
 };
 </script>
 
 <style scoped>
-#rect {
+.uncolored {
+  width: 30px;
+  height: 30px;
+  background-color: #aaaaaa;
+  border-radius: 25%;
+}
+.colored {
   width: 30px;
   height: 30px;
   background-color: #bfadf8;
-  border-radius: 20%;
+  border-radius: 25%;
 }
 text {
   font: bold 15px sans-serif;

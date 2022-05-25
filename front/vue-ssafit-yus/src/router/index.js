@@ -33,7 +33,7 @@ import ExerciseListLegs from "@/components/exercise/ExerciseListLegs.vue";
 import MemberView from "@/views/MemberView.vue";
 import MemberLogin from "@/components/member/MemberLogin.vue";
 import MemberJoin from "@/components/member/MemberJoin.vue";
-import MemberMyPage from "@/components/member/MemberMyPage.vue";
+import MyPage from "@/views/MyPage.vue";
 
 Vue.use(VueRouter);
 
@@ -63,6 +63,11 @@ const routes = [
         component: RoutineDetail,
       },
     ],
+  },
+  {
+    path: "/mypage",
+    name: "myPage",
+    component: MyPage,
   },
   {
     path: "/exercise",
@@ -125,11 +130,6 @@ const routes = [
         path: "join",
         name: "join",
         component: MemberJoin,
-      },
-      {
-        path: "mypage",
-        name: "mypage",
-        component: MemberMyPage,
       },
     ],
   },

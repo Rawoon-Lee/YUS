@@ -20,14 +20,10 @@
           <b-nav-item to="/member/join">회원가입</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav v-show="isLogin" class="ml-auto" align="right">
-          <b-nav-item to="/member/mypage">
-            <img
-              src="@/assets/profile-default.png"
-              alt="프로필"
-              width="40px"
-              height=""
+          <b-nav-item to="/mypage">
+            <img :src="path" alt="프로필" width="40px" height=""
           /></b-nav-item>
-          <button type="button" @click="logout">로그아웃</button>
+          <b-nav-item @click="logout">로그아웃</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -39,8 +35,26 @@ import { mapState } from "vuex";
 
 export default {
   name: "HeaderNav",
+  data() {
+    return {
+      userId: null,
+      path: require("/src/assets/profile-default.png"),
+    };
+  },
   computed: {
     ...mapState(["isLogin"]),
+    ...mapState(["userInfo"]),
+  },
+  created() {
+    this.$store.dispatch("userIsLogin");
+    this.userId = sessionStorage.getItem("USER_ID");
+    const profile = "/src/assets/UserInfo/" + this.userId + ".png";
+    console.log(this.userId);
+    if (this.userInfo["filepath"]) {
+      this.$store.dispatch("getUserInfo", this.userId);
+      this.path = require(profile);
+      console.log(this.path);
+    }
   },
   methods: {
     logout() {
