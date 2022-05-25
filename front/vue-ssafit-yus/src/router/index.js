@@ -33,7 +33,10 @@ import ExerciseListLegs from "@/components/exercise/ExerciseListLegs.vue";
 import MemberView from "@/views/MemberView.vue";
 import MemberLogin from "@/components/member/MemberLogin.vue";
 import MemberJoin from "@/components/member/MemberJoin.vue";
-import MyPage from "@/views/MyPage.vue";
+
+import MyPageView from "@/views/MyPageView.vue";
+import MyPage from "@/components/mypage/MyPage.vue";
+import MyInfoUpdate from "@/components/mypage/MyInfoUpdate.vue";
 
 Vue.use(VueRouter);
 
@@ -66,8 +69,19 @@ const routes = [
   },
   {
     path: "/mypage",
-    name: "myPage",
-    component: MyPage,
+    component: MyPageView,
+    children: [
+      {
+        path: "",
+        name: "myPage",
+        component: MyPage,
+      },
+      {
+        path: "update",
+        name: "myInfoUpdate",
+        component: MyInfoUpdate,
+      },
+    ],
   },
   {
     path: "/exercise",

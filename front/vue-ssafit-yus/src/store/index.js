@@ -432,6 +432,27 @@ export default new Vuex.Store({
           }
         });
     },
+    updateUserInfo({ dispatch }, user) {
+      const API_URL = `${REST_API}/user/info/0`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: user,
+      })
+        .then((res) => {
+          console.log(res);
+          console.log("유저 데이터 업데이트 성공");
+          let userId = sessionStorage.getItem("USER_ID");
+          dispatch("getUserInfo", userId);
+          router.push({ name: "myPage" });
+        })
+        .catch((err) => {
+          console.log("유저 업데이트 못함....");
+          console.log(err.toJSON());
+          console.log(err.toJSON().status);
+          console.log(user);
+        });
+    },
     logout({ commit }) {
       commit("LOGOUT");
     },
