@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>식단 등록</h1>
+  <br>
+    <h1 style="text-align:center">식단 등록</h1>
+    <hr>
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form-group
@@ -72,7 +74,9 @@
         >
           <b-form-input id="fat" v-model="fat"></b-form-input>
         </b-form-group>
+        <div style="text-align:center">
         <b-button variant="outline-success" @click="createMeal">등록</b-button>
+        </div>
       </div>
     </b-card>
   </div>

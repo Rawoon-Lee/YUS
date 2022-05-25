@@ -26,7 +26,7 @@
               alt="프로필"
               class="profile"
           /></b-nav-item>
-          <b-nav-item @click="logout">로그아웃</b-nav-item>
+          <b-nav-item @click="logout" style="margin-top:0.4rem">로그아웃</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

@@ -1,22 +1,22 @@
 <template>
-  <div class="container" style="border: 1px solid #282828">
-    <div class="row align-items-center" style="background-color: #323232; color: aliceblue; height: 60px; border: 1px solid black;">
-      <div class="col-md-1 align-items-center" style="background-color: #828282; font-weight: bold; border-radius: 7px; box-shadow: 2px 2px 2px black;">{{ video.exerciseName }}</div>
-      <div class="col-md-11">
-        <h2>{{ video.title }}</h2>
+  <div class="container" style="border: 1px solid #282828; border-radius:10px; margin-top:1rem;">
+    <div style="vertical-align:middle; background-color: #323232; color: aliceblue; height:70px; border: 1px solid black; margin-top:1rem">
+      <div style="vertical-align:middle; margin-top:0.8rem; text-align:center">
+        <span style="ont-size:18pt; padding:5px 5px 5px 5px; background-color: #828282; font-weight: bold; border-radius: 7px; margin-left:0.3rem;">{{ video.exerciseName }}</span>
+        <span style=" margin-left:0.3rem; font-size:20pt">{{ video.title }}</span>
       </div>
     </div>
     <hr>
-    <div class="row">
-      <div class="col-md-10">{{ video.channelName }}</div>
-      <div class="col-md-2">
-        <span style="margin: 0.5em"><b-icon-eye-fill></b-icon-eye-fill>{{ video.viewCnt }}</span>
-        <span style="margin: 0.5em"><b-icon icon="heart-fill" style="color: red"></b-icon>{{ video.LikedCnt }}</span>
-        <span style="margin: 0.5em"><b-icon icon="chat-right-text-fill">{{ commsYou.lengh }}</b-icon></span>
+    <div style="display:flex; justify-content:space-between">
+      <div align="left" style="margin-left:1rem">채널명 : {{ video.channelName }}</div>
+      <div align="right">
+        <span style="margin-right: 1rem"><b-icon-eye-fill></b-icon-eye-fill> {{ video.viewCnt }}</span>
+        <span style="margin-right: 1rem"><b-icon icon="heart-fill" style="color: red"></b-icon> {{ video.LikedCnt }}</span>
+        <span><b-icon icon="chat-right-text-fill"></b-icon> {{ commsYou.lengh }}</span>
       </div>
     </div>
     <hr>
-    <div class="row">
+    <div>
       <b-embed
         type="iframe"
         aspect="16by9"
@@ -34,45 +34,65 @@
       </b-button>
     </div>
     <hr>
-    <div class="row" v-if="commsYou.length">
-      <comment-box
+    <div v-if="commsYou.length" style="margin-left:2rem">
+      <div
         v-for="(comm, index) in commsYou"
         :key="index"
         :comm="comm.comm"
         :userId="comm.userId"
         :regDate="comm.regDate"
         :classNo="comm.classNo"
-      ></comment-box>
+        :commGroup="comm.commGroup"
+      >
+      <div class="row" v-if="comm.classNo == 0" style="margin-top:1rem">
+        <div class="col">{{comm.comm}}</div>
+        <div class="col">{{comm.userId}}</div>
+        <div class="col">{{comm.regDate}}</div>
+        <div style="margin-right:5rem; width:10%">
+        <b-button type="button" @click="addLike" variant="light">
+          <b-icon icon="reply-fill"></b-icon>답글
+        </b-button>
+        </div>
+      </div>
+      <div class="row" style="margin-left: 2px; margin-top:0.5rem" v-else>
+        <div><b-icon icon="arrow-return-right"></b-icon></div>
+        <div class="col">{{comm.comm}}</div>
+        <div class="col">{{comm.userId}}</div>
+        <div class="col">{{comm.regDate}}</div>
+        <div style="margin-right:5rem">
+        <b-button type="button" @click="addLike" variant="light">
+          <b-icon icon="reply-fill"></b-icon>답글
+        </b-button>
+        </div>
+      </div>
+      </div>
     </div>
-    <div class="row" v-else>
-      <h1>아직 등록 된 댓글이 없습니다..</h1>
+    <div v-else>
+      <h2 style="margin-left:1rem; color:gray; font-size:20pt; text-align:center">작성된 댓글이 없습니다.</h2>
     </div>
     <hr>
-    <div class="row justify-content-end" style="margin-left:2px; margin-right:5px;">
+    <div>
+        <b-icon icon="chat-left-text-fill" style="margin-top:1rem"></b-icon> 댓글 작성
+      </div>
+      <br>
+    <CommentForm></CommentForm>
+    <hr>
+    <div class="row justify-content-center" style="margin-left:2px; margin-right:5px;">
         <b-button to="/exercise/all">목록으로 돌아가기</b-button>
     </div>
     <hr>
+    <br>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import CommentBox from "@/components/comments/CommentBox.vue";
-
+import CommentForm from "@/components/comments/CommentForm.vue";
 export default {
   name: "ExerciseDetail",
   data() {
     return {
-      videoId: null,
-      videoDetail: {
-        videoId: null,
-        title: null,
-        channelName: null,
-        part: null,
-        exerciseName: null,
-        viewCnt: null,
-        likedCnt: null,
-      },
+      userId : sessionStorage.getItem("USER_ID"),
       workouts: [
         {
           label: "어깨",
@@ -99,8 +119,8 @@ export default {
     };
   },
   components: {
-    CommentBox,
-  },
+    CommentForm
+},
   computed: {
     // ...mapState(["exercises"]),
     ...mapState(["commsYou"]),

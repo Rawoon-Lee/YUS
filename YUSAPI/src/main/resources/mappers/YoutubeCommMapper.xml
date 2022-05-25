@@ -21,6 +21,7 @@
 		SELECT *
 		FROM youtube_comm
 		WHERE video_id = #{videoId}
+		ORDER BY comm_group, order_no
 	</select>
 	<select id="selectByCommindex" resultMap="YoutubeCommMap" parameterType="int">
 		SELECT *

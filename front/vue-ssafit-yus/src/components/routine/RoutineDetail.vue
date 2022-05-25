@@ -1,42 +1,56 @@
 <template>
   <div>
-    <h2>루틴 상세 내용</h2>
+  <br>
+    <h2 style="text-align:center">루틴 상세 내용</h2>
+    <hr>
+    <div style="text-align:left; margin-left:10px margin-bottom:1rem">
+      <b-button to="/routine" style="margin-left:5rem">목록</b-button>
+    </div>
     <div class="m-4" v-if="routine">
-      <div class="container">
-        <div>
-          <b-button to="/routine">목록으로 돌아가기</b-button>
+      <div style="width:90%; height:700px; margin:auto; border:1px solid gray; border-radius:10px">
+        <div style="display:flex; justify-content:space-between; text-align:center">
+        <div align="left" style="width:50%; margin-left:3rem">
+        <br><br>
+        <h3 style="text-align:center">내용</h3>
+        <hr>
+          <table class="table" style="text-align:center">
+              <tr>
+                <td>제목 : {{ routine.title }}</td>
+              </tr>
+              <tr>
+                <td> {{ routine.userId }} / {{ routine.regDate }} </td>
+              </tr>
+              <tr>
+                <td> 조회수 : {{ routine.viewCnt }} | 좋아요 : {{ routine.likedCnt }} </td>
+              </tr>
+              <tr>
+                <td>내용 : {{ routine.content }}</td>
+              </tr>
+          </table>
+          <div style="text-align:center">
+              <button v-show="!isRouLiked" type="button" @click="addLike">
+                &#128153;
+              </button>
+              <button v-show="isRouLiked" type="button" @click="delLike">
+                &#128150;
+               </button>
+           </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">제목</th>
-              <th scope="col">설명</th>
-              <th scope="col">작성자</th>
-              <th scope="col">작성일</th>
-              <th scope="col">조회수</th>
-              <th scope="col">좋아요 수</th>
-              <th scope="col">좋아요</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ routine.title }}</td>
-              <td>{{ routine.content }}</td>
-              <td>{{ routine.userId }}</td>
-              <td>{{ routine.regDate }}</td>
-              <td>{{ routine.viewCnt }}</td>
-              <td>{{ routine.likedCnt }}</td>
-              <td>
-                <button v-show="!isRouLiked" type="button" @click="addLike">
-                  &#128153;
-                </button>
-                <button v-show="isRouLiked" type="button" @click="delLike">
-                  &#128150;
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div align="right" style="width:40%; margin:auto">
+        <br><br>
+        <h3 style="text-align:center">루틴</h3>
+        <hr>
+        <div style="margin:auto">
+          <routine-detail-exercise
+            v-for="(workout, index) in workouts"
+            :key="index"
+            :exerciseName="workout.exerciseName"
+            :rep="workout.routineSet"
+            :set="workout.routineRep"
+          ></routine-detail-exercise>
+          </div>
+        </div>
+        </div>
         <!-- <div>
           <v-timeline dense dark>
             <v-timeline-item
@@ -57,13 +71,6 @@
           </v-timeline>
         </div> -->
       </div>
-      <routine-detail-exercise
-        v-for="(workout, index) in workouts"
-        :key="index"
-        :exerciseName="workout.exerciseName"
-        :rep="workout.routineSet"
-        :set="workout.routineRep"
-      ></routine-detail-exercise>
     </div>
   </div>
 </template>
