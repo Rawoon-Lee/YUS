@@ -15,46 +15,54 @@
       <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
       <b-carousel-slide>
         <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/youtube.jpg"
-            alt="image slot"
-          />
+          <router-link to="/routine">
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="@/assets/routine.jpg"
+              alt="image slot"
+            />
+          </router-link>
         </template>
       </b-carousel-slide>
       <b-carousel-slide>
         <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/routine.jpg"
-            alt="image slot"
-          />
+          <router-link to="/challenge">
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="@/assets/challenge.jpg"
+              alt="image slot"
+            />
+          </router-link>
         </template>
       </b-carousel-slide>
       <b-carousel-slide>
         <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/meal.jpg"
-            alt="image slot"
-          />
+          <router-link to="/meal">
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="@/assets/meal.jpg"
+              alt="image slot"
+            />
+          </router-link>
         </template>
       </b-carousel-slide>
       <b-carousel-slide>
         <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/challenge.jpg"
-            alt="image slot"
-          />
+          <router-link to="/exercise/all">
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="@/assets/youtube.jpg"
+              alt="image slot"
+            />
+          </router-link>
         </template>
       </b-carousel-slide>
     </b-carousel>
