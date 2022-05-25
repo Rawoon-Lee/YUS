@@ -153,7 +153,7 @@ const routes = [
         component: MealUpdate,
       },
       {
-        path: "detail:id",
+        path: "detail/:id",
         name: "mealDetail",
         component: MealDetail,
       },

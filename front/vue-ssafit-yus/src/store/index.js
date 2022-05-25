@@ -141,14 +141,15 @@ export default new Vuex.Store({
         });
     },
     createMeal({ commit }, meal) {
-      const API_URL = `${REST_API}/meal`;
+      const API_URL = `${REST_API}/meal/info`;
       axios({
         url: API_URL,
         method: "POST",
-        params: meal,
+        data: meal,
       })
         .then(() => {
-          commit("CREATE_MEAL", meal);
+          console.log("식단 등록 성공");
+          commit("CREATE_MEAL", true);
           router.push("/meal");
         })
         .catch((err) => {
@@ -419,6 +420,7 @@ export default new Vuex.Store({
         .then((res) => {
           console.log(res);
           commit("CREATE_USER", 1);
+          router.push({ name: "login" });
         })
         .catch((err) => {
           console.log(err.toJSON().status);
