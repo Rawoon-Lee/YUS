@@ -1,51 +1,40 @@
 <template>
-  <div>
-    <h2>동영상 상세보기</h2>
-    <div class="m-4" v-if="video">
-      <div>
-        <b-embed
-          type="iframe"
-          aspect="16by9"
-          :src="`https://www.youtube.com/embed/${videoId}`"
-          allowfullscreen
-        ></b-embed>
-      </div>
-      <div class="container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">제목</th>
-              <th scope="col">유튜버</th>
-              <th scope="col">운동</th>
-              <th scope="col">조회수</th>
-              <th scope="col">좋아요 수</th>
-              <th scope="col">좋아요</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ video.title }}</td>
-              <td>{{ video.channelName }}</td>
-              <td>{{ video.exerciseName }}</td>
-              <td>{{ video.viewCnt }}</td>
-              <td>{{ video.LikedCnt }}</td>
-              <td>
-                <button v-show="!isYouLiked" type="button" @click="addLike">
-                  &#128153;
-                </button>
-                <button v-show="isYouLiked" type="button" @click="delLike">
-                  &#128150;
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <b-button to="/exercise/all">목록으로 돌아가기</b-button>
+  <div class="container" style="border: 1px solid #282828">
+    <div class="row align-items-center" style="background-color: #323232; color: aliceblue; height: 60px; border: 1px solid black;">
+      <div class="col-md-1 align-items-center" style="background-color: #828282; font-weight: bold; border-radius: 7px; box-shadow: 2px 2px 2px black;">{{ video.exerciseName }}</div>
+      <div class="col-md-11">
+        <h2>{{ video.title }}</h2>
       </div>
     </div>
-    <div v-if="commsYou">
+    <hr>
+    <div class="row">
+      <div class="col-md-10">{{ video.channelName }}</div>
+      <div class="col-md-2">
+        <span style="margin: 0.5em"><b-icon-eye-fill></b-icon-eye-fill>{{ video.viewCnt }}</span>
+        <span style="margin: 0.5em"><b-icon icon="heart-fill" style="color: red"></b-icon>{{ video.LikedCnt }}</span>
+        <span style="margin: 0.5em"><b-icon icon="chat-right-text-fill">{{ commsYou.lengh }}</b-icon></span>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <b-embed
+        type="iframe"
+        aspect="16by9"
+        :src="`https://www.youtube.com/embed/${videoId}`"
+        allowfullscreen
+      ></b-embed>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+      <b-button v-show="!isYouLiked" type="button" @click="addLike" variant="light">
+        <b-icon icon="heart-fill" style="color: red"></b-icon> 좋아요
+      </b-button>
+      <b-button v-show="isYouLiked" type="button" @click="delLike" variant="light">
+        <b-icon icon="heart"></b-icon> 취소
+      </b-button>
+    </div>
+    <hr>
+    <div class="row" v-if="commsYou.length">
       <comment-box
         v-for="(comm, index) in commsYou"
         :key="index"
@@ -54,8 +43,15 @@
         :regDate="comm.regDate"
         :classNo="comm.classNo"
       ></comment-box>
-      {{ commsYou[0] }}
     </div>
+    <div class="row" v-else>
+      <h1>아직 등록 된 댓글이 없습니다..</h1>
+    </div>
+    <hr>
+    <div class="row justify-content-end" style="margin-left:2px; margin-right:5px;">
+        <b-button to="/exercise/all">목록으로 돌아가기</b-button>
+    </div>
+    <hr>
   </div>
 </template>
 
@@ -164,9 +160,10 @@ export default {
 </script>
 
 <style scoped>
-.iconBtn {
+/* .iconBtn {
   color: pink;
-  border: 0;
+  border: 3px;
+  border-color: black;
   background-color: rgba(0, 0, 0, 0);
-}
+} */
 </style>
