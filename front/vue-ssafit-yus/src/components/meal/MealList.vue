@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h2 style="margin-top:2rem">식단 목록</h2>
+    <h2 style="margin-top: 2rem">식단 목록</h2>
     <hr />
-    <div style="text-align:right; margin-bottom:1rem">
-    <b-button :to="{ name: 'mealCreate' }">오늘의 식단 등록</b-button>
+    <div style="text-align: right; margin-bottom: 1rem">
+      <b-button :to="{ name: 'mealCreate' }">식단 등록</b-button>
     </div>
     <div v-if="meals.length">
       <b-table-simple hover responsive class="text-center">
@@ -35,13 +35,43 @@
     </div>
     <div v-else>등록된 게시글이 없습니다.</div>
     <div>
-      <b-form-select v-model="mode" style="width:100px; height:40px; margin-bottom:0.5rem; margin-right:0.5rem">
-        <option value="1">제목 : </option>
-        <option value="2">내용 : </option>
-        <option value="3">제목+내용 : </option>
+      <b-form-select
+        v-model="mode"
+        style="
+          width: 100px;
+          height: 40px;
+          margin-bottom: 0.5rem;
+          margin-right: 0.5rem;
+        "
+      >
+        <option value="1">제목 :</option>
+        <option value="2">내용 :</option>
+        <option value="3">제목+내용 :</option>
       </b-form-select>
-      <input type="text" v-model="keyword" style="border:1px solid; border-radius:4px; margin-top:0.5rem; height:40px" />
-      <button @click="search" style="margin-left:1rem; margin-bottom:1rem; color: gray; border:1px solid; width:60px; border-radius:5px; height:40px">검색</button>
+      <input
+        type="text"
+        v-model="keyword"
+        style="
+          border: 1px solid;
+          border-radius: 4px;
+          margin-top: 0.5rem;
+          height: 40px;
+        "
+      />
+      <button
+        @click="search"
+        style="
+          margin-left: 1rem;
+          margin-bottom: 1rem;
+          color: gray;
+          border: 1px solid;
+          width: 60px;
+          border-radius: 5px;
+          height: 40px;
+        "
+      >
+        검색
+      </button>
     </div>
 
     <b-pagination
