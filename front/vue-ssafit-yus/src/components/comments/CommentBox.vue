@@ -1,23 +1,22 @@
 <template>
   <div>
-    <v-card class="mx-auto" color="#F5F5F5" max-width="400" v-if="classNo == 0">
+    <v-card class="mx-auto" color="#F5F5F5" max-width="700  " v-if="classNo == 0">
       <v-card-subtitle>
+        <v-list-item-avatar>
+            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        </v-list-item-avatar>
         <v-list-item-title>{{ userId }}</v-list-item-title>
       </v-card-subtitle>
-
       <v-card-actions>
         <v-list-item>
-          <v-list-item-avatar>
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-          </v-list-item-avatar>
           <v-card-text class="text-h5 font-weight-bold">
             {{ comm }}
           </v-card-text>
           <v-card-text class="text-h5 font-weight-bold">
-            {{ comm }}
+            {{ regDate }}
           </v-card-text>
         </v-list-item>
-        <v-btn color="orange" text> 댓글 달기 </v-btn>
+        <v-btn color="orange" text> 답글 달기 </v-btn>
         <v-btn color="orange" text v-if="user == userId"> 삭제하기 </v-btn>
       </v-card-actions>
       <v-card
