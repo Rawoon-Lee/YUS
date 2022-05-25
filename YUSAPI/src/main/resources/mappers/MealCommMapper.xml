@@ -21,6 +21,7 @@
 		SELECT *
 		FROM meal_comm
 		WHERE post_no = #{postNo}
+		ORDER BY comm_group, order_no
 	</select>
 	<select id="selectByCommindex" resultMap="MealCommMap" parameterType="int">
 		SELECT *

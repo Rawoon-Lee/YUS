@@ -18,4 +18,15 @@ export default {
   background-color: #646464;
   border-color: black;
 }
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EliceDigitalBaeum_Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+#app {
+  font-family: "EliceDigitalBaeum_Regular";
+}
 </style>

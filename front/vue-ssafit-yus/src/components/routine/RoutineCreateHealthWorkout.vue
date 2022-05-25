@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>운동추가</h2>
+  <br>
+    <h2 style="text-align:center">운동추가</h2>
     <hr />
     <div>
       <b-form @submit.prevent>
@@ -37,7 +38,9 @@
         >
           <b-form-input id="rep" v-model="rep" type="number"></b-form-input>
         </b-form-group>
-        <button :disabled="isDone" @click="upload">확인</button>
+        <div style="text-align:center">
+        <b-button class="simple-success" :disabled="isDone" @click="upload">추가</b-button>
+        </div>
       </b-form>
     </div>
     <!-- </b-card> -->

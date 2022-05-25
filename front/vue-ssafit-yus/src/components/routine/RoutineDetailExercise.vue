@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="344" outlined>
+    <v-card class="mx-auto" max-width="344" outlined style="text-align:center;">
       <v-list-item four-line>
         <v-list-item-content>
           <div class="text-overline mb-4">운동</div>

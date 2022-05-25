@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>루틴 등록</h1>
+  <br>
+    <h1 style="text-align:center">루틴 등록</h1>
+    <hr>
     <!-- {{ userid }} -->
     {{ USER_ID }}
     <b-card bg-variant="light">
@@ -33,6 +35,7 @@
             placeholder="루틴에 대한 설명을 적어주세요"
           ></b-form-input>
         </b-form-group>
+        <hr>
         <routine-create-health-workout
           v-for="(item, index) in workouts"
           :key="index"
@@ -41,16 +44,17 @@
         <button
           :disabled="!isChecked"
           type="button"
-          class="btn btn-dark"
           @click="add"
+          style="border:1px solid; color:gray; border-radius:5px; padding:5px 5px 5px 5px"
         >
-          루틴 추가
+          >루틴 더 추가하기
         </button>
         <br />
         <br />
-        <b-button variant="outline-success" @click="createRoutine"
+        <div style="text-align:center">
+        <b-button variant="success" @click="createRoutine"
           >등록</b-button
-        >
+        ></div>
       </div>
     </b-card>
   </div>

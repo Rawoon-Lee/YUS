@@ -21,6 +21,7 @@
 		SELECT *
 		FROM routine_comm
 		WHERE routine_no = #{routineNo}
+		ORDER BY comm_group, order_no
 	</select>
 	<select id="selectByCommindex" resultMap="RoutineCommMap" parameterType="int">
 		SELECT *
