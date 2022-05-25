@@ -10,6 +10,7 @@
       v-for="(member, index) in keys"
       :key="index"
       :member="groupMem[member]"
+      :user="member"
     ></challenge-detail-user>
   </div>
 </template>

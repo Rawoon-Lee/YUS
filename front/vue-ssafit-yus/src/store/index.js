@@ -369,7 +369,7 @@ export default new Vuex.Store({
       axios({
         url: API_URL,
         method: "POST",
-        params: user,
+        data: user,
       })
         .then((res) => {
           console.log(res);
@@ -377,6 +377,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err.toJSON().status);
+          console.log(user);
           if (err.toJSON().status == 409) {
             commit("CREATE_USER", 2);
           } else {

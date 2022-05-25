@@ -9,36 +9,37 @@
     </b-alert>
     <b-card bg-variant="light">
       <div class="m-4">
-        <b-form-group
-          label="아이디"
-          label-for="input-1"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input
-            id="input-1"
-            v-model="id"
-            trim
-            placeholder="아이디를 입력해주세요"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="비밀번호"
-          label-for="input-2"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input
-            id="input-2"
-            v-model="pw"
-            trim
-            placeholder="제목을 입력해주세요"
-            type="password"
-          ></b-form-input>
-        </b-form-group>
-        <!-- <b-form-group
+        <b-form @submit.prevent>
+          <b-form-group
+            label="아이디"
+            label-for="input-1"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-input
+              id="input-1"
+              v-model="id"
+              trim
+              placeholder="아이디를 입력해주세요"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="비밀번호"
+            label-for="input-2"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-input
+              id="input-2"
+              v-model="pw"
+              trim
+              placeholder="제목을 입력해주세요"
+              type="password"
+            ></b-form-input>
+          </b-form-group>
+          <!-- <b-form-group
           label="비밀번호 확인"
           label-for="input-2"
           label-cols-md="2"
@@ -53,79 +54,89 @@
             type="password"
           ></b-form-input>
         </b-form-group> -->
-        <!-- <b-form-group
-          label="프로필"
-          label-for="input-3"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-file
-            accept=".jpg, .png"
-            id="input-2"
-            v-model="imgFilePath"
-            :state="Boolean(imgFilePath)"
-            placeholder="프로필 사진을 첨부해주세요"
-          ></b-form-file>
-        </b-form-group> -->
-        <b-form-group
-          label="나이"
-          label-for="age"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input id="age" v-model="age" type="number"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="몸무게"
-          label-for="weight"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input
-            id="weight"
-            v-model="weight"
-            type="number"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="키"
-          label-for="height"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input
-            id="height"
-            v-model="height"
-            type="number"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="목적"
-          label-for="purpose"
-          label-cols-md="2"
-          label-align="left"
-          label-size="lg"
-        >
-          <b-form-input
-            list="input-list"
-            v-model="purpose_text"
-            type="number"
-          ></b-form-input>
-          <datalist id="input-list">
-            <option
-              v-for="(pp, index) in purpose"
-              :key="index"
-              :value="pp.value"
-            >
-              {{ pp.text }}
-            </option>
-          </datalist>
-        </b-form-group>
-        <b-button variant="outline-success" @click="insertUser">등록</b-button>
+          <b-form-group
+            label="프로필"
+            label-for="input-3"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-file
+              accept=".jpg, .png"
+              id="input-3"
+              v-model="imgFilePath"
+              placeholder="프로필 사진을 첨부해주세요"
+              @change="profileInput()"
+            ></b-form-file>
+          </b-form-group>
+          <b-form-group
+            label="나이"
+            label-for="age"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-input id="age" v-model="age" type="number"></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="성별"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-select v-model="gender" :options="genders">
+              <template #first>
+                <b-form-select-option :value="null" disabled
+                  >성별을 골라주세요</b-form-select-option
+                >
+              </template>
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label="몸무게"
+            label-for="weight"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-input
+              id="weight"
+              v-model="weight"
+              type="number"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="키"
+            label-for="height"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-input
+              id="height"
+              v-model="height"
+              type="number"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="목적"
+            label-for="purpose"
+            label-cols-md="2"
+            label-align="left"
+            label-size="lg"
+          >
+            <b-form-select v-model="purpose_text" :options="purpose">
+              <template #first>
+                <b-form-select-option :value="null" disabled
+                  >운동 목적을 골라주세요</b-form-select-option
+                >
+              </template>
+            </b-form-select>
+          </b-form-group>
+          <b-button variant="outline-success" @click="insertUser"
+            >등록</b-button
+          >
+        </b-form>
       </div>
     </b-card>
   </div>
@@ -151,26 +162,34 @@ export default {
       purpose_text: null,
       showDuplicatedError: false,
       showInternalError: false,
+      genders: [
+        {
+          text: "여성",
+          value: 1,
+        },
+        {
+          text: "남성",
+          value: 0,
+        },
+      ],
     };
   },
   methods: {
+    profileInput() {
+      console.log(this.imgFilePath);
+    },
     insertUser() {
-      let newUser = {
-        userId: this.id,
-        userPassword: this.pw,
-        filepath: this.imgFilePath,
-        weight: this.weight,
-        height: this.height,
-        age: this.age,
-        gender: this.gender,
-        purpose: this.purpose_text,
-      };
-      this.$store.dispatch("createUser", newUser);
-      if (this.$store.state.isJoin == 2) {
-        this.showDuplicatedError = true;
-      } else if (this.$store.state.isJoin == 0) {
-        this.showInternalError = true;
-      }
+      let formData = new FormData();
+      formData.append("userId", this.id);
+      formData.append("userPassword", this.pw);
+      formData.append("file", this.imgFilePath);
+      formData.append("weight", this.weight);
+      formData.append("height", this.height);
+      formData.append("gender", this.gender);
+      formData.append("age", this.age);
+      formData.append("purpose", this.purpose_text);
+      console.log(formData);
+      this.$store.dispatch("createUser", formData);
     },
   },
 };
