@@ -11,6 +11,9 @@
       ></comment-box>
       {{ commsYou[0].comm }}
     </div>
+    <div v-else>
+      등록된 댓글이 없습니다.
+    </div>
   </div>
 </template>
 
