@@ -128,10 +128,20 @@ export default {
       let formData = new FormData();
       formData.append("userId", userId);
       formData.append("file", this.imgFilePath);
+      formData.append("filepath", this.userInfo.filepath);
       formData.append("age", this.userInfo.age);
-      formData.append("weight", this.weight);
-      formData.append("height", this.height);
-      formData.append("purpose", this.purpose_text);
+      formData.append(
+        "weight",
+        this.weight ? this.weight : this.userInfo.weight
+      );
+      formData.append(
+        "height",
+        this.height ? this.weight : this.userInfo.height
+      );
+      formData.append(
+        "purpose",
+        this.purpose_text ? this.weight : this.userInfo.weight
+      );
       formData.append("gymName", this.userInfo.gymName);
       console.log(formData);
       this.$store.dispatch("updateUserInfo", formData);

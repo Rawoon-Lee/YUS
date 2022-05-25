@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-  <br>
-    <h1 style="text-align:center">회원가입</h1>
-    <hr>
+    <br />
+    <h1 style="text-align: center">회원가입</h1>
+    <hr />
     <b-alert v-model="showDuplicatedError" variant="danger" dismissible>
       이미 존재하는 아이디입니다. 다른 아이디로 시도해주세요.
     </b-alert>
@@ -135,10 +135,11 @@
               </template>
             </b-form-select>
           </b-form-group>
-          <div style="text-align:center">
-          <b-button variant="outline-success" @click="insertUser"
-            >등록</b-button
-          ></div>
+          <div style="text-align: center">
+            <b-button variant="outline-success" @click="insertUser"
+              >등록</b-button
+            >
+          </div>
         </b-form>
       </div>
     </b-card>
@@ -191,6 +192,7 @@ export default {
       formData.append("gender", this.gender);
       formData.append("age", this.age);
       formData.append("purpose", this.purpose_text);
+      console.log(this.purpose_text);
       console.log(formData);
       this.$store.dispatch("createUser", formData);
     },

@@ -1,14 +1,9 @@
 <template>
   <div class="container">
-<<<<<<< HEAD
-  <br>
-    <h1 style="text-align:center">식단 등록</h1>
-    <hr>
+    <br />
+    <h1 style="text-align: center">식단 등록</h1>
+    <hr />
     <b-card bg-variant="light">
-=======
-    <h1>식단 등록</h1>
-    <div class="card">
->>>>>>> e51e10d0ddf0fc9cad622cff44d0f26a6aded47c
       <div class="m-4">
         <b-form-group
           label="제목"
@@ -79,11 +74,13 @@
         >
           <b-form-input id="fat" v-model="fat"></b-form-input>
         </b-form-group>
-        <div style="text-align:center">
-        <b-button variant="outline-success" @click="createMeal">등록</b-button>
+        <div style="text-align: center">
+          <b-button variant="outline-success" @click="createMeal"
+            >등록</b-button
+          >
         </div>
       </div>
-    </div>
+    </b-card>
   </div>
 </template>
 
