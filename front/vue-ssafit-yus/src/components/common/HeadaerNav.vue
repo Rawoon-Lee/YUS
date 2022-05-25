@@ -21,7 +21,10 @@
         </b-navbar-nav>
         <b-navbar-nav v-show="isLogin" class="ml-auto" align="right">
           <b-nav-item to="/mypage">
-            <img :src="path" alt="프로필" width="40px" height=""
+            <img
+              :src="require(`@/assets/UserInfo/${profilePath}.png`)"
+              alt="프로필"
+              class="profile"
           /></b-nav-item>
           <b-nav-item @click="logout">로그아웃</b-nav-item>
         </b-navbar-nav>
@@ -35,36 +38,31 @@ import { mapState } from "vuex";
 
 export default {
   name: "HeaderNav",
-  data() {
-    return {
-      userId: null,
-      path: require("/src/assets/profile-default.png"),
-    };
-  },
   computed: {
     ...mapState(["isLogin"]),
     ...mapState(["userInfo"]),
+    ...mapState(["profilePath"]),
   },
   created() {
     this.$store.dispatch("userIsLogin");
     this.userId = sessionStorage.getItem("USER_ID");
     this.$store.dispatch("getUserInfo", this.userId);
-    const profile = "/src/assets/UserInfo/" + this.userId + ".png";
-    console.log(this.userId);
-    if (this.userInfo) {
-      if (this.userInfo["filepath"]) {
-        this.path = require(profile);
-        console.log(this.path);
-      }
-    }
   },
   methods: {
     logout() {
       sessionStorage.clear();
       this.$store.dispatch("logout");
+      this.$router.go();
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.profile {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+</style>

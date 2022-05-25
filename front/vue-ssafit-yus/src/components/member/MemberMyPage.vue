@@ -5,7 +5,16 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState(["userInfo"]),
+  },
+  created() {
+    let userId = sessionStorage.getItem("USER_ID");
+    this.$store.dispatch("getUserInfo", userId);
+  },
+};
 </script>
 
 <style></style>

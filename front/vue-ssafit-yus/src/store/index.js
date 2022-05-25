@@ -31,6 +31,7 @@ export default new Vuex.Store({
     isCreatedRou: false,
     USER_ID: null,
     userInfo: null,
+    profilePath: "profile-default",
   },
   getters: {
     getGroupMem(state) {
@@ -110,6 +111,11 @@ export default new Vuex.Store({
     },
     GET_USER_INFO(state, payload) {
       state.userInfo = payload;
+    },
+    GET_PROFILEPATH(state, payload) {
+      console.log(typeof payload);
+      state.profilePath = payload;
+      console.log(state.profilePath);
     },
   },
   actions: {
@@ -364,6 +370,7 @@ export default new Vuex.Store({
           sessionStorage.setItem("access-token", res.data["access-token"]);
           sessionStorage.setItem("USER_ID", res.data.id);
           dispatch("userIsLogin");
+          dispatch("getUserInfo", res.data.id);
           router.push({ name: "main" });
         })
         .catch((err) => {
@@ -379,7 +386,7 @@ export default new Vuex.Store({
         commit("USER_ISLOGIN", false);
       }
     },
-    getUserInfo({ commit }, userId) {
+    getUserInfo({ commit, dispatch }, userId) {
       const API_URL = `${REST_API}/user/info/${userId}`;
       axios({
         url: API_URL,
@@ -391,9 +398,14 @@ export default new Vuex.Store({
         .then((res) => {
           commit("GET_USER_INFO", res.data);
           console.log("user 데이터 가져왔다링");
+          console.log(res.data);
+          if (res.data.filepath) {
+            console.log("이제 path 바꿀게");
+            dispatch("getProfilePath", userId);
+          }
         })
         .catch((err) => {
-          console.log(err.toJSON());
+          err;
           console.log("유저 정보 못가져옴............");
         });
     },
@@ -420,6 +432,9 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit("LOGOUT");
+    },
+    getProfilePath({ commit }, userId) {
+      commit("GET_PROFILEPATH", userId);
     },
     createVideosForUse({ commit }) {
       console.log("실행되었음");
