@@ -2,6 +2,7 @@
   <div class="container">
     <h2>식단 목록</h2>
     <hr />
+    <b-button :to="{ name: 'mealCreate' }">오늘의 식단 등록</b-button>
     <div v-if="meals.length">
       <b-table-simple hover responsive class="text-center">
         <b-thead>
@@ -18,7 +19,7 @@
           <b-tr v-for="(meal, index) in pageMealList" :key="index">
             <b-td>{{ index + 1 }}</b-td>
             <b-td>
-              <b-link :to="`/meal/${meal.postNo}`">{{
+              <b-link :to="`/meal/detail/${meal.postNo}`">{{
                 meal.title
               }}</b-link></b-td
             >

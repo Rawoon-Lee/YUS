@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>식단 등록</h1>
-    <b-card bg-variant="light">
+    <div class="card">
       <div class="m-4">
         <b-form-group
           label="제목"
@@ -74,7 +74,7 @@
         </b-form-group>
         <b-button variant="outline-success" @click="createMeal">등록</b-button>
       </div>
-    </b-card>
+    </div>
   </div>
 </template>
 
@@ -93,17 +93,17 @@ export default {
   },
   methods: {
     createMeal() {
-      let newMeal = {
-        post_no: 0,
-        title: this.title,
-        filepath: this.imgFilePath,
-        user_no: this.$store.state.user_no,
-        content: this.content,
-        protein: this.protein,
-        carb: this.carb,
-        fat: this.fat,
-      };
-      this.$store.dispatch("createMeal", newMeal);
+      let userId = sessionStorage.getItem("USER_ID");
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("file", this.imgFilePath);
+      formData.append("userId", userId);
+      formData.append("carb", this.carb);
+      formData.append("protein", this.protein);
+      formData.append("fat", this.fat);
+      formData.append("content", this.content);
+      console.log(formData);
+      this.$store.dispatch("createMeal", formData);
     },
   },
 };
