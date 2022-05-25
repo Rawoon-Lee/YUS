@@ -48,12 +48,14 @@ export default {
   created() {
     this.$store.dispatch("userIsLogin");
     this.userId = sessionStorage.getItem("USER_ID");
+    this.$store.dispatch("getUserInfo", this.userId);
     const profile = "/src/assets/UserInfo/" + this.userId + ".png";
     console.log(this.userId);
-    if (this.userInfo["filepath"]) {
-      this.$store.dispatch("getUserInfo", this.userId);
-      this.path = require(profile);
-      console.log(this.path);
+    if (this.userInfo) {
+      if (this.userInfo["filepath"]) {
+        this.path = require(profile);
+        console.log(this.path);
+      }
     }
   },
   methods: {

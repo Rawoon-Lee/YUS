@@ -46,14 +46,22 @@
       </div>
     </div>
     <div v-if="commsYou">
-      <comment-list :commsYou="commsYou" :videoId="videoId"></comment-list>
+      <comment-box
+        v-for="(comm, index) in commsYou"
+        :key="index"
+        :comm="comm.comm"
+        :userId="comm.userId"
+        :regDate="comm.regDate"
+        :classNo="comm.classNo"
+      ></comment-box>
+      {{ commsYou[0] }}
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import CommentList from "@/components/comments/CommentList.vue";
+import CommentBox from "@/components/comments/CommentBox.vue";
 
 export default {
   name: "ExerciseDetail",
@@ -95,7 +103,7 @@ export default {
     };
   },
   components: {
-    CommentList,
+    CommentBox,
   },
   computed: {
     // ...mapState(["exercises"]),
