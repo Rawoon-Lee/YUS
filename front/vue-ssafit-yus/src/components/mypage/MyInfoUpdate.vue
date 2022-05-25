@@ -136,11 +136,11 @@ export default {
       );
       formData.append(
         "height",
-        this.height ? this.weight : this.userInfo.height
+        this.height ? this.height : this.userInfo.height
       );
       formData.append(
         "purpose",
-        this.purpose_text ? this.weight : this.userInfo.weight
+        this.purpose_text ? this.purpose_text : this.userInfo.purpose
       );
       formData.append("gymName", this.userInfo.gymName);
       console.log(formData);
