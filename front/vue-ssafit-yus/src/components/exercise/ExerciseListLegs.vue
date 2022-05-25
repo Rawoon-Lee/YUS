@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-center flex-wrap .container-md">
       <div v-for="video in pageVideosList" :key="video.videoId">
           <!-- 카드 -->
-          <div class="card h-200" style="width: 370px; margin-right:2rem">
+          <div class="card h-200" style="width: 430px; margin-right:2rem">
             <iframe
               :src="`https://www.youtube.com/embed/${video.videoId}`"
             ></iframe>
