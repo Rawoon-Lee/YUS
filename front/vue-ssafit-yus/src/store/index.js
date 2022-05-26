@@ -313,12 +313,19 @@ export default new Vuex.Store({
         .then((res) => {
           let rpdlist = [];
           rpdlist.push(res.data.day0);
+          delete res.data.day0;
           rpdlist.push(res.data.day1);
+          delete res.data.day1;
           rpdlist.push(res.data.day2);
+          delete res.data.day2;
           rpdlist.push(res.data.day3);
+          delete res.data.day3;
           rpdlist.push(res.data.day4);
+          delete res.data.day4;
           rpdlist.push(res.data.day5);
+          delete res.data.day5;
           rpdlist.push(res.data.day6);
+          delete res.data.day6;
           console.log("==============");
           console.log(rpdlist);
           commit("GET_RPD_LIST", rpdlist);
