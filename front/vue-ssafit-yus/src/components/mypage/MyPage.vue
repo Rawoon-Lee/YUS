@@ -12,7 +12,7 @@
         "
       >
         <img
-          :src="require(`@/assets/UserInfo/${userId}.png`)"
+          :src="require(`@/assets/UserInfo/${profilePath}.png`)"
           alt="프로필"
           class="mypageProfile"
         />
@@ -60,12 +60,13 @@ export default {
     ...mapState(["groupMem"]),
     ...mapState(["group"]),
     ...mapState(["keys"]),
+    ...mapState(["profilePath"]),
   },
   created() {
-    this.userId = sessionStorage.getItem("USER_ID");
-    console.log(this.userId);
-    this.$store.dispatch("getUserInfo", this.userId);
+    let userId = sessionStorage.getItem("USER_ID");
+    this.$store.dispatch("getUserInfo", userId);
     this.$store.dispatch("getGroup", this.userInfo.groupNo);
+    this.userId = userId;
   },
   components: {
     ChallengeDetail,
