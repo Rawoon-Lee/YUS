@@ -1,6 +1,7 @@
 package com.ssafit.yus.controller;
 
 import java.io.Console;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -82,11 +83,12 @@ public class MealRestController {
 	})
 	@GetMapping("/info/{postNo}")
 	public ResponseEntity<Map<String, String>> detail(@PathVariable int postNo){
+		System.out.println("==================================="+postNo);
 		return new ResponseEntity<Map<String, String>>(mealBoardService.selectByPostNo(postNo), HttpStatus.OK);
 	}
 	
 	@ApiOperation(
-			value = "루틴 게시물 조회수 증가",
+			value = "식단 게시물 조회수 증가",
 			notes = "게시물 조회시 요청바람"
 	)
 	@ApiImplicitParams({
@@ -99,7 +101,6 @@ public class MealRestController {
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.OK);
 	}
-	
 	@ApiOperation(
 			value = "식단 게시물 추가",
 			notes = "별 다른 특이사항은 없고...title, content, filepath, carb, protein, fat, user_id만 전달 해주셈"
@@ -275,6 +276,7 @@ public class MealRestController {
 	@PostMapping("/liked/check")
 	public ResponseEntity<Map<String, String>> checkLiked(@RequestBody MealLiked mealLiked){
 		Map<String, String> ret = new HashMap<String, String>();
+		System.out.println("=============================================="+mealLiked.toString());
 		ret.put("status", mealLikedService.checkStatus(mealLiked));
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String,String>>(ret, HttpStatus.OK);
