@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>회원가입</h1>
+    <h1>회원 정보 수정</h1>
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form @submit.prevent>
@@ -17,20 +17,6 @@
               :value="userInfo.userId"
               disabled
             ></b-form-input>
-          </b-form-group>
-          <b-form-group
-            label="프로필"
-            label-for="input-3"
-            label-cols-md="2"
-            label-align="left"
-            label-size="lg"
-          >
-            <b-form-file
-              accept=".jpg, .png"
-              id="input-3"
-              v-model="imgFilePath"
-              placeholder="프로필 사진을 첨부해주세요"
-            ></b-form-file>
           </b-form-group>
           <b-form-group
             label="몸무게"
@@ -125,27 +111,32 @@ export default {
   methods: {
     updateUser() {
       let userId = sessionStorage.getItem("USER_ID");
-      let formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("file", this.imgFilePath);
-      formData.append("filepath", this.userInfo.filepath);
-      formData.append("age", this.userInfo.age);
-      formData.append(
-        "weight",
-        this.weight ? this.weight : this.userInfo.weight
-      );
-      console.log(this.weight);
-      formData.append(
-        "height",
-        this.height ? this.height : this.userInfo.height
-      );
-      formData.append(
-        "purpose",
-        this.purpose_text ? this.purpose_text : this.userInfo.purpose
-      );
-      formData.append("gymName", this.userInfo.gymName);
-      console.log(formData);
-      this.$store.dispatch("updateUserInfo", formData);
+      // let formData = new FormData();
+      // formData.append("userId", userId);
+      // formData.append(
+      //   "weight",
+      //   this.weight ? this.weight : this.userInfo.weight
+      // );
+      // console.log(this.weight);
+      // formData.append(
+      //   "height",
+      //   this.height ? this.height : this.userInfo.height
+      // );
+      // formData.append(
+      //   "purpose",
+      //   this.purpose_text ? this.purpose_text : this.userInfo.purpose
+      // );
+      // console.log(formData);
+      let user = {
+        userId: userId,
+        weight: this.weight ? this.weight : this.userInfo.weight,
+        height: this.height ? this.height : this.userInfo.height,
+        prupose: this.purpose_text ? this.purpose_text : this.userInfo.purpose,
+        age: this.userInfo.age,
+        gymName: this.userInfo.gymName,
+      };
+      console.log(JSON.stringify(user));
+      this.$store.dispatch("updateUserInfo", JSON.stringify(user));
     },
   },
 };

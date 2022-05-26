@@ -20,7 +20,6 @@ import MealList from "@/components/meal/MealList.vue";
 import MealUpdate from "@/components/meal/MealUpdate.vue";
 
 import ExerciseView from "@/views/ExerciseView.vue";
-import ExerciseCreate from "@/components/exercise/ExerciseCreate.vue";
 import ExerciseDetail from "@/components/exercise/ExerciseDetail.vue";
 
 import ExerciseList from "@/components/exercise/ExerciseList.vue";
@@ -37,6 +36,7 @@ import MemberJoin from "@/components/member/MemberJoin.vue";
 import MyPageView from "@/views/MyPageView.vue";
 import MyPage from "@/components/mypage/MyPage.vue";
 import MyInfoUpdate from "@/components/mypage/MyInfoUpdate.vue";
+import MyInfoUpdateProfile from "@/components/mypage/MyInfoUpdateProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -81,6 +81,11 @@ const routes = [
         name: "myInfoUpdate",
         component: MyInfoUpdate,
       },
+      {
+        path: "updateProfile",
+        name: "myInfoUpdateProfile",
+        component: MyInfoUpdateProfile,
+      },
     ],
   },
   {
@@ -118,11 +123,6 @@ const routes = [
             component: ExerciseListLegs,
           },
         ],
-      },
-      {
-        path: "create",
-        name: "exerciseCreate",
-        component: ExerciseCreate,
       },
       {
         path: "detail/:id",

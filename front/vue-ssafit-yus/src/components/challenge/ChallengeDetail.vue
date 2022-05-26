@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="card" style="width: 25rem; display: flex; align-items: center">
-      <div class="card-body">
+    <div class="card" style="display: flex; align-items: center; border: none">
+      <div class="card-body" style="float: left">
         <h3>그룹명 : {{ group.groupName }}</h3>
         <p class="card-text">그룹 점수 : {{ group.groupPoint }}</p>
         <p class="card-text">
-          {{ group.currentPeople }} / {{ group.maximumPeople }}
+          그룹 인원 : {{ group.currentPeople }} / {{ group.maximumPeople }}
         </p>
         <p class="card-text">방장 : {{ group.userId }}</p>
       </div>
-      <h4>그룹 멤버별 최근 일주일간의 운동 기록</h4>
+      <h4>최근 일주일간의 운동 기록</h4>
       <div
         class="card"
         style="width: 25rem; display: flex; align-items: center"
