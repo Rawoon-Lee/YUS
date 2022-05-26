@@ -28,6 +28,11 @@
 		FROM meal_comm
 		WHERE comm_index = #{commIndex}
 	</select>
+	<select id="selectMaxOrderNo" parameterType="MealComm" resultType="int">
+		SELECT MAX(order_no)
+		FROM meal_comm
+		WHERE post_no = #{postNo} AND comm_group = #{commGroup}
+	</select>
 	<insert id="InsertMealComm" parameterType="MealComm">
 		INSERT INTO meal_comm(class_no, comm, order_no, comm_group, post_no, user_id)
 		VALUES (#{classNo}, #{comm}, #{orderNo}, #{commGroup}, #{postNo}, #{userId})

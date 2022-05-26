@@ -28,6 +28,11 @@
 		FROM youtube_comm
 		WHERE comm_index = #{commIndex}
 	</select>
+	<select id="selectMaxOrderNo" parameterType="YoutubeComm" resultType="int">
+		SELECT MAX(order_no)
+		FROM youtube_comm
+		WHERE video_id = #{videoId} AND comm_group = #{commGroup}
+	</select>
 	<insert id="InsertYoutubeComm" parameterType="YoutubeComm">
 		INSERT INTO youtube_comm(class_no, comm, order_no, comm_group, video_id, user_id)
 		VALUES (#{classNo}, #{comm}, #{orderNo}, #{commGroup}, #{videoId}, #{userId})

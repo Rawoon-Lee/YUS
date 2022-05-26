@@ -29,6 +29,10 @@ public class MealCommServiceImpl implements MealCommService{
 			int maxCommIndex = mealCommDao.selectMaxCommIndex();
 			mealComm.setCommGroup(maxCommIndex + 1);
 		}
+		else {
+			int max = mealCommDao.selectMaxOrderNo(mealComm) + 1;
+			mealComm.setOrderNo(max);
+		}
 		mealCommDao.InsertMealComm(mealComm);
 	}
 

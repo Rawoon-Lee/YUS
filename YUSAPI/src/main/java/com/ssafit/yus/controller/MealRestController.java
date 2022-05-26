@@ -136,7 +136,7 @@ public class MealRestController {
 		@ApiImplicitParam(name = "mealBoard", value = "수정 할 게시물의 속성들", dataTypeClass = MealBoard.class, required = true)
 	})
 	@PutMapping("/info/modify")
-	public ResponseEntity<Map<String, String>> modifyMeal(MealBoard mealBoard){
+	public ResponseEntity<Map<String, String>> modifyMeal(@RequestBody MealBoard mealBoard){
 		Map<String, String> ret = new HashMap<String, String>();
 		mealBoardService.updateMealBoard(0, mealBoard);
 		ret.put("msg", SUCCESS);

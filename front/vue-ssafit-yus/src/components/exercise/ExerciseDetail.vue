@@ -81,35 +81,51 @@
     </div>
     <hr />
     <div v-if="commsYou.length" style="margin-left: 2rem">
-      <div
-        v-for="(comm, index) in commsYou"
-        :key="index"
-        :comm="comm.comm"
-        :userId="comm.userId"
-        :regDate="comm.regDate"
-        :classNo="comm.classNo"
-        :commGroup="comm.commGroup"
-      >
+      <div v-for="(comm, index) in commsYou" :key="index">
         <div class="row" v-if="comm.classNo == 0" style="margin-top: 1rem">
           <div class="col">{{ comm.comm }}</div>
           <div class="col">{{ comm.userId }}</div>
           <div class="col">{{ comm.regDate }}</div>
-          <div style="margin-right: 5rem; width: 10%">
-            <b-button type="button" @click="addLike" variant="light">
+          <div class="col">
+            <b-button type="button" @click="toggleShow(index)" variant="light">
               <b-icon icon="reply-fill"></b-icon>답글
+            </b-button>
+            <b-button
+              v-if="comm.userId == userId"
+              type="button"
+              @click="deleteComm(comm.commIndex)"
+              variant="danger"
+            >
+              <b-icon icon="trash-fill"></b-icon>삭제
             </b-button>
           </div>
         </div>
-        <div class="row" style="margin-left: 2px; margin-top: 0.5rem" v-else>
+        <div class="row" style="margin-left: 12px; margin-top: 0.5rem" v-else>
           <div><b-icon icon="arrow-return-right"></b-icon></div>
           <div class="col">{{ comm.comm }}</div>
           <div class="col">{{ comm.userId }}</div>
           <div class="col">{{ comm.regDate }}</div>
-          <div style="margin-right: 5rem">
-            <b-button type="button" @click="addLike" variant="light">
+          <div class="col">
+            <b-button type="button" @click="toggleShow(index)" variant="light">
               <b-icon icon="reply-fill"></b-icon>답글
             </b-button>
+            <b-button
+              v-if="comm.userId == userId"
+              type="button"
+              @click="deleteComm(comm.commIndex)"
+              variant="danger"
+            >
+              <b-icon icon="trash-fill"></b-icon>삭제
+            </b-button>
           </div>
+        </div>
+        <div v-if="comm.status">
+          <Comment-form
+            :classNo="1"
+            :commGroup="comm.commGroup"
+            :userId="userId"
+            :videoId="video.videoId"
+          ></Comment-form>
         </div>
       </div>
     </div>
@@ -128,10 +144,16 @@
     <hr />
     <div>
       <b-icon icon="chat-left-text-fill" style="margin-top: 1rem"></b-icon> 댓글
-      작성
+      작성({{ commsYou.length }})
     </div>
     <br />
-    <CommentForm></CommentForm>
+    {{ userId }}
+    <comment-form
+      :classNo="0"
+      :commGroup="0"
+      :userId="userId"
+      :videoId="videoId"
+    ></comment-form>
     <hr />
     <div
       class="row justify-content-center"
@@ -189,7 +211,6 @@ export default {
   created() {
     const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
-    console.log("???" + id);
     this.$store.dispatch("getVideo", id);
     this.$store.dispatch("getCommentsYou", id);
     this.videoId = id;
@@ -233,6 +254,16 @@ export default {
       console.log(JSONliked);
       this.$store.dispatch("delLikedYou", JSONliked);
       this.calVideo(this.videoId);
+    },
+    toggleShow(index) {
+      this.commsYou[index].status = !this.commsYou[index].status;
+    },
+    deleteComm(commIndex) {
+      let youtubeComm = {
+        commIndex: commIndex,
+        videoId: this.videoId,
+      };
+      this.$store.dispatch("delYoutubeComm", JSON.stringify(youtubeComm));
     },
   },
 };

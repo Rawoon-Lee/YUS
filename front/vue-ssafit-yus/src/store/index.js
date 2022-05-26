@@ -759,7 +759,8 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log("댓글 가져옴");
+          console.log("댓글 가져오는 부분");
+          for (let item of res.data) item.status = false;
           commit("GET_COMM_YOU", res.data);
         })
         .catch((err) => {
@@ -782,6 +783,45 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log("미안 댓글 못가져옴");
+        });
+    },
+    addYoutubeComm({ dispatch }, youtubeComm) {
+      const API_URL = `${REST_API}/youtube/comm/add`;
+      let JSONparsed = JSON.parse(youtubeComm);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: youtubeComm,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getCommentsYou", JSONparsed.videoId);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delYoutubeComm({ dispatch }, youtubeComm) {
+      let JSONparsed = JSON.parse(youtubeComm);
+      const API_URL = `${REST_API}/youtube/comm/delete/` + JSONparsed.commIndex;
+      console.log(API_URL);
+      axios({
+        url: API_URL,
+        method: "DELETE",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getCommentsYou", JSONparsed.videoId);
+        })
+        .catch((err) => {
           console.log(err.toJSON());
         });
     },

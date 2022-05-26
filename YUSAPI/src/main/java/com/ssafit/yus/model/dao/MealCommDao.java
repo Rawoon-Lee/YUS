@@ -13,4 +13,5 @@ public interface MealCommDao {
 	void updateForDelete(MealComm mealComm);
 	void updateByCommIndex(MealComm mealComm);
 	int selectMaxCommIndex();
+	int selectMaxOrderNo(MealComm mealComm);
 }

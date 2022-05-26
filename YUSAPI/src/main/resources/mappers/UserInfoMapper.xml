@@ -32,7 +32,7 @@
 		height = #{height},
 		age = #{age},
 		gym_name = #{gymName},
-		purpose = #{purpose},
+		purpose = #{purpose}
 		WHERE user_id = #{userId}
 	</update>
 	<update id="updateUserPoint" parameterType="UserInfo">
