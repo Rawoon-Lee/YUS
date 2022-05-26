@@ -47,7 +47,7 @@
         >
         <span
           ><b-icon icon="chat-right-text-fill"></b-icon>
-          {{ commsYou.lengh }}</span
+          {{ commsYou.length }}</span
         >
       </div>
     </div>

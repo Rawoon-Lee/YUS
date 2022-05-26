@@ -2,7 +2,7 @@
   <header>
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand :to="{ name: 'main' }">
-        <img src="@/assets/logo.png" alt="" width="100px" height="" />
+        <img src="@/assets/logo.png" alt="" width="80px" height="" />
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

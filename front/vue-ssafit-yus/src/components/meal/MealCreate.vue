@@ -59,7 +59,7 @@
         <b-form-group
           label="탄수화물"
           label-for="carb"
-          label-cols-xl="2"
+          label-cols-md="2"
           label-align="left"
           label-size="lg"
         >
