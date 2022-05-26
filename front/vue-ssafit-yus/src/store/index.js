@@ -789,12 +789,8 @@ export default new Vuex.Store({
           commit("GET_COMM_MEAL", res.data);
         })
         .catch((err) => {
-<<<<<<< HEAD
           err;
           console.log("미안 댓글 못가져옴");
-=======
-          console.log(err);
->>>>>>> c2d4f2c638ca974acfd53481a8296140142b8b7d
         });
     },
     addYoutubeComm({ dispatch }, youtubeComm) {
@@ -892,6 +888,66 @@ export default new Vuex.Store({
           res;
           console.log(JSONparsed);
           dispatch("getCommentsRoutine", JSONparsed.routineNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addViewRou({ dispatch }, routineNo) {
+      let JSONparsed = JSON.parse(routineNo);
+      const API_URL = `${REST_API}/routine/info/view`;
+      axios({
+        url: API_URL,
+        method: "PUT",
+        data: routineNo,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("루틴 조회수 증가");
+          dispatch("getRoutine", JSONparsed.routineNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addViewYou({ dispatch }, videoId) {
+      const API_URL = `${REST_API}/youtube/info/view/${videoId}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("유튜브 조회수 증가");
+          dispatch("getVideo", videoId);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addViewMeal({ dispatch }, postNo) {
+      let JSONparse = JSON.parse(postNo);
+      const API_URL = `${REST_API}/meal/info/view`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: postNo,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("식단 조회수 증가");
+          dispatch("getMeal", JSONparse.postNo);
         })
         .catch((err) => {
           console.log(err.toJSON());

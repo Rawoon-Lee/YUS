@@ -180,6 +180,17 @@ export default {
     };
     this.$store.dispatch("getIsLikedMeal", JSON.stringify(liked));
   },
+  mounted() {
+    let user = sessionStorage.getItem("USER_ID");
+    if (user != this.meal.userId) {
+      let post = {
+        postNo: this.postNo,
+      };
+      let JSONRou = JSON.stringify(post);
+      console.log(JSONRou);
+      this.$store.dispatch("addViewMeal", JSONRou);
+    }
+  },
   methods: {
     calMeal(postNo) {
       this.$store.dispatch("getMeal", postNo);
