@@ -193,9 +193,22 @@ SELECT * FROM group_info;
 INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_name)
 VALUES ("gMaB-fG4u4g", "www.youtube.com/embed/gMaB-fG4u4g", "전신 다이어트 최고의 운동 [칼소폭 찐 핵핵매운맛]", "Thankyou BUBU", "레그 익스텐션"),
 ("CTojmKLkWTo", "www.youtube.com/embed/CTojmKLkWTo", "전신 다이어트 최고의 운동 [칼소폭 핵매운맛]", "Thankyou BUBU", "페이스 풀"),
-("lKwZ2DU4P-A", "www.youtube.com/embed/lKwZ2DU4P-A", "집에서 칼로리 불태우는 최고의 유산소운동 [칼소폭 매운맛]", "Thankyou BUBU", "렛풀다운"),
+("zRTEwkIM_eE", "www.youtube.com/embed/zRTEwkIM_eE", "레그 프레스 머신 - 헬스 머신 사용법 하체 운동 끝판왕(헬린이 탈출)", "바디체크 - BODY CHECK", "레그 프레스"),
+("Ry_qhN5vx6I", "www.youtube.com/embed/Ry_qhN5vx6I", "뒷벅지와 힙라인을 한번에! 레그프레스 운동법 How to leg press", "힙으뜸", "레그 프레스"),
+("FQ_A97PMrcQ", "www.youtube.com/embed/FQ_A97PMrcQ", "레그프레스 기본설명 & 실수하는자세 & 꿀팁", "고러쉬", "레그 프레스"),
+("UwQ3alQfVNI", "www.youtube.com/embed/UwQ3alQfVNI", "레그프레스 머신사용법 (많이하는 실수, 잘못된자세)ㅣ고민수", "Minsoo Go", "레그 프레스"),
+("mS9iwXhycJI", "www.youtube.com/embed/mS9iwXhycJI", "가장 기본이 되는 필수 하체운동 l 레그 익스텐션", "강경원", "레그 익스텐션"),
+("rIoPAhtMdvw", "www.youtube.com/embed/rIoPAhtMdvw", "하체운동-레그익스텐션(Leg Extension)의 모든것!", "양선수의 온라인PT", "레그 익스텐션"),
+("Zi-ksO-dHeU", "www.youtube.com/embed/Zi-ksO-dHeU", "레그익스텐션! ㅡ 김명섭관장이 말하는 투조인트로 절대 하면 안되는 사람 꼭 보세요!", "김명섭의 헬스교실", "레그 익스텐션"),
+("CVUd2FLP8JI", "www.youtube.com/embed/CVUd2FLP8JI", "다리운동 레그익스텐션 백날해도 당신의 하체가 얇은 이유", "한조바디", "레그 익스텐션"),
 ("q6hBSSfokzY", "www.youtube.com/embed/q6hBSSfokzY", "ENG)하루10분 스쿼트로 기초 체력 기르기!", "힙으뜸", "스쿼트"),
-("oYiBDWhmrX8", "www.youtube.com/embed/oYiBDWhmrX8", "런지의 기본과 간과하기 쉬운 몇가지들", "말왕TV", "딥스");
+("MWjKQGoNW0U", "www.youtube.com/embed/MWjKQGoNW0U", "스쿼트 기초 l 강경원", "강경원", "스쿼트"),
+("JOpYCTNQaoA", "www.youtube.com/embed/JOpYCTNQaoA", "허리통증! 다치기 싫으면 꼭 보세요! 스쿼트 데드 부상 원인! [허리 디스크]", "트리거15초", "스쿼트"),
+("Fk9j6pQ6ej8", "www.youtube.com/embed/Fk9j6pQ6ej8", "'완벽한 스쿼트' 제대로 하는 방법", "피지컬갤러리", "스쿼트"),
+("a_fJKv0KzBo", "www.youtube.com/embed/a_fJKv0KzBo", "딥스 효과는 자세와 방법만 알면 최강의 상체와 가슴 근육을 만듭니다", "헬마드 (헬스 건강 정보)", "딥스"),
+("pqn9koa_wrw", "www.youtube.com/embed/pqn9koa_wrw", "딥스 '이렇게' 제발 하지마세요 (어깨 박살)", "피지컬갤러리", "딥스"),
+("EviXT4MEYkc", "www.youtube.com/embed/EviXT4MEYkc", "딥스 가슴 자극보다 중요시해야 하는 것", "세계적으로 유명한 운동 정보", "딥스"),
+("5BYBC73VrDk", "www.youtube.com/embed/5BYBC73VrDk", "어깨가 안 아픈 딥스?! 레그포지션의 중요성", "말왕TV", "딥스");
 SELECT * FROM youtube_info;
 
 INSERT INTO routine_info (user_id, title, content)
@@ -237,9 +250,9 @@ INSERT INTO success (user_id)
 VALUES ("Hwasa");
 
 INSERT INTO youtube_liked (user_id, video_id)
-VALUES ("JunhoLee", "gMaB-fG4u4g"), 
-("Hwasa", "CTojmKLkWTo"),
-("Hwasa", "lKwZ2DU4P-A");
+VALUES ("JunhoLee", "5BYBC73VrDk"), 
+("Hwasa", "5BYBC73VrDk"),
+("Hwasa", "5BYBC73VrDk");
 
 INSERT INTO routine_liked (routine_no, user_id)
 VALUES (1, "JunhoLee"), (2, "JunhoLee");
@@ -253,9 +266,9 @@ VALUES (0, "오 보기만해도 건강해질 거 같네요", 0, 1, 1, "Hwasa"),
 (1, "신고할게요", 2, 1, 1, "Hwasa");
 
 INSERT INTO youtube_comm (class_no, comm, order_no, comm_group, video_id, user_id)
-VALUES (0, "운동 가즈아!", 0, 1, "lKwZ2DU4P-A", "Hwasa"),
-(1, "화이팅!", 1, 1, "lKwZ2DU4P-A", "JunhoLee"),
-(0, "공짜로 이런 수업을 듣다니 감사합니다", 0, 3, "lKwZ2DU4P-A", "Hwasa");
+VALUES (0, "운동 가즈아!", 0, 1, "5BYBC73VrDk", "Hwasa"),
+(1, "화이팅!", 1, 1, "5BYBC73VrDk", "JunhoLee"),
+(0, "공짜로 이런 수업을 듣다니 감사합니다", 0, 3, "5BYBC73VrDk", "Hwasa");
 
 INSERT INTO routine_comm (class_no, comm, order_no, comm_group, routine_no, user_id)
 VALUES (0, "내 동생이 이거 효과좋다네요", 0, 1, 1, "JunhoLee"),

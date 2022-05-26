@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="card" style="display: flex; align-items: center; border: none">
       <div class="card-body" style="float: left">
         <h3>그룹명 : {{ group.groupName }}</h3>
@@ -29,6 +29,41 @@
         </ul>
       </div>
     </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[0][0].routineNo}`">
+        {{ rpdlist[0][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[1][0].routineNo}`">
+        {{ rpdlist[1][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[2][0].routineNo}`">
+        {{ rpdlist[2][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[3][0].routineNo}`">
+        {{ rpdlist[3][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[4][0].routineNo}`">
+        {{ rpdlist[4][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/detail/${rpdlist[5][0].routineNo}`">
+        {{ rpdlist[5][0].title }}</b-link
+      >
+    </div>
+    <div>
+      <b-link :to="`/routine/${rpdlist[6][0].routineNo}`">
+        {{ rpdlist[6][0].title }}</b-link
+      >
+    </div>
     <!-- <challenge-detail-user
       v-for="(member, index) in keys"
       :key="index"
@@ -47,6 +82,7 @@ export default {
     ...mapState(["groupMem"]),
     ...mapState(["group"]),
     ...mapState(["keys"]),
+    ...mapState(["rpdlist"]),
   },
   components: {
     ChallengeDetailUser,

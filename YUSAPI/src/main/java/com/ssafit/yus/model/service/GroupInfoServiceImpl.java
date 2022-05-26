@@ -26,6 +26,8 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	UserInfoDao userInfoDao;
 	@Autowired
 	SuccessDao successDao;
+	@Autowired
+	RoutineInfoService routineInfoService;
 
 	@Override
 	public List<GroupInfo> selectAll() {
@@ -35,10 +37,13 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	@Override
 	public Map<String, Object> selectByGroupNo(int groupNo) {
 		Map<String, Object> ret = new HashMap<>();
-		List<UserInfo>names = userInfoDao.selectByGroupNo(groupNo);
+		List<UserInfo> names = userInfoDao.selectByGroupNo(groupNo);
+		List<RoutinePerDay> rpdlist = routinePerDayDao.selectByGroupNo(groupNo);
 		ret.put("groupInfo", groupInfoDao.selectByGroupNo(groupNo));
 		for (UserInfo name : names)
 			ret.put(name.getUserId(), successDao.selectByUserId(name.getUserId()));
+		for (RoutinePerDay item : rpdlist)
+			ret.put("day" + item.getDays(), routineInfoService.selectByRoutineNo(item.getRoutineNo()));
 		return ret;
 	}
 

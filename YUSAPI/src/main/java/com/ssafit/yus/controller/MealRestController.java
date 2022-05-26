@@ -92,8 +92,8 @@ public class MealRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "postNo", value = "어떤 게시물을 조회할건지 전달", dataTypeClass = int.class, required = true)
 	})
-	@PostMapping("/info/view")
-	public ResponseEntity<Map<String, String>> updateViewCnt(@RequestBody int postNo){
+	@PutMapping("/info/view/{postNo}")
+	public ResponseEntity<Map<String, String>> updateViewCnt(@PathVariable int postNo){
 		Map<String, String> ret = new HashMap<String, String>();
 		mealBoardService.updateViewCnt(postNo);
 		ret.put("msg", SUCCESS);

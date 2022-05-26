@@ -35,6 +35,7 @@ export default new Vuex.Store({
     USER_ID: null,
     userInfo: null,
     profilePath: "profile-default",
+    rpdlist: [],
   },
   getters: {
     getGroupMem(state) {
@@ -129,6 +130,9 @@ export default new Vuex.Store({
     },
     GET_COMM_ROUTINE(state, payload) {
       state.commsRoutine = payload;
+    },
+    GET_RPD_LIST(state, payload) {
+      state.rpdlist = payload;
     },
   },
   actions: {
@@ -308,6 +312,17 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
+          let rpdlist = [];
+          rpdlist.push(res.data.day0);
+          rpdlist.push(res.data.day1);
+          rpdlist.push(res.data.day2);
+          rpdlist.push(res.data.day3);
+          rpdlist.push(res.data.day4);
+          rpdlist.push(res.data.day5);
+          rpdlist.push(res.data.day6);
+          console.log("==============");
+          console.log(rpdlist);
+          commit("GET_RPD_LIST", rpdlist);
           commit("GET_GROUP", res.data.groupInfo);
           delete res.data.groupInfo;
           commit("GET_MEM", res.data);

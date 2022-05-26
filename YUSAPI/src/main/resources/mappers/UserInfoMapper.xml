@@ -44,7 +44,7 @@
 	<update id="updateUserGroup" parameterType="UserInfo">
 		UPDATE user_info
 		SET
-		group_no = #{groupNo},
+		group_no = #{groupNo}
 		WHERE user_id = #{userId}
 	</update>
 	<update id="updateUserFile" parameterType="UserInfo">
