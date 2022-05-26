@@ -134,7 +134,7 @@
       작성
     </div> -->
     <br />
-    <CommentForm></CommentForm>
+    <meal-comment-form></meal-comment-form>
     <hr />
     <div
       class="row justify-content-center"
@@ -149,7 +149,7 @@
 
 <script>
 import { mapState } from "vuex";
-import CommentForm from "@/components/comments/CommentForm.vue";
+import MealCommentForm from "@/components/comments/MealCommentForm.vue";
 
 export default {
   name: "MealDetail",
@@ -160,7 +160,7 @@ export default {
     };
   },
   components: {
-    CommentForm,
+    MealCommentForm,
   },
   computed: {
     ...mapState(["commsMeal"]),

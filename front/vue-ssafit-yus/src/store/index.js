@@ -24,6 +24,7 @@ export default new Vuex.Store({
     video: {},
     VIDEOS: [],
     commsYou: [],
+    commsRoutine: [],
     commsMeal: [],
     isJoin: 0,
     isLogin: false,
@@ -125,6 +126,9 @@ export default new Vuex.Store({
       console.log(typeof payload);
       state.profilePath = payload;
       console.log(state.profilePath);
+    },
+    GET_COMM_ROUTINE(state, payload) {
+      state.commsRoutine = payload;
     },
   },
   actions: {
@@ -785,8 +789,12 @@ export default new Vuex.Store({
           commit("GET_COMM_MEAL", res.data);
         })
         .catch((err) => {
+<<<<<<< HEAD
           err;
           console.log("미안 댓글 못가져옴");
+=======
+          console.log(err);
+>>>>>>> c2d4f2c638ca974acfd53481a8296140142b8b7d
         });
     },
     addYoutubeComm({ dispatch }, youtubeComm) {
@@ -824,6 +832,66 @@ export default new Vuex.Store({
         .then((res) => {
           res;
           dispatch("getCommentsYou", JSONparsed.videoId);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    getCommentsRoutine({ commit }, id) {
+      const API_URL = `${REST_API}/routine/comm/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log("댓글 가져오는 부분");
+          for (let item of res.data) item.status = false;
+          commit("GET_COMM_ROUTINE", res.data);
+        })
+        .catch((err) => {
+          console.log("미안 댓글 못가져옴");
+          console.log(err.toJSON());
+        });
+    },
+    addRoutineComm({ dispatch }, routineComm) {
+      const API_URL = `${REST_API}/routine/comm/add`;
+      let JSONparsed = JSON.parse(routineComm);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: routineComm,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getCommentsRoutine", JSONparsed.routineNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delRoutineComm({ dispatch }, routineComm) {
+      let JSONparsed = JSON.parse(routineComm);
+      const API_URL = `${REST_API}/routine/comm/delete/` + JSONparsed.commIndex;
+      console.log(API_URL);
+      axios({
+        url: API_URL,
+        method: "DELETE",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log(JSONparsed);
+          dispatch("getCommentsRoutine", JSONparsed.routineNo);
         })
         .catch((err) => {
           console.log(err.toJSON());

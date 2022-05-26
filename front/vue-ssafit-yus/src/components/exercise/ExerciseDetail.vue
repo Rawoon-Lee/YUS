@@ -120,12 +120,12 @@
           </div>
         </div>
         <div v-if="comm.status">
-          <Comment-form
+          <youtube-Comment-form
             :classNo="1"
             :commGroup="comm.commGroup"
             :userId="userId"
             :videoId="video.videoId"
-          ></Comment-form>
+          ></youtube-Comment-form>
         </div>
       </div>
     </div>
@@ -148,12 +148,12 @@
     </div>
     <br />
     {{ userId }}
-    <comment-form
+    <youtube-comment-form
       :classNo="0"
       :commGroup="0"
       :userId="userId"
       :videoId="videoId"
-    ></comment-form>
+    ></youtube-comment-form>
     <hr />
     <div
       class="row justify-content-center"
@@ -168,7 +168,7 @@
 
 <script>
 import { mapState } from "vuex";
-import CommentForm from "@/components/comments/CommentForm.vue";
+import YoutubeCommentForm from "@/components/comments/YoutubeCommentForm.vue";
 export default {
   name: "ExerciseDetail",
   data() {
@@ -200,7 +200,7 @@ export default {
     };
   },
   components: {
-    CommentForm,
+    YoutubeCommentForm,
   },
   computed: {
     // ...mapState(["exercises"]),
