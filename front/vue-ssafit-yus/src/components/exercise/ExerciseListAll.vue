@@ -1,9 +1,19 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center flex-wrap .container-md">
+    <div class="d-flex justify-content-center flex-wrap .container-lg">
       <div v-for="video in pageVideosList" :key="video.videoId">
         <!-- 카드 -->
-        <div class="card h-200" style="width: 430px; margin-right: 2rem">
+        <v-card
+          class="card h-150"
+          elevation="6"
+          style="
+            min-height: 347px;
+            width: 300px;
+            margin-left: 2rem;
+            margin-right: 2rem;
+          "
+          hover
+        >
           <iframe
             :src="`https://www.youtube.com/embed/${video.videoId}`"
           ></iframe>
@@ -27,7 +37,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </v-card>
         <div
           class="d-flex justify-content-start flex-wrap"
           style="margin: 3%"
@@ -55,7 +65,7 @@ export default {
       keyword: "",
       mode: 1,
       currentPage: 1,
-      perPage: 10,
+      perPage: 9,
       workouts: [
         {
           label: "어깨",

@@ -1,8 +1,13 @@
 <template>
   <header>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar
+      toggleable="lg"
+      type="dark"
+      variant="dark"
+      style="height: 100px; font-size: 22px"
+    >
       <b-navbar-brand :to="{ name: 'main' }">
-        <img src="@/assets/logo.png" alt="" width="80px" height="" />
+        <img src="@/assets/logo.png" alt="" width="60px" height="" />
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -19,16 +24,22 @@
           <b-nav-item :to="{ name: 'login' }">로그인</b-nav-item>
           <b-nav-item to="/member/join">회원가입</b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav v-show="isLogin" class="ml-auto" align="right">
+        <b-navbar-nav
+          v-show="isLogin"
+          class="ml-auto"
+          align="right"
+          style="display: flex; align-items: center"
+        >
           <b-nav-item to="/mypage">
             <img
               :src="require(`@/assets/UserInfo/${profilePath}.png`)"
               alt="프로필"
               class="profile"
           /></b-nav-item>
-          <b-nav-item @click="logout" style="margin-top: 0.4rem"
-            >로그아웃</b-nav-item
-          >
+          <b-nav-item style="margin-right: 18px">{{
+            userInfo.userId
+          }}</b-nav-item>
+          <b-nav-item @click="logout">로그아웃</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -40,6 +51,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "HeaderNav",
+  data() {
+    return {
+      userID: null,
+    };
+  },
   computed: {
     ...mapState(["isLogin"]),
     ...mapState(["userInfo"]),
@@ -48,6 +64,7 @@ export default {
   created() {
     this.$store.dispatch("userIsLogin");
     let userId = sessionStorage.getItem("USER_ID");
+    this.userID = userId;
     this.$store.dispatch("getUserInfo", userId);
   },
   methods: {

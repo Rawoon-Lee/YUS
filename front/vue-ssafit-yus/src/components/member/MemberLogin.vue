@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-  <br>
-    <h2 style="text-align:center">로그인 페이지</h2>
-    <hr>
+    <br />
+    <h2 style="text-align: center">로그인 페이지</h2>
+    <hr />
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form-group
@@ -34,8 +34,10 @@
             placeholder="비밀번호를 입력해주세요"
           ></b-form-input>
         </b-form-group>
-        <div style="text-align:center">
-        <b-button variant="outline-success" @click="loginUser">로그인</b-button>
+        <div style="text-align: center">
+          <b-button variant="outline-success" @click="loginUser"
+            >로그인</b-button
+          >
         </div>
       </div>
     </b-card>

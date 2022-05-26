@@ -5,35 +5,52 @@
     <div style="text-align: right; margin-bottom: 1rem">
       <b-button :to="{ name: 'mealCreate' }">식단 등록</b-button>
     </div>
-    <div v-if="meals.length">
-      <b-table-simple hover responsive class="text-center">
-        <b-thead>
-          <b-tr>
-            <b-th>번호</b-th>
-            <b-th>제목</b-th>
-            <b-th>글쓴이</b-th>
-            <b-th>칼로리</b-th>
-            <b-th>등록일</b-th>
-            <b-th>조회수</b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="(meal, index) in pageMealList" :key="index">
-            <b-td>{{ index + 1 }}</b-td>
-            <b-td>
-              <b-link :to="`/meal/detail/${meal.postNo}`">{{
-                meal.title
-              }}</b-link></b-td
+    <div class="d-flex justify-content-center flex-wrap .container-lg">
+      <!-- 카드 도전 -->
+      <div v-for="(meal, index) in pageMealList" :key="index">
+        <v-card
+          class="card h-150"
+          hover
+          style="
+            min-height: 380px;
+            width: 300px;
+            margin-left: 2rem;
+            margin-right: 2rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <v-img
+            :src="require(`@/assets/MealBoard/${meal.filepath}.png`)"
+            height="200px"
+          ></v-img>
+
+          <v-card-title>{{ meal.title }}</v-card-title>
+
+          <v-card-subtitle>
+            <div>
+              {{ meal.userId }}
+            </div>
+            <div>
+              {{ meal.regDate }}
+            </div>
+          </v-card-subtitle>
+
+          <v-card-text style="text-align: right; margin-left: 5px">
+            <v-icon color="#CD1039" style="margin-left: 5px">mdi-heart</v-icon>
+            <span>
+              {{ meal.LikedCnt }}
+            </span>
+            <b-icon-eye-fill style="margin-left: 8px"></b-icon-eye-fill>
+            <span>
+              {{ meal.viewCnt }}
+            </span>
+            <span style="margin-left: 8px"
+              >{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }} kcal</span
             >
-            <b-td>{{ meal.userId }}</b-td>
-            <b-td>{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 }}</b-td>
-            <b-td>{{ meal.regDate }}</b-td>
-            <b-td>{{ meal.viewCnt }}</b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
+          </v-card-text>
+        </v-card>
+      </div>
     </div>
-    <div v-else>등록된 게시글이 없습니다.</div>
     <div>
       <b-form-select
         v-model="mode"

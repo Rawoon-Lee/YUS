@@ -326,11 +326,8 @@ export default new Vuex.Store({
           delete res.data.day5;
           rpdlist.push(res.data.day6);
           delete res.data.day6;
-<<<<<<< HEAD
           console.log("==============");
           console.log(rpdlist);
-=======
->>>>>>> 7f76a1aa4cf00cc1b0b9d9fc0b6ca609e55af454
           commit("GET_RPD_LIST", rpdlist);
           commit("GET_GROUP", res.data.groupInfo);
           delete res.data.groupInfo;
@@ -455,12 +452,20 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          commit("USER_LOGIN", res.data.id);
-          sessionStorage.setItem("access-token", res.data["access-token"]);
-          sessionStorage.setItem("USER_ID", res.data.id);
-          dispatch("userIsLogin");
-          dispatch("getUserInfo", res.data.id);
-          router.push({ name: "main" });
+          console.log(user);
+          console.log(res.data.message);
+          if (res.data.message == "success") {
+            commit("USER_LOGIN", res.data.id);
+            sessionStorage.setItem("access-token", res.data["access-token"]);
+            sessionStorage.setItem("USER_ID", res.data.id);
+            dispatch("userIsLogin");
+            dispatch("getUserInfo", res.data.id);
+            router.push({ name: "main" });
+          } else {
+            alert("비밀번호 또는 아이디가 다릅니다");
+            dispatch("userIsLogin");
+            router.go();
+          }
         })
         .catch((err) => {
           console.log(err);
