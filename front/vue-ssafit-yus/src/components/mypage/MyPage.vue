@@ -5,7 +5,7 @@
       <div
         class="card-body"
         style="
-          width: 25rem;
+          width: 28rem;
           display: flex;
           justify-content: space-around;
           align-items: center;
@@ -22,15 +22,15 @@
             몸무게 / 키 : {{ userInfo.weight }} / {{ userInfo.height }}
           </p>
           <p class="card-text" v-show="userInfo.groupNo > 0">
-            참여중인 챌린지 그룹 : {{ userInfo.groupNo }}
+            챌린지 그룹 : {{ group.groupName }}
           </p>
         </div>
       </div>
       <div
         style="
-          width: 20rem;
+          width: 22rem;
           display: flex;
-          justify-content: space-between;
+          justify-content: space-around;
           align-items: center;
         "
       >

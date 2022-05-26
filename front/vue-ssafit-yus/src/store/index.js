@@ -25,10 +25,12 @@ export default new Vuex.Store({
     VIDEOS: [],
     commsYou: [],
     commsRoutine: [],
+    commsMeal: [],
     isJoin: 0,
     isLogin: false,
     isYouLiked: false,
     isRouLiked: false,
+    isMealLiked: false,
     isCreatedRou: false,
     USER_ID: null,
     userInfo: null,
@@ -107,8 +109,15 @@ export default new Vuex.Store({
       state.isRouLiked = payload;
       console.log(state.isRouLiked);
     },
+    GET_MEAL_ISLIKED(state, payload) {
+      state.isMealLiked = payload;
+      console.log(state.isMealLiked);
+    },
     GET_COMM_YOU(state, payload) {
       state.commsYou = payload;
+    },
+    GET_COMM_MEAL(state, payload) {
+      state.commsMeal = payload;
     },
     GET_USER_INFO(state, payload) {
       state.userInfo = payload;
@@ -139,6 +148,23 @@ export default new Vuex.Store({
       })
         .then((res) => {
           commit("GET_MEALS", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getMeal({ commit }, postNo) {
+      const API_URL = `${REST_API}/meal/info/${postNo}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log("식단 상세정보 가져왔음");
+          commit("GET_MEAL", res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -554,6 +580,28 @@ export default new Vuex.Store({
           console.log(err.toJSON());
         });
     },
+    getIsLikedMeal({ commit }, liked) {
+      const API_URL = `${REST_API}/meal/liked/check`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (res.data.status == "true") {
+            commit("GET_MEAL_ISLIKED", true);
+          } else {
+            commit("GET_MEAL_ISLIKED", false);
+          }
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
     getIsLikedRou({ commit }, liked) {
       const API_URL = `${REST_API}/routine/liked/check`;
       axios({
@@ -662,6 +710,49 @@ export default new Vuex.Store({
           console.log(err.toJSON());
         });
     },
+    addLikedMeal({ dispatch }, liked) {
+      const API_URL = `${REST_API}/meal/liked/add`;
+      let JSONparsed = JSON.parse(liked);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          // commit("GET_ISLIKED", true);
+          res;
+          dispatch("getIsLikedMeal", liked);
+          dispatch("getMeal", JSONparsed.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delLikedMeal({ dispatch }, liked) {
+      const API_URL = `${REST_API}/meal/liked/del`;
+      let JSONparsed = JSON.parse(liked);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: liked,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getIsLikedMeal", liked);
+          dispatch("getMeal", JSONparsed.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
     getCommentsYou({ commit }, id) {
       const API_URL = `${REST_API}/youtube/comm/${id}`;
       axios({
@@ -679,6 +770,23 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log("미안 댓글 못가져옴");
           console.log(err.toJSON());
+        });
+    },
+    getCommentsMeal({ commit }, id) {
+      const API_URL = `${REST_API}/meal/comm/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log("댓글 가져옴");
+          commit("GET_COMM_MEAL", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     addYoutubeComm({ dispatch }, youtubeComm) {
