@@ -161,7 +161,7 @@ public class UserRestController {
 	public ResponseEntity<String> updateUserFile(@PathVariable String userId, MultipartFile file){
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUserId(userId);
-		if (file.isEmpty()) {
+		if (!file.isEmpty()) {
 			File dest = new File(PATH + macOS + userId + ".png");
             try {
             	file.transferTo(dest);
