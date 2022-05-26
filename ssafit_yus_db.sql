@@ -177,7 +177,7 @@ SELECT * FROM exercise_info;
 INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no, filepath)
 VALUES ("JunhoLee", "1e9c98989e7afb35e311334e79aad5ba5895182db8aa8d0ec28cb675fc8a4d0f", 67, 178, 32, 0, "강남비싼헬스장", 1, 1, "JunhoLee"),
 ("Hwasa", "af3fce2230d8b03e584f253b1ad38a70c0142ca88488a073a8eb69f7af19ff34", 44, 160, 28, 1, "이태원비싼헬스장", 1, 2, "Hwasa"),
-("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 3, "hyunklee"),
+("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 0, "hyunklee"),
 ("rawoon", "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", 90, 186, 27, 0, "매탄동휘트니스", 0, 1, "rawoon");
 -- iamhandsome, iamsexy, 121314, ssafityus
 INSERT INTO user_info(user_id, user_password)
@@ -186,8 +186,7 @@ SELECT * FROM user_info;
 
 INSERT INTO group_info (group_name, maximum_people, user_id)
 VALUES ("놀기위해 운동한다", 20, "junhoLee"),
-("체력이 국력", 10, "Hwasa"),
-("오늘은 내가 핫바디", 15, "hyunklee");
+("체력이 국력", 10, "Hwasa");
 SELECT * FROM group_info;
 
 INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_name)

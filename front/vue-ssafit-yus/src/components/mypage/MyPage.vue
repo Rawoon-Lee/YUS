@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container" style="margin-top: 1rem">
     <div class="card" style="display: flex; align-items: center">
       <h2>마이페이지</h2>
       <div
@@ -12,18 +12,15 @@
         "
       >
         <img
-          :src="require(`@/assets/UserInfo/${profilePath}.png`)"
+          :src="require(`@/assets/UserInfo/${userInfo.filepath}.png`)"
           alt="프로필"
           class="mypageProfile"
         />
         <div>
-          <p class="card-text">닉네임 : {{ userId }}</p>
-          <p class="card-text">
-            몸무게 / 키 : {{ userInfo.weight }} / {{ userInfo.height }}
-          </p>
-          <p class="card-text" v-show="userInfo.groupNo > 0">
-            챌린지 그룹 : {{ group.groupName }}
-          </p>
+          <p class="card-text">닉네임 : {{ userInfo.userId }}</p>
+          <p class="card-text">나이 : {{ userInfo.age }}</p>
+          <p class="card-text">키 : {{ userInfo.height }}cm</p>
+          <p class="card-text">몸무게 : {{ userInfo.weight }}kg</p> 
         </div>
       </div>
       <div
@@ -39,46 +36,54 @@
         >
         <b-button :to="{ name: 'myInfoUpdate' }">개인정보 수정하기</b-button>
       </div>
+      <div
+        v-if="userInfo.groupNo > 0"
+        style="border: 0.5px solid black; border-radius: 10%; margin-top: 10px"
+      >
+        <b-link
+          :to="`/challenge/detail/${userInfo.groupNo}`"
+          style="color: #646464"
+        >
+          <b-icon icon="lightning-fill"></b-icon>
+          work out
+        </b-link>
+      </div>
+      <div v-else>
+        <h2>진행중인 챌린지가 없습니다.</h2>
+      </div>
       <br />
     </div>
-    <challenge-detail></challenge-detail>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import ChallengeDetail from "@/components/challenge/ChallengeDetail.vue";
 
 export default {
   data() {
-    return {
-      userId: sessionStorage.getItem("USER_ID"),
-    };
+    return {};
   },
   computed: {
     ...mapState(["userInfo"]),
-    ...mapState(["groupMem"]),
-    ...mapState(["group"]),
     ...mapState(["keys"]),
     ...mapState(["profilePath"]),
+    ...mapState(["group"]),
   },
   created() {
     let userId = sessionStorage.getItem("USER_ID");
     this.$store.dispatch("getUserInfo", userId);
-    this.$store.dispatch("getGroup", this.userInfo.groupNo);
-    this.userId = userId;
+    if (this.userInfo.groupNo != 0)
+      this.$store.dispatch("getGroup", this.userInfo.groupNo);
   },
-  components: {
-    ChallengeDetail,
-  },
+  components: {},
 };
 </script>
 
 <style>
 .mypageProfile {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border-radius: 12%;
   object-fit: cover;
 }
 </style>

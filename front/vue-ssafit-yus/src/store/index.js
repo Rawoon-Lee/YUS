@@ -326,11 +326,6 @@ export default new Vuex.Store({
           delete res.data.day5;
           rpdlist.push(res.data.day6);
           delete res.data.day6;
-<<<<<<< HEAD
-          console.log("==============");
-          console.log(rpdlist);
-=======
->>>>>>> 7f76a1aa4cf00cc1b0b9d9fc0b6ca609e55af454
           commit("GET_RPD_LIST", rpdlist);
           commit("GET_GROUP", res.data.groupInfo);
           delete res.data.groupInfo;
