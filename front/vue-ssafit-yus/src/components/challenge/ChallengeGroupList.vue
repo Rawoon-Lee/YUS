@@ -100,6 +100,7 @@ export default {
       mode: 1,
       currentPage: 1,
       perPage: 10,
+      userId: sessionStorage.getItem("USER_ID"),
     };
   },
   computed: {
@@ -129,11 +130,12 @@ export default {
       this.$store.dispatch("getGroups", payload);
     },
     enroll(groupNo) {
-      let user = this.userInfo;
-      user.groupNo = groupNo;
-      user.file = "temp";
+      let user = {
+        userId: this.userId,
+        groupNo: groupNo,
+      };
       console.log(JSON.stringify(user));
-      this.$store.dispatch("enrollGroup", user);
+      this.$store.dispatch("enrollGroup", JSON.stringify(user));
     },
   },
 };

@@ -3,6 +3,7 @@
     class="container"
     style="border: 1px solid #282828; border-radius: 10px; margin-top: 1rem"
   >
+    <h2>식단 상세 페이지</h2>
     <div
       style="
         vertical-align: middle;
@@ -25,7 +26,7 @@
             border-radius: 7px;
             margin-left: 0.3rem;
           "
-          >{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 + " cal" }}</span
+          >{{ meal.userId }}</span
         >
         <span style="margin-left: 0.3rem; font-size: 20pt">{{
           meal.title
@@ -34,9 +35,7 @@
     </div>
     <hr />
     <div style="display: flex; justify-content: space-between">
-      <div align="left" style="margin-left: 1rem">
-        {{ meal.userId }}
-      </div>
+      <div align="left" style="margin-left: 1rem">제목 : {{ meal.title }}</div>
       <div align="right">
         <span style="margin-right: 1rem"
           ><b-icon-eye-fill></b-icon-eye-fill> {{ meal.viewCnt }}</span
@@ -54,11 +53,11 @@
     <hr />
     <div>
       <div>
-        <!-- <img
+        <img
           :src="require(`@/assets/MealBoard/${meal.filepath}.png`)"
           alt="식단사진"
           class="meal"
-        /> -->
+        />
       </div>
       <div class="card">
         {{ meal.content }}
@@ -84,68 +83,64 @@
       </b-button>
     </div>
     <hr />
-    <div v-if="commsMeal.length" style="margin-left: 2rem">
-      <div v-for="(comm, index) in commsMeal" :key="index">
+    <!-- <div v-if="commsMeal.length" style="margin-left: 2rem">
+      <div
+        v-for="(comm, index) in commsMeal"
+        :key="index"
+        :comm="comm.comm"
+        :userId="comm.userId"
+        :regDate="comm.regDate"
+        :classNo="comm.classNo"
+        :commGroup="comm.commGroup"
+      >
         <div class="row" v-if="comm.classNo == 0" style="margin-top: 1rem">
           <div class="col">{{ comm.comm }}</div>
           <div class="col">{{ comm.userId }}</div>
           <div class="col">{{ comm.regDate }}</div>
-          <div class="col">
-            <b-button type="button" @click="toggleShow(index)" variant="light">
+          <div style="margin-right: 5rem; width: 10%">
+            <b-button type="button" @click="addLike" variant="light">
               <b-icon icon="reply-fill"></b-icon>답글
-            </b-button>
-            <b-button
-              v-if="comm.userId == userId"
-              type="button"
-              @click="deleteComm(comm.commIndex)"
-              variant="danger"
-            >
-              <b-icon icon="trash-fill"></b-icon>삭제
             </b-button>
           </div>
         </div>
-        <div class="row" style="margin-left: 12px; margin-top: 0.5rem" v-else>
+        <div class="row" style="margin-left: 2px; margin-top: 0.5rem" v-else>
           <div><b-icon icon="arrow-return-right"></b-icon></div>
           <div class="col">{{ comm.comm }}</div>
           <div class="col">{{ comm.userId }}</div>
           <div class="col">{{ comm.regDate }}</div>
-          <div class="col">
-            <b-button type="button" @click="toggleShow(index)" variant="light">
+          <div style="margin-right: 5rem">
+            <b-button type="button" @click="addLike" variant="light">
               <b-icon icon="reply-fill"></b-icon>답글
-            </b-button>
-            <b-button
-              v-if="comm.userId == userId"
-              type="button"
-              @click="deleteComm(comm.commIndex)"
-              variant="danger"
-            >
-              <b-icon icon="trash-fill"></b-icon>삭제
             </b-button>
           </div>
         </div>
-        <div v-if="comm.status">
-          <meal-comment-form
-            :classNo="1"
-            :commGroup="comm.commGroup"
-            :userId="userId"
-            :postNo="meal.postNo"
-          ></meal-comment-form>
-        </div>
       </div>
     </div>
+    <div v-else>
+      <h2
+        style="
+          margin-left: 1rem;
+          color: gray;
+          font-size: 20pt;
+          text-align: center;
+        "
+      >
+        작성된 댓글이 없습니다.
+      </h2>
+    </div>
+    <hr />
+    <div>
+      <b-icon icon="chat-left-text-fill" style="margin-top: 1rem"></b-icon> 댓글
+      작성
+    </div> -->
     <br />
-    <meal-comment-form
-      :classNo="0"
-      :commGroup="0"
-      :userId="userId"
-      :postNo="meal.postNo"
-    ></meal-comment-form>
+    <meal-comment-form></meal-comment-form>
     <hr />
     <div
       class="row justify-content-center"
       style="margin-left: 2px; margin-right: 5px"
     >
-      <b-button to="/meal">목록으로 돌아가기</b-button>
+      <b-button to="/exercise/all">목록으로 돌아가기</b-button>
     </div>
     <hr />
     <br />
@@ -175,6 +170,7 @@ export default {
   created() {
     const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
+    console.log("???" + id);
     this.$store.dispatch("getMeal", id);
     // this.$store.dispatch("getCommentsYou", id);
     this.postNo = id;
@@ -182,7 +178,6 @@ export default {
       userId: sessionStorage.getItem("USER_ID"),
       postNo: this.postNo,
     };
-    this.$store.dispatch("getCommentsMeal", id);
     this.$store.dispatch("getIsLikedMeal", JSON.stringify(liked));
   },
   mounted() {
@@ -193,7 +188,7 @@ export default {
       };
       let JSONRou = JSON.stringify(post);
       console.log(JSONRou);
-      this.$store.dispatch("addViewMeal", JSONRou);
+      this.$store.dispatch("addViewMeal", this.postNo);
     }
   },
   methods: {
@@ -218,17 +213,7 @@ export default {
       let JSONliked = JSON.stringify(liked);
       console.log(JSONliked);
       this.$store.dispatch("delLikedMeal", JSONliked);
-      this.calMeal(this.meal.postNo);
-    },
-    toggleShow(index) {
-      this.commsMeal[index].status = !this.commsMeal[index].status;
-    },
-    deleteComm(commIndex) {
-      let mealComm = {
-        commIndex: commIndex,
-        postNo: this.meal.postNo,
-      };
-      this.$store.dispatch("delMealComm", JSON.stringify(mealComm));
+      this.calMeal(this.postNo);
     },
   },
 };

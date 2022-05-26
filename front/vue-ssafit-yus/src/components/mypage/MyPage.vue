@@ -63,10 +63,10 @@ export default {
     ...mapState(["profilePath"]),
   },
   created() {
-    this.userId = sessionStorage.getItem("USER_ID");
-    console.log(this.userId);
-    this.$store.dispatch("getUserInfo", this.userId);
+    let userId = sessionStorage.getItem("USER_ID");
+    this.$store.dispatch("getUserInfo", userId);
     this.$store.dispatch("getGroup", this.userInfo.groupNo);
+    this.userId = userId;
   },
   components: {
     ChallengeDetail,

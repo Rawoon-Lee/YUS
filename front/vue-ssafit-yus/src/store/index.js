@@ -338,13 +338,15 @@ export default new Vuex.Store({
         });
     },
     enrollGroup({ dispatch }, user) {
-      const API_URL = `${REST_API}/user/info/2`;
+      const API_URL = `${REST_API}/user/info/group`;
+      console.log(user);
       axios({
         url: API_URL,
-        method: "POST",
-        params: user,
+        method: "PUT",
+        data: user,
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
         },
       })
         .then(() => {
@@ -533,7 +535,8 @@ export default new Vuex.Store({
           console.log(res);
           console.log("유저 프로필 업데이트 성공");
           dispatch("getUserInfo", userID);
-          router.push({ name: "myPage" });
+          dispatch("getgetProfilePath", userID);
+          router.replace({ name: "myPage" });
         })
         .catch((err) => {
           console.log("유저 프로필 업데이트 못함....");
@@ -945,21 +948,18 @@ export default new Vuex.Store({
         });
     },
     addViewMeal({ dispatch }, postNo) {
-      let JSONparse = JSON.parse(postNo);
-      const API_URL = `${REST_API}/meal/info/view`;
+      const API_URL = `${REST_API}/meal/info/view/${postNo}`;
       axios({
         url: API_URL,
-        method: "POST",
-        data: postNo,
+        method: "PUT",
         headers: {
           "access-token": sessionStorage.getItem("access-token"),
-          "Content-Type": "application/json",
         },
       })
         .then((res) => {
           res;
           console.log("식단 조회수 증가");
-          dispatch("getMeal", JSONparse.postNo);
+          dispatch("getMeal", postNo);
         })
         .catch((err) => {
           console.log(err.toJSON());
@@ -1002,6 +1002,27 @@ export default new Vuex.Store({
           res;
           console.log(JSONparsed);
           dispatch("getCommentsMeal", JSONparsed.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    success({ commit }, userId) {
+      const API_URL = `${REST_API}/group/success`;
+      console.log(userId);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: userId,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("운동 완료 등록함");
+          commit;
         })
         .catch((err) => {
           console.log(err.toJSON());

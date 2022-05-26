@@ -28,13 +28,26 @@
           </li>
         </ul>
       </div>
+      <div class="card">
+        <routine-detail-exercise
+          v-for="(workout, index) in workouts"
+          :key="index"
+          :exerciseName="workout.exerciseName"
+          :rep="workout.routineSet"
+          :set="workout.routineRep"
+        ></routine-detail-exercise>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          v-show="keys.includes(userId)"
+          @click="success"
+        >
+          운동 달성!
+        </button>
+      </div>
     </div>
-    <!-- <challenge-detail-user
-      v-for="(member, index) in keys"
-      :key="index"
-      :member="groupMem[member]"
-      :user="member"
-    ></challenge-detail-user> -->
   </div>
 </template>
 
@@ -43,6 +56,12 @@ import { mapState } from "vuex";
 import ChallengeDetailUser from "@/components/challenge/ChallengeDetailUser.vue";
 
 export default {
+  data() {
+    return {
+      userId: sessionStorage.getItem("USER_ID"),
+      groupNo: null,
+    };
+  },
   computed: {
     ...mapState(["groupMem"]),
     ...mapState(["group"]),
@@ -55,6 +74,16 @@ export default {
     let pathname = this.$route.path.split("/");
     let id = pathname[pathname.length - 1];
     this.$store.dispatch("getGroup", id);
+    this.groupNo = id;
+  },
+  methods: {
+    success() {
+      let user = {
+        userId: this.userId,
+      };
+      this.$store.dispatch("success", JSON.stringify(user));
+      this.$store.dispatch("getGroup", this.groupNo);
+    },
   },
 };
 </script>
