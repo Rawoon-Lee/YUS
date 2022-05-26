@@ -197,6 +197,7 @@ export default {
           options: ["스쿼트", "레그 프레스", "레그 익스텐션"],
         },
       ],
+      videoId: null,
     };
   },
   components: {
@@ -220,20 +221,12 @@ export default {
     };
     this.$store.dispatch("getIsLikedYou", liked);
   },
+  mounted() {
+    this.$store.dispatch("addViewYou", this.videoId);
+  },
   methods: {
     calVideo(videoId) {
       this.$store.dispatch("getVideo", videoId);
-      // this.videoDetail.title = video.title;
-      // this.videoDetail.channelName = video.channelName;
-      // for (let i = 0; i < this.workouts.length; i++) {
-      // if (this.workouts[i]["options"].includes(video.exerciseName)) {
-      // this.videoDetail.part = this.workouts[i].label;
-      // break;
-      // }
-      // }
-      // this.videoDetail.exerciseName = video.exerciseName;
-      // this.videoDetail.viewCnt = video.viewCnt;
-      // this.videoDetail.likedCnt = video.LikedCnt;
     },
     addLike() {
       let liked = {

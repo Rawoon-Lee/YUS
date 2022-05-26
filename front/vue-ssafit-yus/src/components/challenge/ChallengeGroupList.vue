@@ -25,7 +25,7 @@
                 group.groupName
               }}</b-link></b-td
             >
-            <b-td>포켓몬빵순이</b-td>
+            <b-td>{{ group.userId }}</b-td>
             <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
             <b-td>{{ group.groupPoint }}</b-td>
             <b-td

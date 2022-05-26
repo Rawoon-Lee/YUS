@@ -788,6 +788,44 @@ export default new Vuex.Store({
           console.log(err.toJSON());
         });
     },
+    getCommentsMeal({ commit }, id) {
+      const API_URL = `${REST_API}/meal/comm/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          for (let item of res.data) item.status = false;
+          commit("GET_COMM_MEAL", res.data);
+        })
+        .catch((err) => {
+          err;
+          console.log("미안 댓글 못가져옴");
+        });
+    },
+    addYoutubeComm({ dispatch }, youtubeComm) {
+      const API_URL = `${REST_API}/youtube/comm/add`;
+      let JSONparsed = JSON.parse(youtubeComm);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: youtubeComm,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getCommentsYou", JSONparsed.videoId);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
     delYoutubeComm({ dispatch }, youtubeComm) {
       let JSONparsed = JSON.parse(youtubeComm);
       const API_URL = `${REST_API}/youtube/comm/delete/` + JSONparsed.commIndex;
@@ -868,8 +906,29 @@ export default new Vuex.Store({
           console.log(err.toJSON());
         });
     },
-    getCommentsMeal({ commit }, id) {
-      const API_URL = `${REST_API}/meal/comm/${id}`;
+    addViewRou({ dispatch }, routineNo) {
+      let JSONparsed = JSON.parse(routineNo);
+      const API_URL = `${REST_API}/routine/info/view`;
+      axios({
+        url: API_URL,
+        method: "PUT",
+        data: routineNo,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("루틴 조회수 증가");
+          dispatch("getRoutine", JSONparsed.routineNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addViewYou({ dispatch }, videoId) {
+      const API_URL = `${REST_API}/youtube/info/view/${videoId}`;
       axios({
         url: API_URL,
         method: "GET",
@@ -878,11 +937,33 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          for (let item of res.data) item.status = false;
-          commit("GET_COMM_MEAL", res.data);
+          res;
+          console.log("유튜브 조회수 증가");
+          dispatch("getVideo", videoId);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.toJSON());
+        });
+    },
+    addViewMeal({ dispatch }, postNo) {
+      let JSONparse = JSON.parse(postNo);
+      const API_URL = `${REST_API}/meal/info/view`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: postNo,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log("식단 조회수 증가");
+          dispatch("getMeal", JSONparse.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
         });
     },
     addMealComm({ dispatch }, mealComm) {

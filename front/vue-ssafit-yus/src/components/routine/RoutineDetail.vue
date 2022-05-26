@@ -232,6 +232,17 @@ export default {
     };
     this.$store.dispatch("getIsLikedRou", JSON.stringify(liked));
   },
+  mounted() {
+    let user = sessionStorage.getItem("USER_ID");
+    if (user != this.routine.userId) {
+      let routineNo = {
+        routineNo: this.routineId,
+      };
+      let JSONRou = JSON.stringify(routineNo);
+      console.log(JSONRou);
+      this.$store.dispatch("addViewRou", JSONRou);
+    }
+  },
   methods: {
     calRoutine(routineId) {
       this.$store.dispatch("getRoutine", routineId);
