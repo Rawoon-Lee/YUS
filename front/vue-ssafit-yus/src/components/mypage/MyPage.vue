@@ -12,7 +12,7 @@
         "
       >
         <img
-          :src="require(`@/assets/UserInfo/${userId}.png`)"
+          :src="require(`@/assets/UserInfo/${profilePath}.png`)"
           alt="프로필"
           class="mypageProfile"
         />
@@ -60,6 +60,7 @@ export default {
     ...mapState(["groupMem"]),
     ...mapState(["group"]),
     ...mapState(["keys"]),
+    ...mapState(["profilePath"]),
   },
   created() {
     this.userId = sessionStorage.getItem("USER_ID");

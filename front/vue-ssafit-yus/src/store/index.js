@@ -123,9 +123,8 @@ export default new Vuex.Store({
       state.userInfo = payload;
     },
     GET_PROFILEPATH(state, payload) {
-      console.log(typeof payload);
       state.profilePath = payload;
-      console.log(state.profilePath);
+      console.log(state.profilePath + "프로필 이름");
     },
     GET_COMM_ROUTINE(state, payload) {
       state.commsRoutine = payload;
