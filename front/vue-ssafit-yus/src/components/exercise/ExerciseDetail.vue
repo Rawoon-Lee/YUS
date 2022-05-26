@@ -12,7 +12,7 @@
       <div align="right">
         <span style="margin-right: 1rem"><b-icon-eye-fill></b-icon-eye-fill> {{ video.viewCnt }}</span>
         <span style="margin-right: 1rem"><b-icon icon="heart-fill" style="color: red"></b-icon> {{ video.LikedCnt }}</span>
-        <span><b-icon icon="chat-right-text-fill"></b-icon> {{ commsYou.lengh }}</span>
+        <span><b-icon icon="chat-right-text-fill"></b-icon> {{ commsYou.length }}</span>
       </div>
     </div>
     <hr>
@@ -35,36 +35,35 @@
     </div>
     <hr>
     <div v-if="commsYou.length" style="margin-left:2rem">
-      <div
-        v-for="(comm, index) in commsYou"
-        :key="index"
-        :comm="comm.comm"
-        :userId="comm.userId"
-        :regDate="comm.regDate"
-        :classNo="comm.classNo"
-        :commGroup="comm.commGroup"
-      >
-      <div class="row" v-if="comm.classNo == 0" style="margin-top:1rem">
-        <div class="col">{{comm.comm}}</div>
-        <div class="col">{{comm.userId}}</div>
-        <div class="col">{{comm.regDate}}</div>
-        <div style="margin-right:5rem; width:10%">
-        <b-button type="button" @click="addLike" variant="light">
-          <b-icon icon="reply-fill"></b-icon>답글
-        </b-button>
+      <div v-for="(comm, index) in commsYou" :key="index">
+        <div class="row" v-if="comm.classNo == 0" style="margin-top:1rem">
+          <div class="col">{{comm.comm}}</div>
+          <div class="col">{{comm.userId}}</div>
+          <div class="col">{{comm.regDate}}</div>
+          <div style="margin-right:5rem; width:10%">
+          <b-button type="button" @click="toggleShow(index)" variant="light">
+            <b-icon icon="reply-fill"></b-icon>답글
+          </b-button>
+          </div>
         </div>
-      </div>
-      <div class="row" style="margin-left: 2px; margin-top:0.5rem" v-else>
-        <div><b-icon icon="arrow-return-right"></b-icon></div>
-        <div class="col">{{comm.comm}}</div>
-        <div class="col">{{comm.userId}}</div>
-        <div class="col">{{comm.regDate}}</div>
-        <div style="margin-right:5rem">
-        <b-button type="button" @click="addLike" variant="light">
-          <b-icon icon="reply-fill"></b-icon>답글
-        </b-button>
+        <div class="row" style="margin-left: 2px; margin-top:0.5rem" v-else>
+          <div><b-icon icon="arrow-return-right"></b-icon></div>
+          <div class="col">{{comm.comm}}</div>
+          <div class="col">{{comm.userId}}</div>
+          <div class="col">{{comm.regDate}}</div>
+          <div style="margin-right:5rem">
+            <b-button type="button" @click="toggleShow(index)" variant="light">
+              <b-icon icon="reply-fill"></b-icon>답글
+            </b-button>
+          </div>
         </div>
-      </div>
+        <div v-if="comm.status">
+          <Comment-form
+            :classNo="1"
+            :commGroup="comm.commGroup"
+            :userId="comm.userId"
+          ></Comment-form>
+        </div>
       </div>
     </div>
     <div v-else>
@@ -72,10 +71,15 @@
     </div>
     <hr>
     <div>
-        <b-icon icon="chat-left-text-fill" style="margin-top:1rem"></b-icon> 댓글 작성
-      </div>
+        <b-icon icon="chat-left-text-fill" style="margin-top:1rem"></b-icon> 댓글 작성({{commsYou.length}})
+    </div>
       <br>
-    <CommentForm></CommentForm>
+      {{userId}}
+      <comment-form
+        :classNo="0"
+        :commGroup="0"
+        :userId="userId"
+      ></comment-form>
     <hr>
     <div class="row justify-content-center" style="margin-left:2px; margin-right:5px;">
         <b-button to="/exercise/all">목록으로 돌아가기</b-button>
@@ -130,7 +134,6 @@ export default {
   created() {
     const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
-    console.log("???" + id);
     this.$store.dispatch("getVideo", id);
     this.$store.dispatch("getCommentsYou", id);
     this.videoId = id;
@@ -175,6 +178,9 @@ export default {
       this.$store.dispatch("delLikedYou", JSONliked);
       this.calVideo(this.videoId);
     },
+    toggleShow(index){
+      this.commsYou[index].status = !this.commsYou[index].status
+    }
   },
 };
 </script>

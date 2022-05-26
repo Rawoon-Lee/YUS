@@ -13,4 +13,5 @@ public interface RoutineCommDao {
 	void updateForDelete(RoutineComm routineComm);
 	void updateByCommIndex(RoutineComm routineComm);
 	int selectMaxCommIndex();
+	int selectMaxOrderNo(RoutineComm routineComm);
 }

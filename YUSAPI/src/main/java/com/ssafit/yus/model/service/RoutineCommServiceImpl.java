@@ -30,6 +30,10 @@ public class RoutineCommServiceImpl implements RoutineCommService{
 			int maxCommIndex = routineCommDao.selectMaxCommIndex();
 			routineComm.setCommGroup(maxCommIndex + 1);
 		}
+		else {
+			int max = routineCommDao.selectMaxOrderNo(routineComm) + 1;
+			routineComm.setOrderNo(max);
+		}
 		routineCommDao.InsertRoutineComm(routineComm);
 	}
 

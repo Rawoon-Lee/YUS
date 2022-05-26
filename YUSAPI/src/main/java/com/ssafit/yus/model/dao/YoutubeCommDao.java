@@ -12,4 +12,5 @@ public interface YoutubeCommDao {
 	void updateForDelete(YoutubeComm youtubeComm);
 	void updateByCommIndex(YoutubeComm youtubeComm);
 	int selectMaxCommIndex();
+	int selectMaxOrderNo(YoutubeComm youtubeComm);
 }

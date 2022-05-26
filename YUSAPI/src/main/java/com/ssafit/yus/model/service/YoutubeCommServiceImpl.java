@@ -29,6 +29,10 @@ public class YoutubeCommServiceImpl implements YoutubeCommService{
 			int maxCommIndex = youtubeCommDao.selectMaxCommIndex();
 			youtubeComm.setCommGroup(maxCommIndex + 1);
 		}
+		else {
+			int max = youtubeCommDao.selectMaxOrderNo(youtubeComm) + 1;
+			youtubeComm.setOrderNo(max);
+		}
 		youtubeCommDao.InsertYoutubeComm(youtubeComm);
 	}
 

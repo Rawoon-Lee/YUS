@@ -622,7 +622,9 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log("댓글 가져옴");
+          console.log("댓글 가져오는 부분")
+          for(let item of res.data)
+            item.status = false;
           commit("GET_COMM_YOU", res.data);
         })
         .catch((err) => {

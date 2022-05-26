@@ -28,6 +28,11 @@
 		FROM routine_comm
 		WHERE comm_index = #{commIndex}
 	</select>
+	<select id="selectMaxOrderNo" parameterType="RoutineComm" resultType="int">
+		SELECT MAX(order_no)
+		FROM routine_comm
+		WHERE routine_no = #{routineNo} AND comm_group = #{commGroup}
+	</select>
 	<insert id="InsertRoutineComm" parameterType="RoutineComm">
 		INSERT INTO routine_comm(class_no, comm, order_no, comm_group, routine_no, user_id)
 		VALUES (#{classNo}, #{comm}, #{orderNo}, #{commGroup}, #{routineNo}, #{userId})

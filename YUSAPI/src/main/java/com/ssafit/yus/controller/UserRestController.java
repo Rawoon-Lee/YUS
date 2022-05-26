@@ -137,33 +137,21 @@ public class UserRestController {
 		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", dataTypeClass = UserInfo.class, required = true)
 	})
 	
-	@PostMapping("/info/info")
-	public ResponseEntity<String> updateUserInfo(UserInfoWithFile userInfo){
-		if (!userInfo.getFile().isEmpty()) {
-			File dest = new File(PATH + macOS + userInfo.getUserId() + ".png");
-            try {
-            	userInfo.getFile().transferTo(dest);
-            } catch (IllegalStateException e) {
-               e.printStackTrace();
-            } catch (IOException e) {
-               e.printStackTrace();
-            }
-            userInfo.setFilepath(userInfo.getUserId());
-		}
-		System.out.println(userInfo.toString());
-		userInfoService.updateUserInfo(3, userInfo);
+	@PutMapping("/info/info")
+	public ResponseEntity<String> updateUserInfo(@RequestBody UserInfo userInfo){
+		userInfoService.updateUserInfo(0, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	@PutMapping("/info/point")
-	public ResponseEntity<String> updateUserPoint(UserInfo userInfo){
+	public ResponseEntity<String> updateUserPoint(@RequestBody UserInfo userInfo){
 		System.out.println(userInfo.toString());
 		userInfoService.updateUserInfo(1, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	@PutMapping("/info/group")
-	public ResponseEntity<String> updateGroupNo(UserInfo userInfo){
+	public ResponseEntity<String> updateGroupNo(@RequestBody UserInfo userInfo){
 		System.out.println(userInfo.toString());
 		userInfoService.updateUserInfo(2, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
