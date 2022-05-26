@@ -9,6 +9,7 @@ public interface MealBoardDao {
 	MealBoard selectByPostNo(int postNo);
 	void insertMealBoard(MealBoard mealBoard);
 	void updateMealBoard(MealBoard mealBoard);
+	void updateFile(MealBoard mealBoard);
 	void updateViewCnt(int postNo);
 	void deleteMealBoard(int postNo);
 }

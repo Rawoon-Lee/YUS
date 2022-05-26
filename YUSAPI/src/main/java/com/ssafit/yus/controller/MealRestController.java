@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -134,15 +135,24 @@ public class MealRestController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "mealBoard", value = "수정 할 게시물의 속성들", dataTypeClass = MealBoard.class, required = true)
 	})
-	@PostMapping("/info/modify")
-	public ResponseEntity<Map<String, String>> modifyMeal(MealBoardWithFile mealBoard){
+	@PutMapping("/info/modify")
+	public ResponseEntity<Map<String, String>> modifyMeal(MealBoard mealBoard){
 		Map<String, String> ret = new HashMap<String, String>();
-		if (!mealBoard.getFile().isEmpty()) {
-			String uuid = mealBoardDao.selectByPostNo(mealBoard.getPostNo()).getFilepath();
+		mealBoardService.updateMealBoard(0, mealBoard);
+		ret.put("msg", SUCCESS);
+		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.CREATED);
+	}
+	@PutMapping("/info/modify/{postNo}")
+	public ResponseEntity<Map<String, String>> modifyMealFile(@PathVariable int postNo, MultipartFile file){
+		Map<String, String> ret = new HashMap<String, String>();
+		MealBoard mealBoard = new MealBoard();
+		mealBoard.setPostNo(postNo);
+		if (!file.isEmpty()) {
+			String uuid = mealBoardDao.selectByPostNo(postNo).getFilepath();
 			if (uuid == null) uuid = UUID.randomUUID() + "";
 			File dest = new File(PATH + macOS + uuid + ".png");
             try {
-            	mealBoard.getFile().transferTo(dest);
+            	file.transferTo(dest);
             } catch (IllegalStateException e) {
                e.printStackTrace();
             } catch (IOException e) {
@@ -150,7 +160,7 @@ public class MealRestController {
             }
             mealBoard.setFilepath(uuid);
 		}
-		mealBoardService.updateMealBoard(mealBoard);
+		mealBoardService.updateMealBoard(1, mealBoard);
 		ret.put("msg", SUCCESS);
 		return new ResponseEntity<Map<String, String>>(ret, HttpStatus.CREATED);
 	}

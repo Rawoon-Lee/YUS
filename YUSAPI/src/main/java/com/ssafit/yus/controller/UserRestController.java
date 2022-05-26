@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -135,8 +136,9 @@ public class UserRestController {
 		@ApiImplicitParam(name = "mode", value = "0 : userInfo, 1 : userPoint, 2 : userGroup", dataTypeClass = int.class, required = true),
 		@ApiImplicitParam(name = "userInfo", value = "변경할 내용을 수정한 객체(프론트에서 처리)", dataTypeClass = UserInfo.class, required = true)
 	})
-	@PostMapping("/info/{mode}")
-	public ResponseEntity<String> updateInfo(@PathVariable int mode, UserInfoWithFile userInfo){
+	
+	@PostMapping("/info/info")
+	public ResponseEntity<String> updateUserInfo(UserInfoWithFile userInfo){
 		if (!userInfo.getFile().isEmpty()) {
 			File dest = new File(PATH + macOS + userInfo.getUserId() + ".png");
             try {
@@ -149,7 +151,41 @@ public class UserRestController {
             userInfo.setFilepath(userInfo.getUserId());
 		}
 		System.out.println(userInfo.toString());
-		userInfoService.updateUserInfo(mode, userInfo);
+		userInfoService.updateUserInfo(3, userInfo);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+	
+	@PutMapping("/info/point")
+	public ResponseEntity<String> updateUserPoint(UserInfo userInfo){
+		System.out.println(userInfo.toString());
+		userInfoService.updateUserInfo(1, userInfo);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+	
+	@PutMapping("/info/group")
+	public ResponseEntity<String> updateGroupNo(UserInfo userInfo){
+		System.out.println(userInfo.toString());
+		userInfoService.updateUserInfo(2, userInfo);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+	
+	@PutMapping("/info/{userId}")
+	public ResponseEntity<String> updateUserFile(@PathVariable String userId, MultipartFile file){
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserId(userId);
+		if (file.isEmpty()) {
+			File dest = new File(PATH + macOS + userId + ".png");
+            try {
+            	file.transferTo(dest);
+            } catch (IllegalStateException e) {
+               e.printStackTrace();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+            userInfo.setFilepath(userInfo.getUserId());
+		}
+		System.out.println(userInfo.toString());
+		userInfoService.updateUserInfo(3, userInfo);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 }
