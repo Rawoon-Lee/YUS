@@ -54,7 +54,7 @@
     <div>
       <div>
         <img
-          :src="require(`@/assets/UserInfo/${userId}.png`)"
+          :src="require(`@/assets/MealBoard/${meal.filepath}.png`)"
           alt="식단사진"
           class="meal"
         />
@@ -163,7 +163,6 @@ export default {
     CommentForm,
   },
   computed: {
-    // ...mapState(["exercises"]),
     ...mapState(["commsMeal"]),
     ...mapState(["meal"]),
     ...mapState(["isMealLiked"]),
@@ -179,10 +178,10 @@ export default {
       userId: sessionStorage.getItem("USER_ID"),
       postNo: this.postNo,
     };
-    this.$store.dispatch("getIsLikedMeal", liked);
+    this.$store.dispatch("getIsLikedMeal", JSON.stringify(liked));
   },
   methods: {
-    cal(postNo) {
+    calMeal(postNo) {
       this.$store.dispatch("getMeal", postNo);
     },
     addLike() {
@@ -193,7 +192,7 @@ export default {
       let JSONliked = JSON.stringify(liked);
       console.log(JSONliked);
       this.$store.dispatch("addLikedMeal", JSONliked);
-      this.calVideo(this.videoId);
+      this.calMeal(this.postNo);
     },
     delLike() {
       let liked = {
@@ -203,7 +202,7 @@ export default {
       let JSONliked = JSON.stringify(liked);
       console.log(JSONliked);
       this.$store.dispatch("delLikedMeal", JSONliked);
-      this.calVideo(this.videoId);
+      this.calMeal(this.postNo);
     },
   },
 };

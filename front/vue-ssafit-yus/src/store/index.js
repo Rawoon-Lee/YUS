@@ -589,6 +589,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           if (res.data.status == "true") {
+            console.log("식단 좋아요 여부 불러옴");
             commit("GET_MEAL_ISLIKED", true);
           } else {
             commit("GET_MEAL_ISLIKED", false);
@@ -721,10 +722,12 @@ export default new Vuex.Store({
         .then((res) => {
           // commit("GET_ISLIKED", true);
           res;
+
           dispatch("getIsLikedMeal", liked);
           dispatch("getMeal", JSONparsed.postNo);
         })
         .catch((err) => {
+          console.log("식단 좋아요 추가 못함");
           console.log(err.toJSON());
         });
     },
@@ -782,6 +785,7 @@ export default new Vuex.Store({
           commit("GET_COMM_MEAL", res.data);
         })
         .catch((err) => {
+          err;
           console.log("미안 댓글 못가져옴");
         });
     },
