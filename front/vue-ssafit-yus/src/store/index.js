@@ -724,7 +724,6 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          // commit("GET_ISLIKED", true);
           res;
 
           dispatch("getIsLikedMeal", liked);

@@ -44,7 +44,9 @@ public class MealBoardServiceImpl implements MealBoardService{
 	@Override
 	public Map<String, String> selectByPostNo(int postNo) {
 		Map<String, String> ret = new HashMap<>();
+		System.out.println("여기까진 오는 거지? =======" + postNo);
 		MealBoard item = mealBoardDao.selectByPostNo(postNo);
+		System.out.println("여기까진 오는 거지? =======" + postNo);
 		ret.put("postNo", Integer.toString(item.getPostNo()));
 		ret.put("userId", item.getUserId());
 		ret.put("title", item.getTitle());
