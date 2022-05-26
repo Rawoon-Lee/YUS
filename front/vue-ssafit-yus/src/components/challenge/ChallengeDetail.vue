@@ -28,15 +28,6 @@
           </li>
         </ul>
       </div>
-      <div class="card">
-        <routine-detail-exercise
-          v-for="(workout, index) in workouts"
-          :key="index"
-          :exerciseName="workout.exerciseName"
-          :rep="workout.routineSet"
-          :set="workout.routineRep"
-        ></routine-detail-exercise>
-      </div>
       <div>
         <button
           type="button"
