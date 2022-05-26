@@ -1,16 +1,31 @@
 <template>
-  <div>
-    <div>
-      <div style="width: 80px; float: left; margin-left: 20px">{{ user }}</div>
-      <div
-        v-for="(date, index) in week"
-        :key="index"
-        :class="[isSameDate(date) ? 'colored' : 'uncolored']"
-        width="30"
-        height="30"
-        style="border: 0px; float: left; margin-right: 8px"
-        background-color="#000000"
-      ></div>
+  <div
+    style="
+      display: flex;
+      align-items: center;
+
+      padding-bottom: 0px;
+    "
+  >
+    <div style="display: flex; justify-content: space-between; width: 100%">
+      <div>
+        <img
+          :src="require(`@/assets/UserInfo/${user}.png`)"
+          alt="프로필"
+          id="profile"
+          style="float: left; margin-right: 5px"
+        />
+        <div style="float: left; margin-right: 30px">{{ user }}</div>
+      </div>
+      <div style="display: flex; justify-content: center">
+        <div
+          v-for="(date, index) in week"
+          :key="index"
+          :class="[isSameDate(date) ? 'colored' : 'uncolored']"
+          style="border: 0px; margin: 3px"
+          background-color="#000000"
+        ></div>
+      </div>
     </div>
     <br />
     <br />
@@ -73,19 +88,25 @@ export default {
 
 <style scoped>
 .uncolored {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-color: #aaaaaa;
   border-radius: 25%;
 }
 .colored {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-color: #bfadf8;
   border-radius: 25%;
 }
 text {
   font: bold 15px sans-serif;
   fill: #505050;
+}
+#profile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>

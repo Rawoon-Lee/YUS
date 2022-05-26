@@ -1,21 +1,57 @@
 <template>
-  <div class="container" style="border: 1px solid #282828; border-radius:10px; margin-top:1rem;">
-    <div style="vertical-align:middle; background-color: #323232; color: aliceblue; height:70px; border: 1px solid black; margin-top:1rem">
-      <div style="vertical-align:middle; margin-top:0.8rem; text-align:center">
-        <span style="ont-size:18pt; padding:5px 5px 5px 5px; background-color: #828282; font-weight: bold; border-radius: 7px; margin-left:0.3rem;">{{ video.exerciseName }}</span>
-        <span style=" margin-left:0.3rem; font-size:20pt">{{ video.title }}</span>
+  <div
+    class="container"
+    style="border: 1px solid #282828; border-radius: 10px; margin-top: 1rem"
+  >
+    <div
+      style="
+        vertical-align: middle;
+        background-color: #323232;
+        color: aliceblue;
+        height: 70px;
+        border: 1px solid black;
+        margin-top: 1rem;
+      "
+    >
+      <div
+        style="vertical-align: middle; margin-top: 0.8rem; text-align: center"
+      >
+        <span
+          style="
+            ont-size: 18pt;
+            padding: 5px 5px 5px 5px;
+            background-color: #828282;
+            font-weight: bold;
+            border-radius: 7px;
+            margin-left: 0.3rem;
+          "
+          >{{ video.exerciseName }}</span
+        >
+        <span style="margin-left: 0.3rem; font-size: 20pt">{{
+          video.title
+        }}</span>
       </div>
     </div>
-    <hr>
-    <div style="display:flex; justify-content:space-between">
-      <div align="left" style="margin-left:1rem">채널명 : {{ video.channelName }}</div>
+    <hr />
+    <div style="display: flex; justify-content: space-between">
+      <div align="left" style="margin-left: 1rem">
+        채널명 : {{ video.channelName }}
+      </div>
       <div align="right">
-        <span style="margin-right: 1rem"><b-icon-eye-fill></b-icon-eye-fill> {{ video.viewCnt }}</span>
-        <span style="margin-right: 1rem"><b-icon icon="heart-fill" style="color: red"></b-icon> {{ video.LikedCnt }}</span>
-        <span><b-icon icon="chat-right-text-fill"></b-icon> {{ commsYou.length }}</span>
+        <span style="margin-right: 1rem"
+          ><b-icon-eye-fill></b-icon-eye-fill> {{ video.viewCnt }}</span
+        >
+        <span style="margin-right: 1rem"
+          ><b-icon icon="heart-fill" style="color: red"></b-icon>
+          {{ video.LikedCnt }}</span
+        >
+        <span
+          ><b-icon icon="chat-right-text-fill"></b-icon>
+          {{ commsYou.lengh }}</span
+        >
       </div>
     </div>
-    <hr>
+    <hr />
     <div>
       <b-embed
         type="iframe"
@@ -24,12 +60,22 @@
         allowfullscreen
       ></b-embed>
     </div>
-    <hr>
+    <hr />
     <div class="row justify-content-center">
-      <b-button v-show="!isYouLiked" type="button" @click="addLike" variant="light">
+      <b-button
+        v-show="!isYouLiked"
+        type="button"
+        @click="addLike"
+        variant="light"
+      >
         <b-icon icon="heart-fill" style="color: red"></b-icon> 좋아요
       </b-button>
-      <b-button v-show="isYouLiked" type="button" @click="delLike" variant="light">
+      <b-button
+        v-show="isYouLiked"
+        type="button"
+        @click="delLike"
+        variant="light"
+      >
         <b-icon icon="heart"></b-icon> 취소
       </b-button>
     </div>
@@ -67,9 +113,18 @@
       </div>
     </div>
     <div v-else>
-      <h2 style="margin-left:1rem; color:gray; font-size:20pt; text-align:center">작성된 댓글이 없습니다.</h2>
+      <h2
+        style="
+          margin-left: 1rem;
+          color: gray;
+          font-size: 20pt;
+          text-align: center;
+        "
+      >
+        작성된 댓글이 없습니다.
+      </h2>
     </div>
-    <hr>
+    <hr />
     <div>
         <b-icon icon="chat-left-text-fill" style="margin-top:1rem"></b-icon> 댓글 작성({{commsYou.length}})
     </div>
@@ -84,8 +139,8 @@
     <div class="row justify-content-center" style="margin-left:2px; margin-right:5px;">
         <b-button to="/exercise/all">목록으로 돌아가기</b-button>
     </div>
-    <hr>
-    <br>
+    <hr />
+    <br />
   </div>
 </template>
 
@@ -96,7 +151,7 @@ export default {
   name: "ExerciseDetail",
   data() {
     return {
-      userId : sessionStorage.getItem("USER_ID"),
+      userId: sessionStorage.getItem("USER_ID"),
       workouts: [
         {
           label: "어깨",
@@ -123,8 +178,8 @@ export default {
     };
   },
   components: {
-    CommentForm
-},
+    CommentForm,
+  },
   computed: {
     // ...mapState(["exercises"]),
     ...mapState(["commsYou"]),

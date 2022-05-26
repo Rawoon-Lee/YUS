@@ -293,6 +293,24 @@ export default new Vuex.Store({
           commit("CREATE_ROUTINE", false);
         });
     },
+    enrollGroup({ dispatch }, user) {
+      const API_URL = `${REST_API}/user/info/2`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: user,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then(() => {
+          console.log("그룹가입신청 완료");
+          dispatch("getGroups");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     getRoutines({ commit }, payload) {
       let params = null;
       if (payload) {
@@ -433,11 +451,15 @@ export default new Vuex.Store({
         });
     },
     updateUserInfo({ dispatch }, user) {
-      const API_URL = `${REST_API}/user/info/0`;
+      const API_URL = `${REST_API}/user/info/info`;
       axios({
         url: API_URL,
-        method: "POST",
+        method: "PUT",
         data: user,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
       })
         .then((res) => {
           console.log(res);
@@ -448,6 +470,30 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log("유저 업데이트 못함....");
+          console.log(err.toJSON());
+          console.log(err.toJSON().status);
+          console.log(user);
+        });
+    },
+    updateUserInfoProfile({ dispatch }, user) {
+      let userID = sessionStorage.getItem("USER_ID");
+      const API_URL = `${REST_API}/user/info/${userID}`;
+      axios({
+        url: API_URL,
+        method: "PUT",
+        data: user,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          console.log("유저 프로필 업데이트 성공");
+          dispatch("getUserInfo", userID);
+          router.push({ name: "myPage" });
+        })
+        .catch((err) => {
+          console.log("유저 프로필 업데이트 못함....");
           console.log(err.toJSON());
           console.log(err.toJSON().status);
           console.log(user);
