@@ -45,6 +45,7 @@ export default {
         orderNo: 0,
         commGroup: this.commGroup,
       };
+      console.log(mealComm);
       this.$store.dispatch("addMealComm", JSON.stringify(mealComm));
     },
   },
