@@ -37,7 +37,7 @@
               id="input-2"
               v-model="pw"
               trim
-              placeholder="제목을 입력해주세요"
+              placeholder="비밀번호를 입력해주세요"
               type="password"
             ></b-form-input>
           </b-form-group>

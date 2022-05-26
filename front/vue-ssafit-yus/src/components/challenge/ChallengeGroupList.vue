@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h2 style="margin-top:2rem">챌린지 그룹 목록</h2>
-    <hr>
-    <div style="text-align:right; margin-bottom:1rem">
-    <b-button to="challenge/create">그룹 만들기</b-button>
+    <h2 style="margin-top: 2rem">챌린지 그룹 목록</h2>
+    <hr />
+    <div style="text-align: right; margin-bottom: 1rem">
+      <b-button to="challenge/create">그룹 만들기</b-button>
     </div>
     <div v-if="groups.length">
       <b-table-simple hover responsive class="text-center">
@@ -18,8 +18,8 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <b-tr v-for="group in pageGroupsList" :key="group.groupNo">
-            <b-td>{{ group.groupNo }}</b-td>
+          <b-tr v-for="(group, index) in pageGroupsList" :key="index">
+            <b-td>{{ index + 1 }}</b-td>
             <b-td>
               <b-link :to="`/challenge/detail/${group.groupNo}`">{{
                 group.groupName
@@ -28,20 +28,54 @@
             <b-td>포켓몬빵순이</b-td>
             <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
             <b-td>{{ group.groupPoint }}</b-td>
-            <b-td><b-button @click="enroll">가입 신청</b-button></b-td>
+            <b-td
+              ><b-button @click="enroll(group.groupNo)"
+                >가입 신청</b-button
+              ></b-td
+            >
           </b-tr>
         </b-tbody>
       </b-table-simple>
     </div>
     <div v-else>등록된 게시글이 없습니다.</div>
     <div>
-      <b-form-select v-model="mode" style="width:100px; height:40px; margin-bottom:0.5rem; margin-right:0.5rem">
-        <option value="1">제목 : </option>
-        <option value="2">내용 : </option>
-        <option value="3">제목+내용 : </option>
+      <b-form-select
+        v-model="mode"
+        style="
+          width: 100px;
+          height: 40px;
+          margin-bottom: 0.5rem;
+          margin-right: 0.5rem;
+        "
+      >
+        <option value="1">제목 :</option>
+        <option value="2">내용 :</option>
+        <option value="3">제목+내용 :</option>
       </b-form-select>
-      <input type="text" v-model="keyword" style="border:1px solid; border-radius:4px; margin-top:0.5rem; height:40px" />
-      <button @click="search" style="margin-left:1rem; margin-bottom:1rem; color: gray; border:1px solid; width:60px; border-radius:5px; height:40px">검색</button>
+      <input
+        type="text"
+        v-model="keyword"
+        style="
+          border: 1px solid;
+          border-radius: 4px;
+          margin-top: 0.5rem;
+          height: 40px;
+        "
+      />
+      <button
+        @click="search"
+        style="
+          margin-left: 1rem;
+          margin-bottom: 1rem;
+          color: gray;
+          border: 1px solid;
+          width: 60px;
+          border-radius: 5px;
+          height: 40px;
+        "
+      >
+        검색
+      </button>
     </div>
 
     <b-pagination
@@ -70,6 +104,7 @@ export default {
   },
   computed: {
     ...mapState(["groups"]),
+    ...mapState(["userInfo"]),
     rows() {
       return this.groups.length;
     },
@@ -81,7 +116,9 @@ export default {
     },
   },
   created() {
+    let userId = sessionStorage.getItem("USER_ID");
     this.$store.dispatch("getGroups");
+    this.$store.dispatch("getUserInfo", userId);
   },
   methods: {
     search() {
@@ -91,8 +128,12 @@ export default {
       };
       this.$store.dispatch("getGroups", payload);
     },
-    enroll() {
-      //등록하는 함수
+    enroll(groupNo) {
+      let user = this.userInfo;
+      user.groupNo = groupNo;
+      user.file = "temp";
+      console.log(JSON.stringify(user));
+      this.$store.dispatch("enrollGroup", user);
     },
   },
 };

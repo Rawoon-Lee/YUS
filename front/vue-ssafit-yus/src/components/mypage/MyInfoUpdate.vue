@@ -134,6 +134,7 @@ export default {
         "weight",
         this.weight ? this.weight : this.userInfo.weight
       );
+      console.log(this.weight);
       formData.append(
         "height",
         this.height ? this.height : this.userInfo.height

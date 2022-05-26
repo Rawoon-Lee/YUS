@@ -293,6 +293,24 @@ export default new Vuex.Store({
           commit("CREATE_ROUTINE", false);
         });
     },
+    enrollGroup({ dispatch }, user) {
+      const API_URL = `${REST_API}/user/info/2`;
+      axios({
+        url: API_URL,
+        method: "POST",
+        params: user,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then(() => {
+          console.log("그룹가입신청 완료");
+          dispatch("getGroups");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     getRoutines({ commit }, payload) {
       let params = null;
       if (payload) {

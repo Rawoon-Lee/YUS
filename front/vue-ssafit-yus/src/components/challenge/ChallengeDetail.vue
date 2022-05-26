@@ -1,17 +1,40 @@
 <template>
   <div>
-    {{ group.groupName }}
-    {{ group.groupPoint }}
-    {{ group.maximumPeople }}
-    {{ group.currentPeople }}
-    {{ group.userId }}
-    <h2>최근 일주일간의 운동 기록</h2>
-    <challenge-detail-user
+    <div class="card" style="width: 25rem; display: flex; align-items: center">
+      <div class="card-body">
+        <h3>그룹명 : {{ group.groupName }}</h3>
+        <p class="card-text">그룹 점수 : {{ group.groupPoint }}</p>
+        <p class="card-text">
+          {{ group.currentPeople }} / {{ group.maximumPeople }}
+        </p>
+        <p class="card-text">방장 : {{ group.userId }}</p>
+      </div>
+      <h4>그룹 멤버별 최근 일주일간의 운동 기록</h4>
+      <div
+        class="card"
+        style="width: 25rem; display: flex; align-items: center"
+      >
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item"
+            v-for="(member, index) in keys"
+            :key="index"
+            style=""
+          >
+            <challenge-detail-user
+              :member="groupMem[member]"
+              :user="member"
+            ></challenge-detail-user>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <challenge-detail-user
       v-for="(member, index) in keys"
       :key="index"
       :member="groupMem[member]"
       :user="member"
-    ></challenge-detail-user>
+    ></challenge-detail-user> -->
   </div>
 </template>
 
