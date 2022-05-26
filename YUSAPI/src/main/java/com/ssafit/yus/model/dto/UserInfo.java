@@ -16,7 +16,7 @@ public class UserInfo {
 	private int age;
 	private int gender;
 	private String gymName;
-	private String filepath;
+	private String filepath; //파일에 대한 유무
 	private int purpose;
 	private int groupNo;
 	private int userPoint;

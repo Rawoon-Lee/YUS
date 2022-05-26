@@ -33,7 +33,6 @@
 		age = #{age},
 		gym_name = #{gymName},
 		purpose = #{purpose},
-		filepath = #{filepath}
 		WHERE user_id = #{userId}
 	</update>
 	<update id="updateUserPoint" parameterType="UserInfo">
@@ -46,6 +45,12 @@
 		UPDATE user_info
 		SET
 		group_no = #{groupNo},
+		WHERE user_id = #{userId}
+	</update>
+	<update id="updateUserFile" parameterType="UserInfo">
+		UPDATE user_info
+		SET
+		filepath = #{filepath}
 		WHERE user_id = #{userId}
 	</update>
 	<delete id="deleteUserInfo" parameterType="String">

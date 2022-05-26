@@ -65,8 +65,11 @@ public class MealBoardServiceImpl implements MealBoardService{
 	}
 
 	@Override
-	public void updateMealBoard(MealBoard mealBoard) {
-		mealBoardDao.updateMealBoard(mealBoard);
+	public void updateMealBoard(int mode, MealBoard mealBoard) {
+		if (mode == 1)
+			mealBoardDao.updateMealBoard(mealBoard);
+		else
+			mealBoardDao.updateFile(mealBoard);
 	}
 
 	@Override

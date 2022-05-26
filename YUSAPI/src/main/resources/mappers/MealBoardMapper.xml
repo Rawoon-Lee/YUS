@@ -33,10 +33,15 @@
 		SET
 		title = #{title},
 		content = #{content},
-		filepath = #{filepath},
 		carb = #{carb},
 		protein = #{protein},
 		fat = #{fat}
+		WHERE post_no = #{postNo}
+	</update>
+	<update id="updateFile" parameterType="MealBoard">
+		UPDATE meal_board
+		SET
+		filepath = #{filepath}
 		WHERE post_no = #{postNo}
 	</update>
 	<update id="updateViewCnt" parameterType="int">

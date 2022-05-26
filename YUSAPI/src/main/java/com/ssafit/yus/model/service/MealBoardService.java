@@ -9,7 +9,7 @@ public interface MealBoardService {
 	List<Map<String, String>> selectAll();
 	Map<String, String> selectByPostNo(int postNo);
 	void insertMealBoard(MealBoard mealBoard);
-	void updateMealBoard(MealBoard mealBoard);
+	void updateMealBoard(int mode, MealBoard mealBoard);
 	void updateViewCnt(int postNo);
 	void deleteMealBoard(int postNo);
 }

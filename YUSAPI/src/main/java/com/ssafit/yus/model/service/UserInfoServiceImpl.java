@@ -42,7 +42,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 			userInfoDao.updateUserInfo(userInfo);
 		else if (mode == 1)
 			userInfoDao.updateUserPoint(userInfo);
-		else {
+		else if (mode == 2){
 			if (userInfo.getGroupNo() != 0) {
 				GroupInfo groupInfo = new GroupInfo();
 				groupInfo.setGroupNo(userInfo.getGroupNo());
@@ -50,5 +50,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 			}
 			userInfoDao.updateUserGroup(userInfo);
 		}
+		else
+			userInfoDao.updateUserFile(userInfo);
 	}
 }
