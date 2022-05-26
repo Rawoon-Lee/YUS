@@ -14,7 +14,6 @@
             <b-th>그룹장</b-th>
             <b-th>멤버</b-th>
             <b-th>Activity Credit</b-th>
-            <b-th>가입 신청</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
@@ -28,16 +27,10 @@
             <b-td>{{ group.userId }}</b-td>
             <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
             <b-td>{{ group.groupPoint }}</b-td>
-            <b-td
-              ><b-button @click="enroll(group.groupNo)"
-                >가입 신청</b-button
-              ></b-td
-            >
           </b-tr>
         </b-tbody>
       </b-table-simple>
     </div>
-    <div v-else>등록된 게시글이 없습니다.</div>
     <div>
       <b-form-select
         v-model="mode"

@@ -51,6 +51,10 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	public void InsertGroupInfo(ListForGroup lfg) {
 		groupInfoDao.InsertGroupInfo(lfg.getGroupInfo());
 		int groupNo = groupInfoDao.selectMaxGroupNo();
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserId(lfg.getGroupInfo().getUserId());
+		userInfo.setGroupNo(groupNo);
+		userInfoDao.updateUserGroup(userInfo);
 		List<RoutinePerDay> list = lfg.getRpdlist();
 		for (RoutinePerDay item : list) {
 			item.setGroupNo(groupNo);

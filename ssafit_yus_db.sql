@@ -187,7 +187,6 @@ SELECT * FROM user_info;
 INSERT INTO group_info (group_name, maximum_people, user_id)
 VALUES ("놀기위해 운동한다", 20, "junhoLee"),
 ("체력이 국력", 10, "Hwasa");
--- ("오늘은 내가 핫바디", 15, "hyunklee");
 SELECT * FROM group_info;
 
 INSERT INTO youtube_info(video_id, url, title, channel_name, exercise_name)

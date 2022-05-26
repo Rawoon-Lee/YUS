@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-  <br>
-    <h1 style="text-align:center">그룹 등록</h1>
-    <hr>
+    <br />
+    <h1 style="text-align: center">그룹 등록</h1>
+    <hr />
     <b-card bg-variant="light">
       <div class="m-4">
         <b-form-group
@@ -133,9 +133,10 @@
           </b-form-select>
         </b-form-group>
         <br />
-        <div style="text-align:center">
-        <b-button variant="outline-success" @click="createRoutine"
-          >등록</b-button>
+        <div style="text-align: center">
+          <b-button variant="outline-success" @click="createRoutine"
+            >등록</b-button
+          >
         </div>
       </div>
     </b-card>
