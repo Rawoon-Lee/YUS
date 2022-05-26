@@ -723,7 +723,6 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          // commit("GET_ISLIKED", true);
           res;
           dispatch("getIsLikedMeal", liked);
           dispatch("getMeal", JSONparsed.postNo);
@@ -770,23 +769,6 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log("미안 댓글 못가져옴");
           console.log(err.toJSON());
-        });
-    },
-    getCommentsMeal({ commit }, id) {
-      const API_URL = `${REST_API}/meal/comm/${id}`;
-      axios({
-        url: API_URL,
-        method: "GET",
-        headers: {
-          "access-token": sessionStorage.getItem("access-token"),
-        },
-      })
-        .then((res) => {
-          console.log("댓글 가져옴");
-          commit("GET_COMM_MEAL", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     addYoutubeComm({ dispatch }, youtubeComm) {
@@ -887,6 +869,23 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err.toJSON());
+        });
+    },
+    getCommentsMeal({ commit }, id) {
+      const API_URL = `${REST_API}/meal/comm/${id}`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log("댓글 가져옴");
+          commit("GET_COMM_MEAL", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },

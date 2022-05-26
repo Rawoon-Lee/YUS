@@ -19,7 +19,7 @@
 		SELECT *
 		FROM meal_board
 	</select>
-	<select id="selectByPostNo" parameterType="int">
+	<select id="selectByPostNo" parameterType="int" resultMap="MealBoardMap">
 		SELECT *
 		FROM meal_board
 		WHERE post_no = #{postNo}

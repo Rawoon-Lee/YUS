@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "CommentForm",
+  name: "YoutubeCommentForm",
   props: {
     classNo: Number,
     commGroup: Number,
