@@ -3,7 +3,6 @@
     class="container"
     style="border: 1px solid #282828; border-radius: 10px; margin-top: 1rem"
   >
-    <h2>식단 상세 페이지</h2>
     <div
       style="
         vertical-align: middle;
@@ -26,7 +25,7 @@
             border-radius: 7px;
             margin-left: 0.3rem;
           "
-          >{{ meal.userId }}</span
+          >{{ meal.carb * 3 + meal.protein * 2 + meal.fat * 4 + " cal" }}</span
         >
         <span style="margin-left: 0.3rem; font-size: 20pt">{{
           meal.title
@@ -35,7 +34,9 @@
     </div>
     <hr />
     <div style="display: flex; justify-content: space-between">
-      <div align="left" style="margin-left: 1rem">제목 : {{ meal.title }}</div>
+      <div align="left" style="margin-left: 1rem">
+        {{ meal.userId }}
+      </div>
       <div align="right">
         <span style="margin-right: 1rem"
           ><b-icon-eye-fill></b-icon-eye-fill> {{ meal.viewCnt }}</span
@@ -53,11 +54,11 @@
     <hr />
     <div>
       <div>
-        <img
+        <!-- <img
           :src="require(`@/assets/MealBoard/${meal.filepath}.png`)"
           alt="식단사진"
           class="meal"
-        />
+        /> -->
       </div>
       <div class="card">
         {{ meal.content }}
@@ -123,17 +124,22 @@
           </div>
         </div>
         <div v-if="comm.status">
-          <routine-Comment-form
+          <meal-comment-form
             :classNo="1"
             :commGroup="comm.commGroup"
             :userId="userId"
             :postNo="meal.postNo"
-          ></routine-Comment-form>
+          ></meal-comment-form>
         </div>
       </div>
     </div>
     <br />
-    <meal-comment-form></meal-comment-form>
+    <meal-comment-form
+      :classNo="0"
+      :commGroup="0"
+      :userId="userId"
+      :postNo="meal.postNo"
+    ></meal-comment-form>
     <hr />
     <div
       class="row justify-content-center"
@@ -169,7 +175,6 @@ export default {
   created() {
     const pathName = this.$route.path.split("/");
     const id = pathName[pathName.length - 1];
-    console.log("???" + id);
     this.$store.dispatch("getMeal", id);
     // this.$store.dispatch("getCommentsYou", id);
     this.postNo = id;
@@ -177,6 +182,7 @@ export default {
       userId: sessionStorage.getItem("USER_ID"),
       postNo: this.postNo,
     };
+    this.$store.dispatch("getCommentsMeal", id);
     this.$store.dispatch("getIsLikedMeal", JSON.stringify(liked));
   },
   mounted() {
@@ -216,6 +222,13 @@ export default {
     },
     toggleShow(index) {
       this.commsMeal[index].status = !this.commsMeal[index].status;
+    },
+    deleteComm(commIndex) {
+      let mealComm = {
+        commIndex: commIndex,
+        postNo: this.meal.postNo,
+      };
+      this.$store.dispatch("delMealComm", JSON.stringify(mealComm));
     },
   },
 };

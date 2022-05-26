@@ -162,8 +162,21 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
+          let parsedRet = {
+            postNo: parseInt(res.data.postNo),
+            title: res.data.title,
+            content: res.data.content,
+            filepath: res.data.filepath,
+            carb: parseInt(res.data.carb),
+            protein: parseInt(res.data.protein),
+            fat: parseInt(res.data.fat),
+            userId: res.data.userId,
+            viewCnt: parseInt(res.data.viewCnt),
+            regDate: res.data.regDate,
+            LikedCnt: res.data.LikedCnt,
+          };
           console.log("식단 상세정보 가져왔음");
-          commit("GET_MEAL", res.data);
+          commit("GET_MEAL", parsedRet);
         })
         .catch((err) => {
           console.log(err);
@@ -234,6 +247,8 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
+          console.log("=======mealdata========");
+          console.log(res.data);
           commit("GET_VIDEO", res.data);
         })
         .catch((err) => {
@@ -355,7 +370,6 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log(res);
           commit("GET_ROUTINES", res.data);
         })
         .catch((err) => {
@@ -783,7 +797,7 @@ export default new Vuex.Store({
         },
       })
         .then((res) => {
-          console.log("댓글 가져옴");
+          for (let item of res.data) item.status = false;
           commit("GET_COMM_MEAL", res.data);
         })
         .catch((err) => {
@@ -946,6 +960,48 @@ export default new Vuex.Store({
           res;
           console.log("식단 조회수 증가");
           dispatch("getMeal", JSONparse.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    addMealComm({ dispatch }, mealComm) {
+      console.log(mealComm);
+      const API_URL = `${REST_API}/meal/comm/add`;
+      let JSONparsed = JSON.parse(mealComm);
+      axios({
+        url: API_URL,
+        method: "POST",
+        data: mealComm,
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          dispatch("getCommentsMeal", JSONparsed.postNo);
+        })
+        .catch((err) => {
+          console.log(err.toJSON());
+        });
+    },
+    delMealComm({ dispatch }, mealComm) {
+      let JSONparsed = JSON.parse(mealComm);
+      const API_URL = `${REST_API}/meal/comm/delete/` + JSONparsed.commIndex;
+      console.log(API_URL);
+      axios({
+        url: API_URL,
+        method: "DELETE",
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res;
+          console.log(JSONparsed);
+          dispatch("getCommentsMeal", JSONparsed.postNo);
         })
         .catch((err) => {
           console.log(err.toJSON());
