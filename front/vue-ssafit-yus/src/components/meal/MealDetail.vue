@@ -54,7 +54,7 @@
     <div>
       <div>
         <img
-          :src="require(`@/assets/UserInfo/${userId}.png`)"
+          :src="require(`@/assets/MealBoard/${meal.filepath}.png`)"
           alt="식단사진"
           class="meal"
         />
@@ -162,7 +162,6 @@ export default {
     MealCommentForm,
   },
   computed: {
-    // ...mapState(["exercises"]),
     ...mapState(["commsMeal"]),
     ...mapState(["meal"]),
     ...mapState(["isMealLiked"]),
@@ -178,7 +177,7 @@ export default {
       userId: sessionStorage.getItem("USER_ID"),
       postNo: this.postNo,
     };
-    this.$store.dispatch("getIsLikedMeal", liked);
+    this.$store.dispatch("getIsLikedMeal", JSON.stringify(liked));
   },
   methods: {
     calMeal(postNo) {

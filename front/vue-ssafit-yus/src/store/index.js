@@ -593,6 +593,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           if (res.data.status == "true") {
+            console.log("식단 좋아요 여부 불러옴");
             commit("GET_MEAL_ISLIKED", true);
           } else {
             commit("GET_MEAL_ISLIKED", false);
@@ -724,10 +725,12 @@ export default new Vuex.Store({
       })
         .then((res) => {
           res;
+
           dispatch("getIsLikedMeal", liked);
           dispatch("getMeal", JSONparsed.postNo);
         })
         .catch((err) => {
+          console.log("식단 좋아요 추가 못함");
           console.log(err.toJSON());
         });
     },
@@ -768,26 +771,6 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log("미안 댓글 못가져옴");
-          console.log(err.toJSON());
-        });
-    },
-    addYoutubeComm({ dispatch }, youtubeComm) {
-      const API_URL = `${REST_API}/youtube/comm/add`;
-      let JSONparsed = JSON.parse(youtubeComm);
-      axios({
-        url: API_URL,
-        method: "POST",
-        data: youtubeComm,
-        headers: {
-          "access-token": sessionStorage.getItem("access-token"),
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          res;
-          dispatch("getCommentsYou", JSONparsed.videoId);
-        })
-        .catch((err) => {
           console.log(err.toJSON());
         });
     },
