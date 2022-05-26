@@ -174,11 +174,11 @@ VALUES ("사이드 레터럴 레이즈", "어깨"),
 ("레그 익스텐션", "하체");
 SELECT * FROM exercise_info;
 
-INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no)
-VALUES ("JunhoLee", "1e9c98989e7afb35e311334e79aad5ba5895182db8aa8d0ec28cb675fc8a4d0f", 67, 178, 32, 0, "강남비싼헬스장", 1, 1),
-("Hwasa", "af3fce2230d8b03e584f253b1ad38a70c0142ca88488a073a8eb69f7af19ff34", 44, 160, 28, 1, "이태원비싼헬스장", 1, 2),
-("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 3),
-("rawoon", "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", 90, 186, 27, 0, "매탄동휘트니스", 0, 1);
+INSERT INTO user_info(user_id, user_password, weight, height, age, gender, gym_name, purpose, group_no, filepath)
+VALUES ("JunhoLee", "1e9c98989e7afb35e311334e79aad5ba5895182db8aa8d0ec28cb675fc8a4d0f", 67, 178, 32, 0, "강남비싼헬스장", 1, 1, "JunhoLee"),
+("Hwasa", "af3fce2230d8b03e584f253b1ad38a70c0142ca88488a073a8eb69f7af19ff34", 44, 160, 28, 1, "이태원비싼헬스장", 1, 2, "Hwasa"),
+("hyunklee", "7d824ad37e366f330ef3d3bafb8dc8b18a5b07622e2830eac5966339d98a94b0", 90, 186, 27, 0, "테리온휘트니스", 0, 3, "hyunklee"),
+("rawoon", "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", 90, 186, 27, 0, "매탄동휘트니스", 0, 1, "rawoon");
 -- iamhandsome, iamsexy, 121314, ssafityus
 INSERT INTO user_info(user_id, user_password)
 VALUES ("deletedcomm", "2c4a12c037cc5893af1c594156c339fe39963354ae4b37ef43e217ce4bb44d68");
