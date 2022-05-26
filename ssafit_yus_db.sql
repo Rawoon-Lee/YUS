@@ -185,7 +185,7 @@ VALUES ("deletedcomm", "2c4a12c037cc5893af1c594156c339fe39963354ae4b37ef43e217ce
 SELECT * FROM user_info;
 
 INSERT INTO group_info (group_name, maximum_people, user_id)
-VALUES ("놀기위해 운동한다", 20, "junhoLee"),
+VALUES ("놀기위해 운동한다", 20, "JunhoLee"),
 ("체력이 국력", 10, "Hwasa");
 SELECT * FROM group_info;
 

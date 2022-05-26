@@ -7,68 +7,30 @@
     </div>
     <div v-if="groups.length">
       <b-table-simple hover responsive class="text-center">
-        <b-thead>
-          <b-tr>
-            <b-th>번호</b-th>
-            <b-th>그룹명</b-th>
-            <b-th>그룹장</b-th>
-            <b-th>멤버</b-th>
-            <b-th>Activity Credit</b-th>
-          </b-tr>
-        </b-thead>
         <b-tbody>
           <b-tr v-for="(group, index) in pageGroupsList" :key="index">
-            <b-td>{{ index + 1 }}</b-td>
+            <b-td
+              ><img
+                :src="require(`@/assets/UserInfo/${group.userId}.png`)"
+                alt="프로필"
+                class="mypageProfile"
+            /></b-td>
             <b-td>
-              <b-link :to="`/challenge/detail/${group.groupNo}`">{{
-                group.groupName
-              }}</b-link></b-td
-            >
-            <b-td>{{ group.userId }}</b-td>
-            <b-td>{{ group.currentPeople }} / {{ group.maximumPeople }}</b-td>
-            <b-td>{{ group.groupPoint }}</b-td>
+              <div>
+                <b-link :to="`/challenge/detail/${group.groupNo}`"
+                  ><h2>{{ group.groupName }}</h2></b-link
+                >
+              </div>
+              <div>리더 : {{ group.userId }}</div>
+              <div>
+                인원 : {{ group.currentPeople }} /
+                {{ group.maximumPeople }}
+              </div>
+              <div>Activity Credit : {{ group.groupPoint }}</div>
+            </b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>
-    </div>
-    <div>
-      <b-form-select
-        v-model="mode"
-        style="
-          width: 100px;
-          height: 40px;
-          margin-bottom: 0.5rem;
-          margin-right: 0.5rem;
-        "
-      >
-        <option value="1">제목 :</option>
-        <option value="2">내용 :</option>
-        <option value="3">제목+내용 :</option>
-      </b-form-select>
-      <input
-        type="text"
-        v-model="keyword"
-        style="
-          border: 1px solid;
-          border-radius: 4px;
-          margin-top: 0.5rem;
-          height: 40px;
-        "
-      />
-      <button
-        @click="search"
-        style="
-          margin-left: 1rem;
-          margin-bottom: 1rem;
-          color: gray;
-          border: 1px solid;
-          width: 60px;
-          border-radius: 5px;
-          height: 40px;
-        "
-      >
-        검색
-      </button>
     </div>
 
     <b-pagination
@@ -134,4 +96,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.mypageProfile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+</style>

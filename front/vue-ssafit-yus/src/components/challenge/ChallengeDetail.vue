@@ -90,18 +90,53 @@
             <hr />
             <div class="d-flex justify-content-center flex-wrap .container-md">
               <div v-for="(item, index) in rpdlist" :key="index">
-                <!-- 카드 -->
-                <div
-                  class="card h-200"
-                  style="width: 380px; margin-right: 2rem"
-                >
-                  <div class="card-body">
-                    <h5 class="videotitle">day {{ index + 1 }}</h5>
-                    <div style="text-align: center; font-weight: bold">
-                      {{ item[0].title }}
+                <div v-if="index == today - 1">
+                  <div
+                    class="card h-200"
+                    style="
+                      width: 380px;
+                      margin-right: 2rem;
+                      background-color: #bfadf8;
+                    "
+                  >
+                    <div class="card-body">
+                      <h5 class="videotitle">day {{ index + 1 }}</h5>
+                      <div style="text-align: center; font-weight: bold">
+                        <b-link
+                          style="color: #646464"
+                          :to="`/routine/${item[0].routineNo}`"
+                          ><b-icon icon="link45deg" style="color: blue"></b-icon
+                          >{{ item[0].title }}</b-link
+                        >
+                      </div>
+                      <div class="videotext" style="text-align: right">
+                        {{ item[0].userId }}
+                      </div>
                     </div>
-                    <div class="videotext" style="text-align: right">
-                      {{ item[0].userId }}
+                  </div>
+                </div>
+                <div v-else>
+                  <div
+                    class="card h-200"
+                    style="
+                      width: 380px;
+                      margin-right: 2rem;
+                      background-color: #aaaaaa;
+                    "
+                  >
+                    <div class="card-body">
+                      <h5 class="videotitle">day {{ index + 1 }}</h5>
+                      <div style="text-align: center; font-weight: bold">
+                        <b-link
+                          style="color: black"
+                          :to="`/routine/${item[0].routineNo}`"
+                          ><b-icon icon="link45deg" style="color: blue"></b-icon
+                          >{{ item[0].title }}</b-link
+                        >
+                      </div>
+                      <div class="videotext" style="text-align: right">
+                        {{ item[0].userId }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -130,6 +165,7 @@ export default {
     return {
       userId: sessionStorage.getItem("USER_ID"),
       groupNo: 0,
+      today: 0,
     };
   },
   computed: {
@@ -143,6 +179,9 @@ export default {
     ChallengeDetailUser,
   },
   created() {
+    let now = new Date();
+    this.today = now.getDay();
+    console.log(this.today);
     let userId = sessionStorage.getItem("USER_ID");
     let pathname = this.$route.path.split("/");
     let id = pathname[pathname.length - 1];
