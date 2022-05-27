@@ -248,6 +248,12 @@ VALUES ("JunhoLee");
 INSERT INTO success (user_id)
 VALUES ("Hwasa");
 
+INSERT INTO success (user_id, is_done)
+VALUES ("hyunklee", "2022-05-22 03:30:39"),
+("hyunklee", "2022-05-23 03:30:39"),
+("hyunklee", "2022-05-25 03:30:39"),
+("hyunklee", "2022-05-26 03:30:39");
+
 INSERT INTO youtube_liked (user_id, video_id)
 VALUES ("JunhoLee", "5BYBC73VrDk"), 
 ("Hwasa", "5BYBC73VrDk"),
